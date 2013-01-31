@@ -1,27 +1,30 @@
 \encoding{UTF-8}
 \name{clustcentroid}
 \alias{clustcentroid}
+\alias{clustmedoid}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Centroids of a crisp classification
+Cluster centers of a classification
 }
 \description{
-Calculates the centroid (multivariate average) coordinates of a classification represented in the form of a cluster vector or membership matrix.
+Function \code{clustcentroid} calculates the centroid (multivariate average) coordinates of a classification. Function \code{clustmedoid} determines the medoid (object whose average dissimilarity to all the other objects is minimal) for each cluster in the classification.
 }
 \usage{
-clustcentroid(x, y)
+clustcentroid(x, y, m = 1)
+clustmedoid(x, y, m = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-Community data, a site-by-species data frame.
+    Community data, a site-by-species data frame. In function \code{clustmedoid}, \code{x} can alternatively be an object of class \code{\link{dist}} (otherwise, the dissimilarity measure is assumed to be the Euclidean distance). 
    }
   \item{y}{
 	A vector indicating the cluster that each object in \code{x} belongs to. Alternatively, a fuzzy/hard site-by-group matrix of membership values.
    }
+  \item{m}{Fuzziness exponent, only effective when \code{y} is a fuzzy membership matrix.}
 }
 \value{
- A group-by-species data frame containing species average abundance values.
+ Function \code{clustcentroid} returns a group-by-species data frame containing species average abundance values (i.e. the coordinates of each cluster centroid). Function \code{clustmedoid} returns a vector of indices (medoids).
 }
 \note{
   In order to assign new plot record data into a predefined set of classes, one should use functions \code{\link{as.vegclust}} and \code{\link{vegclass}} instead.
@@ -46,7 +49,10 @@ wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1, sqrt(rowSums(as.matri
 # Performs a K-means clustering
 wetland.km = kmeans(wetland.chord, centers=3, nstart=10)
 
-# Gets cluster variance of KM (i.e. hard) clusters
+# Gets the coordinates corresponding to the centroids of KM clusters
 clustcentroid(wetland.chord, y=wetland.km$cluster)
+
+# Gets the object indices corresponding to the medoids of KM clusters
+clustmedoid(wetland.chord, y=wetland.km$cluster)
 
 }

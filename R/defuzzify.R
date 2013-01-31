@@ -30,5 +30,6 @@ defuzzify<-function(object, method="max", alpha=0.5,na.rm=FALSE) {
 		cluster =cluster[sel]
 		u = subset(u,sel)
 	}
+  names(cluster) = row.names(u)
 	return(list(memb=u,cluster=cluster))
 }

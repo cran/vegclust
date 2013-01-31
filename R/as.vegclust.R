@@ -1,19 +1,8 @@
 as.vegclust <-
-function(x,cluster) {
-   cln =levels(as.factor(cluster))
-   if(inherits(x,"dist")) {
-   	mode="distance"
-   	x = as.matrix(x)
-   } else {
-   	mode="raw"
-   }
-   k = length(cln)
-   n = nrow(x)
-   
-   dist2cent = matrix(0,nrow=n,ncol=k) 
-   if(mode=="raw") centers = matrix(0,nrow=k,ncol=ncol(x)) 
-   else centers = NULL
-   
+function(x,y, method="KM", m=1.0, dnoise=NULL, eta=NULL) {
+  METHODS <- c("KM", "FCM", "PCM","NC","HNC" ,"KMdd","NCdd", "HNCdd", "FCMdd", "PCMdd")
+  method <- match.arg(method, METHODS)
+  
    dist2onecluster<-function(x,object) {
 		#x is an (euclidean) distance matrix
 		x = as.matrix(x)
@@ -38,45 +27,59 @@ function(x,cluster) {
 		return(d)
    }	
 	
-   disteu <-function(x,y) {
-   	return(sqrt(sum((x-y)^2)))
+   if(inherits(x,"dist")) {
+   	mode="distance"
+   	x = as.matrix(x)
+   	sitenames = rownames(x)
+   } else {
+   	mode="raw"
+   	sitenames = rownames(x)
+   	varnames = names(x)
+   	x = as.matrix(x)
    }
-
-   #Memberships
-   u = data.frame(as.memb(cluster))
-	 rownames(u) = rownames(x)
-	 names(u) = levels(as.factor(cluster))
+   if(is.vector(y)) {
+   	cluster = y
+   	cln =levels(as.factor(cluster))
+    u = data.frame(as.memb(cluster))
+    rownames(u) = sitenames
+    names(u) = cln
+   	k = length(cln)
+   } else if(is.matrix(y) || is.data.frame(y)) {
+   	u = as.data.frame(y)
+   	cln = names(u)
+   	k = length(cln)
+   	if(method=="NC"||method=="NCdd"|| method=="HNC"||method=="HNCdd") {
+   	  k = k-1
+   	  cln = cln[1:k]
+   	}
+   }
+   n = nrow(x)
    
-   #Distance to clusters
+   dist2cent = matrix(0,nrow=n,ncol=k) 
+      
    if(mode=="distance") {
    	for(j in 1:n) {
    		dist2cent[j,] = dist2clusters(x,cluster,x[j,])
    	}
-   } else{
+   	centers=NULL
+   } else if (mode=="raw"){
+   	centers = clustcentroid(x,u[,1:k])
+   	names(centers) = varnames
+   	row.names(centers) = cln
+   	cm = as.matrix(centers)
    	for(i in 1:k) {
-   		sel = (cluster==cln[i])
-   		sel[is.na(sel)]=FALSE
-   		centers[i,] = apply(x[sel,],2,"mean")
-		  dist2cent[,i] = apply(x,1,"disteu",centers[i,])
+   		dist2cent[,i] = sqrt(rowSums(sweep(x,2,cm[i,],"-")^2))
    	}   
    }   
-   
-   #Centers
-   if(mode=="raw"){
-   	centers = as.data.frame(centers)   
-   	names(centers) = names(x)
-   	row.names(centers) = levels(as.factor(cluster))
-   } 
-   
    dist2cent = as.data.frame(dist2cent)  
-	names(dist2cent) = levels(as.factor(cluster))
-	rownames(dist2cent) = rownames(x)
+   names(dist2cent) = cln
+   rownames(dist2cent) = sitenames
 	
-	size = colSums(u)
-	withinss = colSums((dist2cent^2)*u)
-	functional = sum(withinss)
+   size = colSums(u[,1:k])
+   withinss = colSums((dist2cent^2)*u[,1:k])
+   functional = sum(withinss)
 	
-   res = list(mode = mode, method="KM", m = 1.0, dnoise = NULL,memb=u,mobileCenters=centers, fixedCenters=NULL, dist2clusters=dist2cent, withinss = withinss, size=size, functional=functional)
+   res = list(mode = mode, method=method, m = m, dnoise = dnoise, eta = eta, memb=u,mobileCenters=centers, fixedCenters=NULL, dist2clusters=dist2cent, withinss = withinss, size=size, functional=functional)
    class(res)<-"vegclust"
 	return(res)
 }

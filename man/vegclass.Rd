@@ -27,8 +27,8 @@ This function uses the classification model specified in \code{y} to classify th
 Returns an object of type \code{vegclass} with the following items:
   \item{method}{The clustering model used in \code{y}}
   \item{m}{The fuzziness exponent in \code{y}}
-  \item{dnoise}{The distance to the noise cluster used for noise clustering (NC). This is set to \code{NULL} for other models.}
-  \item{eta}{ The reference distance vector used for possibilistic c-means (PCM). This is set to \code{NULL} for other models.}
+  \item{dnoise}{The distance to the noise cluster used for noise clustering (models NC, NCdd, HNC, HNCdd). This is set to \code{NULL} for other models.}
+  \item{eta}{ The reference distance vector used for possibilistic clustering (models PCM and PCMdd). This is set to \code{NULL} for other models.}
   \item{memb}{The fuzzy membership matrix.}
   \item{dist2clusters}{The matrix of object distances to cluster centers.}
 }

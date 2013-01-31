@@ -6,11 +6,11 @@
 Vegetation clustering methods
 }
 \description{
-Performs hard or fuzzy clustering of a community data matrix
+Performs hard or fuzzy clustering of vegetation data
 }
 \usage{
 vegclust(x, mobileCenters, fixedCenters = NULL, method="NC", m = 2, dnoise = NULL, eta = NULL, alpha=0.001, iter.max=100, nstart=1, maxminJ = 10, seeds=NULL, verbose=FALSE)
-vegclustdist(x, mobileMemb, fixedMemb = NULL, method="NC", m = 2, dnoise = NULL, eta = NULL, alpha=0.001, iter.max=100, nstart=1, seeds=NULL)
+vegclustdist(x, mobileMemb, fixedMemb = NULL, method="NC", m = 2, dnoise = NULL, eta = NULL, alpha=0.001, iter.max=100, nstart=1, seeds=NULL, verbose=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -30,7 +30,19 @@ vegclustdist(x, mobileMemb, fixedMemb = NULL, method="NC", m = 2, dnoise = NULL,
 	A matrix or data frame with starting memberships for fixed (non-mobile) clusters.
   }
   \item{method}{
-	A clustering model. Current accepted models are: \code{"KM"} for kmeans (MacQueen 1967), \code{"FCM"} for fuzzy c-means (Bezdek 1981), \code{"NC"} for noise clustering (Dave and Krishnapuram 1997) and \code{"PCM"} for possibilistic c-means (Krishnapuram and Keller 1993).
+  A clustering model. Current accepted models are: 
+  \itemize{
+    \item{\code{"KM"}:}{ K-means or hard c-means (MacQueen 1967)}
+    \item{\code{"KMdd"}:}{ Hard c-medoids (Krishnapuram et al. 1999)}
+    \item{\code{"FCM"}:}{ Fuzzy c-means (Bezdek 1981)}
+    \item{\code{"FCMdd"}:}{ Fuzzy c-medoids (Krishnapuram et al. 1999)}
+    \item{\code{"NC"}:}{ Noise clustering (Dave and Krishnapuram 1997)}
+    \item{\code{"NCdd"}:}{ Noise clustering with medoids}
+    \item{\code{"HNC"}:}{ Hard noise clustering}
+    \item{\code{"HNCdd"}:}{ Hard noise clustering with medoids}
+    \item{\code{"PCM"}:}{ Possibilistic c-means (Krishnapuram and Keller 1993)}
+    \item{\code{"PCMdd"}:}{ Possibilistic c-medoids}
+  }
   }
   \item{m}{
 	The fuzziness exponent to be used (this is relevant for all models except for kmeans)
@@ -62,20 +74,28 @@ vegclustdist(x, mobileMemb, fixedMemb = NULL, method="NC", m = 2, dnoise = NULL,
 
 }
 \details{
-Functions \code{vegclust} and \code{vegclustdist} try to generalize the \code{\link{kmeans}} function in \code{stats} in three ways. Firstly, they allows different clustering models (three fuzzy and one hard). The reader should refer to the original publications to better understand the differences between models. Secondly, users can specify fixed clusters (that is, centroids that do not change their positions during iterations). Fixed clusters are intended to be used when some clusters were previously defined and new data has been collected. One may allow some of these new data points to form new clusters, while some other points will be assigned to the original clusters. In the case of models with cluster repulsion (such as KM, FCM or NC) the new (mobile) clusters are not allowed to 'push' the fixed ones. As a result, mobile clusters will occupy new regions of the reference space. Thirdly, \code{vegclustdist} implements the distance-based equivalent of \code{vegclust}. Note that all data frames or matrices used as input of \code{vegclust} should be defined on the same space of species (see \code{\link{conformveg}}). Unlike \code{\link{kmeans}}, which allows different specific algorithms, here updates of centroids are done after all objects have been reassigned (Forgy 1965). In order to obtain hard cluster definitions, users can apply the function \code{\link{defuzzify}} to the \code{vegclust} object.
+Functions \code{vegclust} and \code{vegclustdist} try to generalize the \code{\link{kmeans}} function in \code{stats} in three ways. 
+
+Firstly, they allows different clustering models. Clustering models can be divided in (a) fuzzy or hard; (b) centroid-based or medoid-based; (c) Partitioning (KM and FCM family), noise clustering (NC family), and possibilistic clustering (PCM and PCMdd). The reader should refer to the original publications to better understand the differences between models. 
+
+Secondly, users can specify fixed clusters (that is, centroids that do not change their positions during iterations). Fixed clusters are intended to be used when some clusters were previously defined and new data has been collected. One may allow some of these new data points to form new clusters, while some other points will be assigned to the original clusters. In the case of models with cluster repulsion (such as KM, FCM or NC) the new (mobile) clusters are not allowed to 'push' the fixed ones. As a result, mobile clusters will occupy new regions of the reference space. 
+
+Thirdly, \code{vegclustdist} implements the distance-based equivalent of \code{vegclust}. The results of \code{vegclust} and \code{vegclustdist} will be the same (if seeds are equal) if the distance matrix is calculated using the Euclidean distance (see function \code{\link{dist}}). Otherwise, the equivalence holds by resorting on principal coordinates analysis.
+
+Note that all data frames or matrices used as input of \code{vegclust} should be defined on the same space of species (see \code{\link{conformveg}}). Unlike \code{\link{kmeans}}, which allows different specific algorithms, here updates of prototypes (centroids or medoids) are done after all objects have been reassigned (Forgy 1965). In order to obtain hard cluster definitions, users can apply the function \code{\link{defuzzify}} to the \code{vegclust} object.
 }
 \value{
 Returns an object of type \code{vegclust} with the following items:
   \item{mode}{\code{raw} for function \code{vegclust} and \code{dist} for function \code{vegclustdist}.}
   \item{method}{The clustering model used}
   \item{m}{The fuzziness exponent used (\code{m=1} in case of kmeans)}
-  \item{dnoise}{The distance to the noise cluster used for noise clustering (NC). This is set to \code{NULL} for other models.}
-  \item{eta}{ The reference distance vector used for possibilistic c-means (PCM). This is set to \code{NULL} for other models.}
+  \item{dnoise}{The distance to the noise cluster used for noise clustering (NC, HNC, NCdd or HNCdd). This is set to \code{NULL} for other models.}
+  \item{eta}{ The reference distance vector used for possibilistic clustering (PCM or PCMdd). This is set to \code{NULL} for other models.}
   \item{memb}{The fuzzy membership matrix. Columns starting with "M" indicate mobile clusters, whereas columns starting with "F" indicate fixed clusters.}
-  \item{mobileCenters}{A data frame with the coordinates of the mobile centers (not available in \code{vegclustdist}).}
-  \item{fixedCenters}{A data frame with coordinates for fixed (non-mobile) clusters (not available in \code{vegclustdist}).}
+  \item{mobileCenters}{If \code{vegclust} is used, this contains a data frame with the coordinates of the mobile centers (centroids or medoids). If \code{vegclustdist} is used, it will contain the indices of mobile medoids for models KMdd, FCMdd, HNCdd, NCdd and PCMdd; or \code{NULL} otherwise.}
+  \item{fixedCenters}{If \code{vegclust} is used, this contains a data frame with the coordinates of the fixed centers (centroids or medoids). If \code{vegclustdist} is used, it will contain the indices of fixed medoids for models KMdd, FCMdd, HNCdd, NCdd and PCMdd; or \code{NULL} otherwise.}
   \item{dist2clusters}{The matrix of object distances to cluster centers. Columns starting with "M" indicate mobile clusters, whereas columns starting with "F" indicate fixed clusters.}
-  \item{withinss}{The within-cluster sum of squares for each cluster.}
+  \item{withinss}{In the case of methods KM, FCM, NC, PCM and HNC it contains the within-cluster sum of squares for each cluster (squared distances to cluster center weighted by membership). In the case of methods KMdd, FCMdd, NCdd, HNCdd and PCMdd it contains the sum of distances to each cluster (weighted by membership).}
   \item{size}{The number of objects belonging to each cluster. In case of fuzzy clusters the sum of memberships is given.}
   \item{functional}{The objective function value (the minimum value attained after all iterations).}
 }
@@ -88,6 +108,8 @@ MacQueen, J. (1967) Some methods for classification and analysis of multivariate
 
 Bezdek, J. C. (1981) Pattern recognition with fuzzy objective functions. Plenum Press, New York.
 
+Krishnapuram, R., Joshi, A., & Yi, L. (1999). A Fuzzy relative of the k-medoids algorithm with application to web document and snippet clustering. IEEE International Fuzzy Systems (pp. 1281–1286). 
+
 Krishnapuram, R. and J. M. Keller. (1993) A possibilistic approach to clustering. IEEE transactions on fuzzy systems 1, 98-110.
 
 De \enc{Cáceres}{Caceres}, M., Font, X, Oliva, F. (2010) The management of numerical vegetation classifications with fuzzy clustering methods. Journal of Vegetation Science 21 (6): 1138-1151.
@@ -98,7 +120,7 @@ Miquel De \enc{Cáceres}{Caceres}, Forest Science Center of Catalonia
 
 
 \seealso{
-\code{\link{kmeans}}, \code{\link[e1071]{cmeans}},\code{\link{vegclass}},\code{\link{defuzzify}}
+\code{\link{kmeans}}, \code{\link[e1071]{cmeans}},\code{\link{vegclass}},\code{\link{defuzzify}},\code{\link{clustvar}}
 }
 \examples{
 

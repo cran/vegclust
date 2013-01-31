@@ -8,19 +8,44 @@ Turns into vegclust objects
 Attempts to turn its arguments into a \code{\link{vegclust}} object
 }
 \usage{
-as.vegclust(x, cluster)
+as.vegclust(x, y, method="KM", m=1.0, dnoise=NULL, eta=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 A site-by-species data matrix (raw mode), or a site-by-site distance matrix (distance mode).
    }
-  \item{cluster}{
-	A vector indicating the hard membership of each object in \code{x} to a set of groups.
+  \item{y}{
+	A vector indicating the cluster that each object in \code{x} belongs to. Alternatively, a fuzzy/hard site-by-group matrix of membership values.
    }
+  \item{method}{
+	A clustering model from which \code{y} was obtained (normally "KM"). Current accepted models are:
+  \itemize{
+    \item{\code{"KM"}:}{ K-means or hard c-means (MacQueen 1967)}
+    \item{\code{"KMdd"}:}{ Hard c-medoids (Krishnapuram et al. 1999)}
+    \item{\code{"FCM"}:}{ Fuzzy c-means (Bezdek 1981)}
+    \item{\code{"FCMdd"}:}{ Fuzzy c-medoids (Krishnapuram et al. 1999)}
+    \item{\code{"NC"}:}{ Noise clustering (Dave and Krishnapuram 1997)}
+    \item{\code{"NCdd"}:}{ Noise clustering with medoids}
+    \item{\code{"HNC"}:}{ Hard noise clustering}
+    \item{\code{"HNCdd"}:}{ Hard noise clustering with medoids}
+    \item{\code{"PCM"}:}{ Possibilistic c-means (Krishnapuram and Keller 1993)}
+    \item{\code{"PCMdd"}:}{ Possibilistic c-medoids}
+  }
+  }
+  \item{m}{
+	The fuzziness exponent to be used, relevant for all fuzzy models (FCM, FCMdd, NC, NCdd, PCM and PCMdd)
+  }
+  \item{dnoise}{
+	The distance to the noise cluster, relevant for noise clustering models (NC, HNC, NCdd and HNCdd). 
+  }
+  \item{eta}{
+	A vector of reference distances, relevant for possibilistic models (PCM and PCMdd). 
+  }
+
 }
 \details{
-This function is used to generate \code{\link{vegclust}} objects which can then be used in \code{\link{vegclass}} to classify new data. The input classification is hard (i.e. yes/no membership), cluster centers are calculated as multivariate means, and the method for assigning new data is assumed to be k-means (\code{"KM"}), i.e. plots will be assigned to the nearest cluster center. If community data is given as site-by-species data matrix the cluster centroids are added as \code{mobileCenters} in the \code{\link{vegclust}} object. Centroids cannot be computed if community data is given as a site-by-site dissimilarity matrix. 
+This function is used to generate \code{\link{vegclust}} objects which can then be used in \code{\link{vegclass}} to classify new data. If the input classification is hard (i.e. yes/no membership), cluster centers are calculated as multivariate means, and the method for assigning new data is assumed to be k-means (\code{"KM"}), i.e. plots will be assigned to the nearest cluster center. If community data is given as site-by-species data matrix the cluster centroids are added as \code{mobileCenters} in the \code{\link{vegclust}} object. Centroids will not be computed if community data is given as a site-by-site dissimilarity matrix. Moreover, current implementation does not allow \code{y} to be a membership matrix when \code{x} is a distance matrix.
 }
 \value{
 An object of class \code{\link{vegclust}}.

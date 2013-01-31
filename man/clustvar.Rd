@@ -3,7 +3,7 @@
 \alias{clustvar}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Cluster variance (beta diversity)
+Cluster variance
 }
 \description{
 Computes the variation in community composition (i.e. beta diversity) found within the sites of a set of hard or fuzzy clusters.
@@ -27,7 +27,14 @@ Community data. Either a site-by-species matrix or a site-by-site matrix of comp
   }
 }
 \details{
-If an object of class \code{\link{vegclust}} or \code{\link{vegclass}} is provided as input, the function uses the information contained there (distances to clusters, memberships and exponent of fuzziness) in order to compute cluster variances. Both mobile and fixed clusters are considered. Membership matrices may be defuzzified if \code{defuzzify=TRUE}. Alternatively, if \code{x} is a data matrix (site by species or distances among sites) and \code{cluster} is \code{null}, the function assumes a single cluster of all points in \code{x}. When \code{cluster} is provided, the function computes cluster variance for each (hard) group and this computation implies setting the centroid of the group. In contrast, when an object of class \code{\link{vegclust}} or \code{\link{vegclass}} is provided the centroids do not need to be recomputed, and the distances to centroids are used directly.
+This function can be used in two ways:
+\itemize{
+\item{if \code{x} is a data matrix (site by species or distances among sites) and \code{cluster} is \code{null}, the function assumes a single cluster of all points in \code{x}. When \code{cluster} is provided, the function computes cluster variance for each (hard) group and this computation implies setting the centroid of the group. Cluster variance is defined as the average squared distance to the centroid.}
+\item{
+If \code{x} is an object of class \code{\link{vegclust}} or \code{\link{vegclass}}, the function uses the information contained there (distances to cluster centers, memberships and exponent of fuzziness) in order to compute cluster variances. Cluster centers do not need to be recomputed, and the distances to cluster centers are used directly. For centroid-based cluster models (KM, FCM, NC, HNC and PCM) the variance is defined as the average squared distance to the centroid. For medoid-based cluster models (KMdd, FCMdd, NCdd, HNCdd and PCMdd) the variance is defined as average distance to the medoid. The variance for both mobile and fixed clusters is returned. Additionally, membership matrices may be defuzzified if \code{defuzzify=TRUE}. 
+}
+}
+
 }
 \value{
  A double value (for one cluster) or a vector of values, one per each cluster.

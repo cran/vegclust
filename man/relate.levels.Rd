@@ -9,27 +9,28 @@ Relates two clustering level results.
 Analyzes how lower level clusters are assigned into upper level ones. The analysis is made for several number of clusters.
 }
 \usage{
-relate.levels(lower, upper, verbose=FALSE, ...)
+relate.levels(lower, upper, defuzzify = FALSE, verbose=FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{lower}{ A list of objects of type \code{\link{vegclust}} that represent classifications at a fine level of resolution.}
-  \item{upper}{ A list of objects of type \code{\link{vegclust}} that represent classifications at an broad level of resolution.}
+  \item{lower}{ A list of objects of type \code{\link{vegclust}} or \code{\link{vegclass}} that represent classifications at a finer level of resolution.}
+  \item{upper}{ A list of objects of type \code{\link{vegclust}} or \code{\link{vegclass}} that represent classifications at an broader level of resolution.}
+  \item{defuzzify}{ A flag used to indicate whether the result of calling \code{\link{crossmemb}} should be deffuzified.}
   \item{verbose}{ A flag used to ask for extra screen output.}
   \item{...}{
     Additional parameters for function \code{\link{defuzzify}}.
   }
 }
 \details{
-For each pair of \code{vegclust} objects in \code{upper} and \code{lower}, the function makes calls to \code{\link{vegclass}} in order to assign the centroids of the object of \code{lower} into classes of the object of \code{upper}. The assignment result is then defuzzified (by calling function \code{\link{defuzzify}}) and several quantities are calculated (see 'value' section).
+For each pair of \code{vegclust} (or \code{vegclass}) objects in \code{upper} and \code{lower}, the function calls function \code{\link{crossmemb}} and then, if asked, deffuzifies the resulting memberships (by calling function \code{\link{defuzzify}}) and several quantities are calculated (see 'value' section).
 }
 \value{
- A list with several data frames (see below). In each of them, the rows are items of \code{upper} and columns are items of \code{lower}. The names of rows and columns are the number of clusters of each \code{\link{vegclust}} object.
- \item{inter}{The number of low level clusters that are not clearly assigned into any cluster (with the options supplied to \code{\link{defuzzify}}). }
- \item{noise}{The number of low level clusters that are assigned to the Noise class (for \code{upper} objects using Noise clustering). }
- \item{miss}{The number of upper level clusters (mobile or fixed) that do not have any member among the lower level clusters. }
- \item{missmob}{The number of upper level mobile clusters that do not have any member among the lower level clusters. }
- \item{missfix}{The number of upper level fixed clusters that do not have any member among the lower level clusters. }
+ A list with several data frames (see below). In each of them, the rows are items of \code{upper} and columns are items of \code{lower}. The names of rows and columns are the number of clusters of each \code{\link{vegclust}} (or \code{vegclass}) object.
+ \item{nnoise}{The number of low level clusters that are assigned to the Noise class (for \code{upper} objects using Noise clustering). }
+ \item{maxnoise}{The maximum membership value of low level clusters to the Noise class (for \code{upper} objects using Noise clustering). }
+ \item{minmaxall}{The minimum value (across upper level clusters) of the maximum membership value observed among the lower level clusters. }
+ \item{minallsize}{The minimum value (across upper level clusters) of the sum of membership values across lower level clusters. }
+ \item{empty}{The number of upper level clusters (mobile or fixed) that do not have any member among the lower level clusters. }
 }
 \author{
 Miquel De \enc{Cáceres}{Caceres}, Forest Science Center of Catalonia

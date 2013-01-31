@@ -1,11 +1,11 @@
 clustcentroid <-
-function(x,y) {
+function(x,y, m=1) {
 	if(is.null(dim(y))) {
-	   u = as.memb(y)
+	  u = as.memb(y)
 	} else {
-		u = as.matrix(y)
+		u = as.matrix(y)^m
 	}
-   s = t(as.matrix(x))%*%u
+   s = t(as.matrix(x))%*%(u)
    centers = sweep(t(s),1,colSums(u),"/")
    centers = as.data.frame(centers)   
    names(centers) = names(x)

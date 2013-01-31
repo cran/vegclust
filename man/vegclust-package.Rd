@@ -12,9 +12,9 @@ This package contains functions used to perform fuzzy and hard clustering of veg
 \tabular{ll}{
 Package: \tab vegclust\cr
 Type: \tab Package\cr
-Version: \tab 1.5.1\cr
-Date: \tab 2009-08-19\cr
-License: \tab GPL version 2 or newer\cr
+Version: \tab 1.6.0\cr
+Date: \tab 2013-01-31\cr
+License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
 
