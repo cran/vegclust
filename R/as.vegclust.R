@@ -40,10 +40,15 @@ function(x,y, method="KM", m=1.0, dnoise=NULL, eta=NULL) {
    if(is.vector(y)) {
    	cluster = y
    	cln =levels(as.factor(cluster))
-    u = data.frame(as.memb(cluster))
-    rownames(u) = sitenames
-    names(u) = cln
+    u = as.memb(cluster)
+   	rownames(u) = sitenames
+    colnames(u) = cln
    	k = length(cln)
+   	if(method=="NC"||method=="NCdd"|| method=="HNC"||method=="HNCdd") {
+       u = cbind(u, rep(0,nrow(u)))
+       colnames(u)[k+1] = "N"
+   	}
+    u = as.data.frame(u)
    } else if(is.matrix(y) || is.data.frame(y)) {
    	u = as.data.frame(y)
    	cln = names(u)
@@ -63,10 +68,10 @@ function(x,y, method="KM", m=1.0, dnoise=NULL, eta=NULL) {
    	}
    	centers=NULL
    } else if (mode=="raw"){
-   	centers = clustcentroid(x,u[,1:k])
-   	names(centers) = varnames
-   	row.names(centers) = cln
-   	cm = as.matrix(centers)
+   	cm = clustcentroid(x,u[,1:k])
+   	colnames(cm) = varnames
+   	rownames(cm) = cln
+   	centers = as.data.frame(cm)
    	for(i in 1:k) {
    		dist2cent[,i] = sqrt(rowSums(sweep(x,2,cm[i,],"-")^2))
    	}   

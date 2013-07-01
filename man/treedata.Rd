@@ -11,19 +11,21 @@
 }
 \seealso{\code{\link{stratifyvegdata}}}
 \examples{
-#Load tree data
+## Load tree data
 data(treedata)
 
-#Inspect tree data
+## Inspect tree data
 head(treedata)
 
-#Define stratum thresholds (4 strata)
+## Define stratum thresholds (4 strata)
 heights = 0.5+(0:3)
 
-#Stratify tree data
-X = stratifyvegdata(treedata,heights=heights, plotColumn="plotID", speciesColumn="species", heightColumn="height", counts=TRUE)
+## Stratify tree data
+X = stratifyvegdata(treedata, sizes=heights, plotColumn="plotID",
+                    speciesColumn="species", sizeColumn="height", 
+                    counts=TRUE)
 
-#Inspect first plot
+## Inspect the first plot record
 X[[1]]
 }
 \keyword{datasets}

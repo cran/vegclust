@@ -9,13 +9,14 @@ Relates two clustering level results.
 Analyzes how lower level clusters are assigned into upper level ones. The analysis is made for several number of clusters.
 }
 \usage{
-relate.levels(lower, upper, defuzzify = FALSE, verbose=FALSE, ...)
+relate.levels(lower, upper, defuzzify = FALSE, excludeFixed = FALSE, verbose=FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{lower}{ A list of objects of type \code{\link{vegclust}} or \code{\link{vegclass}} that represent classifications at a finer level of resolution.}
   \item{upper}{ A list of objects of type \code{\link{vegclust}} or \code{\link{vegclass}} that represent classifications at an broader level of resolution.}
-  \item{defuzzify}{ A flag used to indicate whether the result of calling \code{\link{crossmemb}} should be deffuzified.}
+  \item{defuzzify}{ A logical flag used to indicate whether the result of calling \code{\link{crossmemb}} should be deffuzified.}
+  \item{excludeFixed}{A logical used to indicate whether fixed clusters should be excluded from the comparison of levels.}
   \item{verbose}{ A flag used to ask for extra screen output.}
   \item{...}{
     Additional parameters for function \code{\link{defuzzify}}.
@@ -40,17 +41,21 @@ Miquel De \enc{Cáceres}{Caceres}, Forest Science Center of Catalonia
 \code{\link{vegclust}}, \code{\link{vegclass}}, \code{\link{defuzzify}}
 }
 \examples{
-# Loads data  
+## Loads data  
 data(wetland)
   
-# This equals the chord transformation (see also 'normalize' option in \code{\link{decostand}} from the vegan package)
-wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1, sqrt(rowSums(as.matrix(wetland)^2)), "/"))
+## This equals the chord transformation 
+## (see also  \code{\link{decostand}} in package vegan)
+wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1,
+                              sqrt(rowSums(as.matrix(wetland)^2)), "/"))
 
-# Create noise clustering from hierarchical clustering at different number of cluster
+## Create noise clustering from hierarchical clustering at different number of cluster
 wetland.hc = hclust(dist(wetland.chord),method="ward") 
-wetland.nc1 = hier.vegclust(wetland.chord, wetland.hc, cmin=2, cmax=6, m = 1.2, dnoise=0.75, method="NC")
-wetland.nc2 = hier.vegclust(wetland.chord, wetland.hc, cmin=2, cmax=4, m = 1.2, dnoise=0.85, method="NC")
+wetland.nc1 = hier.vegclust(wetland.chord, wetland.hc, cmin=2, cmax=6, m = 1.2, 
+                            dnoise=0.75, method="NC")
+wetland.nc2 = hier.vegclust(wetland.chord, wetland.hc, cmin=2, cmax=4, m = 1.2, 
+                            dnoise=0.85, method="NC")
 
-#Studies the assignment of levels
+## Studies the assignment of levels
 relate.levels(wetland.nc1, wetland.nc2, method="cut")
 }

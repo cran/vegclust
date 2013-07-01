@@ -39,11 +39,11 @@ Miquel De \enc{Cáceres}{Caceres}, Centre Tecnologic Forestal de Catalunya.
 \code{\link{vegclust}}, \code{\link{vegclass}}
 }
 \examples{
-#Loads data (38 columns and 33 species)
+## Loads data (38 columns and 33 species)
 data(wetland)
 dim(wetland)
 
-# Splits wetland data into two matrices of 30x27 and 11x22
+## Splits wetland data into two matrices of 30x27 and 11x22
 wetland.30 = wetland[1:30,]
 wetland.30 = wetland.30[,colSums(wetland.30)>0]
 dim(wetland.30)
@@ -51,7 +51,7 @@ wetland.11 = wetland[31:41,]
 wetland.11 = wetland.11[,colSums(wetland.11)>0] 
 dim(wetland.11)
 
-#Conforms the two matrices so they can eventually be merged
+## Conforms the two matrices so they can eventually be merged
 wetland.cf = conformveg(wetland.30, wetland.11)
 dim(wetland.cf$x)
 dim(wetland.cf$y)

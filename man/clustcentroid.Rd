@@ -19,12 +19,12 @@ clustmedoid(x, y, m = 1)
     Community data, a site-by-species data frame. In function \code{clustmedoid}, \code{x} can alternatively be an object of class \code{\link{dist}} (otherwise, the dissimilarity measure is assumed to be the Euclidean distance). 
    }
   \item{y}{
-	A vector indicating the cluster that each object in \code{x} belongs to. Alternatively, a fuzzy/hard site-by-group matrix of membership values.
+	It can be (a) A vector indicating the cluster that each object in \code{x} belongs to; (b) a fuzzy/hard site-by-group matrix of membership values; (c) an object of class \code{\link{vegclust}} or \code{\link{vegclass}}
    }
   \item{m}{Fuzziness exponent, only effective when \code{y} is a fuzzy membership matrix.}
 }
 \value{
- Function \code{clustcentroid} returns a group-by-species data frame containing species average abundance values (i.e. the coordinates of each cluster centroid). Function \code{clustmedoid} returns a vector of indices (medoids).
+ Function \code{clustcentroid} returns a group-by-species matrix containing species average abundance values (i.e. the coordinates of each cluster centroid). Function \code{clustmedoid} returns a vector of indices (medoids).
 }
 \note{
   In order to assign new plot record data into a predefined set of classes, one should use functions \code{\link{as.vegclust}} and \code{\link{vegclass}} instead.
@@ -37,22 +37,24 @@ Miquel De \enc{Cáceres}{Caceres}, Forest Science Center of Catalonia
 \code{\link{as.vegclust}}, \code{\link{vegclass}}, \code{\link{vegclust}}, \code{\link{kmeans}}
 }
 \examples{
-# Loads stats
+## Loads stats
 library(stats)
   
-# Loads data
+## Loads data
 data(wetland)
   
-# This equals the chord transformation (see also 'normalize' option in \code{\link{decostand}} from the vegan package)
-wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1, sqrt(rowSums(as.matrix(wetland)^2)), "/"))
+## This equals the chord transformation 
+## (see also \code{\link{decostand}} in package 'vegan')
+wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1,
+                              sqrt(rowSums(as.matrix(wetland)^2)), "/"))
 
-# Performs a K-means clustering
+## Performs a K-means clustering
 wetland.km = kmeans(wetland.chord, centers=3, nstart=10)
 
-# Gets the coordinates corresponding to the centroids of KM clusters
+## Gets the coordinates corresponding to the centroids of KM clusters
 clustcentroid(wetland.chord, y=wetland.km$cluster)
 
-# Gets the object indices corresponding to the medoids of KM clusters
+## Gets the object indices corresponding to the medoids of KM clusters
 clustmedoid(wetland.chord, y=wetland.km$cluster)
 
 }

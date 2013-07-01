@@ -207,9 +207,9 @@ function(x,mobileCenters, fixedCenters=NULL, method="NC", m=2,dnoise=NULL, eta =
 	if(method=="NC"||method=="NCdd"||method=="HNC"||method=="HNCdd") names(u)[kMov+kFix+1] = "N"
 	rownames(u) = rownames(x)
 	rownames(dist2cent) = rownames(x)
-	size = colSums(u[,1:(kMov+kFix)])
-   if(method=="NC"||method=="FCM"||method=="KM"||method=="PCM"||method=="HNC") withinss = colSums((dist2cent^2)*(u[,1:(kMov+kFix)]^m))
-   else withinss = colSums((dist2cent)*(u[,1:(kMov+kFix)]^m))
+	size = colSums(u[,1:(kMov+kFix), drop=FALSE])
+   if(method=="NC"||method=="FCM"||method=="KM"||method=="PCM"||method=="HNC") withinss = colSums((dist2cent^2)*(u[,1:(kMov+kFix), drop=FALSE]^m))
+   else withinss = colSums((dist2cent)*(u[,1:(kMov+kFix), drop=FALSE]^m))
    res = list(mode="raw", method=method, m = m, dnoise = dnoise,eta = eta, memb=u,mobileCenters=mobileCenters, fixedCenters=fixedCenters, dist2clusters=dist2cent, withinss = withinss, size=size, functional=functional, iter=iter)
    class(res)<-"vegclust"
 	return(res)

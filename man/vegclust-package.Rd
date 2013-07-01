@@ -12,8 +12,8 @@ This package contains functions used to perform fuzzy and hard clustering of veg
 \tabular{ll}{
 Package: \tab vegclust\cr
 Type: \tab Package\cr
-Version: \tab 1.6.0\cr
-Date: \tab 2013-01-31\cr
+Version: \tab 1.6.3\cr
+Date: \tab 2013-07-01\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
@@ -40,14 +40,17 @@ De \enc{Cáceres}{Caceres}, M., Font, X, Oliva, F. (2010) The management of nume
 }
 \keyword{ package }
 \examples{
-
-# Loads data  
+## Loads data  
 data(wetland)
   
-# This equals the chord transformation (see also 'normalize' option in \code{\link{decostand}} from the vegan package)
-wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1, sqrt(rowSums(as.matrix(wetland)^2)), "/"))
+## This equals the chord transformation 
+## (see also  \code{\link{decostand}} in package 'vegan')
+wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1, 
+                              sqrt(rowSums(as.matrix(wetland)^2)), "/"))
 
-# Create noise clustering with 3 clusters. Perform 10 starts from random seeds and keep the best solution
-vegclust(wetland.chord, mobileCenters=3, m = 1.2, dnoise=0.75, method="NC", nstart=10)
+## Create noise clustering with 3 clusters. Perform 10 starts from random seeds 
+## and keep the best solution
+wetland.nc = vegclust(wetland.chord, mobileCenters=3, m = 1.2, dnoise=0.75, 
+                      method="NC", nstart=10)
 
 }
