@@ -9,7 +9,7 @@
 \format{
   An object of class 'stratifiedvegdata' with 96 elements (plots), each of them consisting of a data.frame where rows correspond to species groups and columns correspond to vegetation strata. Abundance values are percentage cover.
 }
-\seealso{\code{\link{stratifyvegdata}}}
+\seealso{\code{\link{CAP}}, \code{\link{plot.CAP}}}
 \examples{
 data(medreg)
 }

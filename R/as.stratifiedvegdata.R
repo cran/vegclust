@@ -9,7 +9,7 @@ as.stratifiedvegdata<-function(X) {
     if(nrow(X[[i]])!=p) stop("All elements should have the same number of rows (species)")
     if(ncol(X[[i]])!=s) stop("All elements should have the same number of columns (strata)")
   }  
-  class(X)<-c("list","stratifiedvegdata")
+  class(X)<-c("stratifiedvegdata","list")
   if(is.null(names(X))) names(X)<-1:length(X)
   return(X)
 }

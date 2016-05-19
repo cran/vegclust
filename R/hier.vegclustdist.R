@@ -1,15 +1,14 @@
-hier.vegclust<-function(x, hclust, cmin=2,cmax=20, min.size = NULL,  verbose=TRUE,...) {
+hier.vegclustdist<-function(x, hclust, cmin=2,cmax=20, min.size = NULL,  verbose=TRUE,...) {
   vc = vector("list",length=cmax-cmin +1)
-  xs = x[row.names(x)%in% hclust$labels,] #Select those objects used for hierarchical clustering
+#   xs = x[row.names(x)%in% hclust$labels,] #Select those objects used for hierarchical clustering
   i=1
   for(c in cmin:cmax) {
     if(verbose) cat(paste("PROCESSING",c,"MOBILE CLUSTERS\n"))
     if(c==1) {
-      cent=matrix(0,nrow=1, ncol=ncol(xs))
-      cent[1,]=colMeans(xs)
+      memb=as.memb(rep(1, ncol(as.matrix(x))))
     }
-    else cent = as.vegclust(xs,cutree(hclust,k=c))$mobileCenters
-    vc[[i]] = vegclust(x,mobileCenters=cent,...)
+    else memb = as.memb(cutree(hclust,k=c))
+    vc[[i]] = vegclustdist(x,mobileMemb=memb,...)
     if(!is.null(min.size)) {
       nsmall = sum(vc[[i]]$size< min.size)
       if(nsmall>0) {

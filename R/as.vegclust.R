@@ -68,7 +68,7 @@ function(x,y, method="KM", m=1.0, dnoise=NULL, eta=NULL) {
    	}
    	centers=NULL
    } else if (mode=="raw"){
-   	cm = clustcentroid(x,u[,1:k])
+   	cm = clustcentroid(x,u[,1:k], m=m)
    	colnames(cm) = varnames
    	rownames(cm) = cln
    	centers = as.data.frame(cm)

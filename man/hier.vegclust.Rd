@@ -2,20 +2,24 @@
 \name{hier.vegclust}
 \alias{hier.vegclust}
 \alias{random.vegclust}
+\alias{hier.vegclustdist}
+\alias{random.vegclustdist}
 \title{
 Clustering with several number of clusters
 }
 \description{
-Performs several runs of function 'vegclust' on a community data matrix using different number of clusters
+Performs several runs of function 'vegclust' (or 'vegclustdist') on a community data matrix (or distance matrix) using different number of clusters
 }
 \usage{
-hier.vegclust(x, hclust, cmin=2,cmax=20, verbose=TRUE, ...)
-random.vegclust(x, cmin=2, cmax=20, nstart=10, verbose=TRUE, ...)
+hier.vegclust(x, hclust, cmin=2,cmax=20, min.size=NULL, verbose=TRUE, ...)
+hier.vegclustdist(x, hclust, cmin=2,cmax=20, min.size=NULL, verbose=TRUE, ...)
+random.vegclust(x, cmin=2, cmax=20, nstart=10, min.size=NULL, verbose=TRUE, ...)
+random.vegclustdist(x, cmin=2, cmax=20, nstart=10, min.size=NULL, verbose=TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-	Community data table. A site (rows) by species (columns) matrix or data frame.
+	For \code{hier.vegclust} and {random.vegclust}, a site (rows) by species (columns) matrix or data frame. For \code{hier.vegclustdist} and {random.vegclustdist}, a square distance matrix.
   }
   \item{hclust}{
 	A hierarchical clustering represented in an object of type \code{\link{hclust}}.
@@ -29,16 +33,20 @@ random.vegclust(x, cmin=2, cmax=20, nstart=10, verbose=TRUE, ...)
   \item{nstart}{
 	A number indicating how many random trials should be performed for each number of groups
   }
+  \item{min.size}{
+    If \code{min.size != NULL}, it specifies the minimum size of clusters. If some clusters are smaller, the algorithm will return the solutions corresponding to lower numbers of clusters.
+  }
   \item{verbose}{
  	Flag used to print which number of clusters is currently running.
   }
   \item{...}{
-	Additional parameters for function \code{\link{vegclust}}.
+	Additional parameters for function \code{\link{vegclust}} or \code{\link{vegclustdist}}.
   }
 }
 \details{
-Function \code{hier.vegclust} takes starting cluster configurations from cuts of a dendrogram given by object \code{hclust}. Function \code{random.vegclust} chooses random objects as cluster centroids and for each number of clusters performs \code{nstart} trials.
+Function \code{hier.vegclust} takes starting cluster configurations from cuts of a dendrogram given by object \code{hclust}. Function \code{random.vegclust} chooses random objects as cluster centroids and for each number of clusters performs \code{nstart} trials. Functions \code{hier.vegclustdist} and \code{random.vegclustdist} are analogous to \code{hier.vegclust} and \code{random.vegclust} but accept distance matrices as input.
 }
+
 \value{
 Returns an object of type 'mvegclust' (multiple vegclust), which contains a list vector with objects of type \code{\link{vegclust}}.
 }
@@ -48,7 +56,7 @@ Miquel De \enc{Cáceres}{Caceres}, Forest Science Center of Catalonia
 
 
 \seealso{
-\code{\link{vegclust}},\code{\link{vegclass}},\code{\link{defuzzify}},\code{\link{hclust}}
+\code{\link{vegclust}}, \code{\link{vegclustdist}}, \code{\link{vegclass}}, \code{\link{defuzzify}}, \code{\link{hclust}}
 }
 \examples{
 ## Loads data  

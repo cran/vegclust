@@ -8,8 +8,9 @@ Noise clustering with increasing number of clusters
 Performs several runs of function 'vegclust' on a community data matrix using an increasing number of clusters until some conditions are met.
 }
 \usage{
-incr.vegclust(x, method="NC", ini.fixed.centers = NULL, min.size = 10, alpha = 0.5, 
-              nstart=100, fix.previous = TRUE, ...)
+incr.vegclust(x, method="NC", ini.fixed.centers = NULL, 
+              min.size = 10, max.var=NULL, alpha = 0.5, 
+              nstart=100, fix.previous = TRUE, dnoise=0.75, m=1.0,...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,10 +27,13 @@ incr.vegclust(x, method="NC", ini.fixed.centers = NULL, min.size = 10, alpha = 0
   }  
   }
   \item{ini.fixed.centers}{
-	The coordinates of initial fixed cluster centers. These will be used as \code{fixedCenters} in all calls to \code{\link{vegclust}}.
+	The coordinates of initial fixed cluster centers. These will be used as \code{fixedCenters} in all calls to \code{\link{vegclust}}. If \code{method="NCdd"} or \code{method="HNCdd"} then \code{ini.fixed.centers} can be specified as a vector of indices for medoids.
   }
   \item{min.size}{
 	 The minimum size (cardinality) of clusters. If any of the current k clusters does not have enough members the algorithm will stop and return the solution with k-1 clusters.
+   }
+  \item{max.var}{
+   The maximum variance allowed for clusters (see function \code{\link{clustvar}}). If specified, the algorithm will stop when any of the clusters is at the same time small and has large variance. If \code{max.var = NULL} then this criterion is not used.
    }
   \item{alpha}{
 	Criterion to choose cluster seeds from the noise class. Specifically, an object is considered as cluster seed if the membership to the noise class is larger than \code{alpha}.
@@ -40,8 +44,14 @@ incr.vegclust(x, method="NC", ini.fixed.centers = NULL, min.size = 10, alpha = 0
   \item{fix.previous}{
  	Flag used to indicate that the cluster centers found when determining k-1 clusters are fixed when determining k clusters.
   }
+  \item{m}{
+  The fuzziness exponent.
+  }
+  \item{dnoise}{
+	The distance to the noise cluster. 
+  }
   \item{...}{
-	Additional parameters for function \code{\link{vegclust}} (normally \code{dnoise} and \code{m}).
+	Additional parameters for function \code{\link{vegclust}}.
   }
 }
 \details{

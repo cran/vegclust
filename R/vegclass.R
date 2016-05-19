@@ -1,26 +1,25 @@
 vegclass<-function(y, x) {
 	if(!inherits(y,"vegclust")) stop("y must be a vegclust object")
 	
-
 	if(y$mode=="raw"){
-	    if(!is.null(y$fixedCenters)) centers = as.data.frame(rbind(y$mobileCenters,y$fixedCenters))
-		  else centers = as.data.frame(y$mobileCenters)
-		  if(length(names(x))!=length(names(centers)) || sum(names(x)==names(centers))<ncol(x)) {
-				  c = conformveg(x,centers)
-				  x = as.matrix(c$x)
-				  centers = as.matrix(c$y)
-		  } else {
-			    x = as.matrix(x)
-			    centers = as.matrix(centers)
-		  }
-		  k = nrow(centers)
+	  if(!is.null(y$fixedCenters)) centers = rbind(y$mobileCenters,y$fixedCenters)
+	  else centers = y$mobileCenters
+	  if(length(colnames(x))!=length(colnames(centers)) || sum(colnames(x)==colnames(centers))<ncol(x)) {
+	    c = conformveg(x,centers)
+	    x = as.matrix(c$x)
+	    centers = as.matrix(c$y)
+	  } else {
+	    x = as.matrix(x)
+	    centers = as.matrix(centers)
+	  }
+	  k = nrow(centers)
 	} else { 
-		memb = as.matrix(y$memb)
-    x = as.matrix(x) #x contains the distance from new objects to old ones
-		d2cl = as.matrix(y$dist2clusters)
-		k = ncol(d2cl)
+	  memb = as.matrix(y$memb)
+	  x = as.matrix(x) #x contains the distance from new objects to old ones
+	  d2cl = as.matrix(y$dist2clusters)
+	  k = ncol(d2cl)
 	}
-
+	
 	m = y$m
   dnoise = y$dnoise
   eta = y$eta

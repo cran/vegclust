@@ -1,4 +1,4 @@
-plot.CAP<-function(x, sizes=NULL, species=NULL, plots=NULL, switchAxes=FALSE, add=FALSE, drawAxes=TRUE, xlab="", ylab="", type="s",...) {
+plot.stratifiedvegdata<-function(x, sizes=NULL, species=NULL, plots=NULL, switchAxes=FALSE, add=FALSE, drawAxes=TRUE, xlab="", ylab="", type="s",...) {
   if(!is.null(plots)) x = x[plots]
   if(length(x)==0) stop("No site samples to draw. Check your selection.")
   spnames = row.names(as.data.frame(x[[1]]))

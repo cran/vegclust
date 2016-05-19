@@ -53,7 +53,7 @@ plot.mvegclust<-function(x, type="hnc", excludeFixed=TRUE, verbose=FALSE, ylim=N
 		if(is.null(ylim)) ylim <- c(0,1)
 		if(is.null(xlab)) xlab <- "Number of groups"
 		if(is.null(ylab)) ylab <- "Proportion of all objects"
-		plot(minclasses:maxclasses, propNoise,type="n", ylim=ylim,axes=TRUE, frame.plot=FALSE, ylab=ylab, xlab=xlab,...)
+		plot(minclasses:maxclasses, propNoise,type="n", ylim=ylim,frame.plot=FALSE, ylab=ylab, xlab=xlab,...)
 		axis(1, xaxp=c(minclasses,maxclasses, (maxclasses-minclasses)), tcl = -0.2, labels=FALSE)
 		lines(minclasses:maxclasses, propNoise, lty=1)
 		lines(minclasses:maxclasses, propAss, lty=2)
