@@ -1,5 +1,5 @@
 ### R code from vignette source 'VegetationClassification.Rnw'
-### Encoding: UTF-8
+### Encoding: ISO8859-1
 
 ###################################################
 ### code chunk number 1: VegetationClassification.Rnw:20-21
@@ -195,33 +195,53 @@ dim(wetland.10)
 
 
 ###################################################
-### code chunk number 28: VegetationClassification.Rnw:310-312
+### code chunk number 28: VegetationClassification.Rnw:310-313
 ###################################################
-groups = kmeans(wetland.31, 2)$cluster
+km = kmeans(wetland.31, 2)
+groups = km$cluster
 groups
 
 
 ###################################################
-### code chunk number 29: VegetationClassification.Rnw:315-316
+### code chunk number 29: VegetationClassification.Rnw:316-317
 ###################################################
 wetland.31.km = as.vegclust(wetland.31, groups)
 
 
 ###################################################
-### code chunk number 30: VegetationClassification.Rnw:319-320
+### code chunk number 30: VegetationClassification.Rnw:320-321
 ###################################################
 wetland.31.km$method
 
 
 ###################################################
-### code chunk number 31: VegetationClassification.Rnw:323-325
+### code chunk number 31: VegetationClassification.Rnw:324-326
 ###################################################
 wetland.10.km = vegclass(wetland.31.km, wetland.10)
 defuzzify(wetland.10.km)$cluster
 
 
 ###################################################
-### code chunk number 32: VegetationClassification.Rnw:328-332
+### code chunk number 32: VegetationClassification.Rnw:329-330
+###################################################
+wetland.31.km.d = as.vegclust(dist(wetland.31), groups)
+
+
+###################################################
+### code chunk number 33: VegetationClassification.Rnw:333-334
+###################################################
+wetland.d.10.31 = as.data.frame(as.matrix(dchord)[32:41,1:31])
+
+
+###################################################
+### code chunk number 34: VegetationClassification.Rnw:337-339
+###################################################
+wetland.d.11.km = vegclass(wetland.31.km.d,wetland.d.10.31)
+defuzzify(wetland.d.11.km)$cluster
+
+
+###################################################
+### code chunk number 35: VegetationClassification.Rnw:343-347
 ###################################################
 wetland.31.nc = as.vegclust(wetland.31, groups, method="HNC", 
                             dnoise = 0.8)
@@ -230,7 +250,7 @@ defuzzify(wetland.10.nc)$cluster
 
 
 ###################################################
-### code chunk number 33: VegetationClassification.Rnw:341-346
+### code chunk number 36: VegetationClassification.Rnw:356-361
 ###################################################
 cf = conformveg(wetland.31, wetland.10)
 wetland.31.cf<- cf$x
@@ -240,13 +260,13 @@ dim(wetland.10.cf)
 
 
 ###################################################
-### code chunk number 34: VegetationClassification.Rnw:352-353
+### code chunk number 37: VegetationClassification.Rnw:367-368
 ###################################################
 fixed = clustcentroid(wetland.31.cf, groups)
 
 
 ###################################################
-### code chunk number 35: VegetationClassification.Rnw:359-364
+### code chunk number 38: VegetationClassification.Rnw:374-379
 ###################################################
 wetland.nc = vegclust(wetland.10.cf, mobileCenters=1, 
                       fixedCenters = fixed, 
@@ -256,7 +276,7 @@ defuzzify(wetland.nc)$cluster
 
 
 ###################################################
-### code chunk number 36: VegetationClassification.Rnw:369-374
+### code chunk number 39: VegetationClassification.Rnw:384-389
 ###################################################
 wetland.km = vegclust(wetland.10.cf, mobileCenters=1, 
                       fixedCenters = fixed, 
@@ -266,7 +286,7 @@ defuzzify(wetland.km)$cluster
 
 
 ###################################################
-### code chunk number 37: VegetationClassification.Rnw:381-386
+### code chunk number 40: VegetationClassification.Rnw:396-401
 ###################################################
 wetland.nc = vegclust(rbind(wetland.31.cf,wetland.10.cf), mobileCenters=1, 
                       fixedCenters = fixed, 
@@ -276,75 +296,107 @@ defuzzify(wetland.nc)$cluster
 
 
 ###################################################
-### code chunk number 38: VegetationClassification.Rnw:394-395
+### code chunk number 41: VegetationClassification.Rnw:407-408
+###################################################
+fixedDist = wetland.d.11.km$dist2clusters
+
+
+###################################################
+### code chunk number 42: VegetationClassification.Rnw:411-416
+###################################################
+wetland.km.d = vegclustdist(dist(wetland.10), mobileMemb = 1,
+                            fixedDistToCenters=fixedDist, 
+                            method = "KM",
+                            nstart=10)
+defuzzify(wetland.km.d)$cluster
+
+
+###################################################
+### code chunk number 43: VegetationClassification.Rnw:420-421
+###################################################
+fixedDist = rbind(wetland.31.km.d$dist2clusters, wetland.d.11.km$dist2clusters)
+
+
+###################################################
+### code chunk number 44: VegetationClassification.Rnw:424-429
+###################################################
+wetland.km.d = vegclustdist(dchord, mobileMemb = 1,
+                            fixedDistToCenters=fixedDist, 
+                            method = "KM",
+                            nstart=10)
+defuzzify(wetland.km.d)$cluster
+
+
+###################################################
+### code chunk number 45: VegetationClassification.Rnw:436-437
 ###################################################
 groups = c(rep(1, 17), rep(2, 14), rep(3,10))
 
 
 ###################################################
-### code chunk number 39: VegetationClassification.Rnw:402-404
+### code chunk number 46: VegetationClassification.Rnw:444-446
 ###################################################
 centroids = clustcentroid(wetlandchord, groups)
 round(centroids, dig=3)
 
 
 ###################################################
-### code chunk number 40: VegetationClassification.Rnw:408-410
+### code chunk number 47: VegetationClassification.Rnw:450-452
 ###################################################
 medoids = clustmedoid(wetlandchord, groups)
 medoids
 
 
 ###################################################
-### code chunk number 41: VegetationClassification.Rnw:421-422
+### code chunk number 48: VegetationClassification.Rnw:463-464
 ###################################################
 clustvar(wetlandchord, groups)
 
 
 ###################################################
-### code chunk number 42: VegetationClassification.Rnw:434-435
+### code chunk number 49: VegetationClassification.Rnw:476-477
 ###################################################
 clustvar(dchord, groups)
 
 
 ###################################################
-### code chunk number 43: VegetationClassification.Rnw:438-439
+### code chunk number 50: VegetationClassification.Rnw:480-481
 ###################################################
 clustvar(wetlandchord)
 
 
 ###################################################
-### code chunk number 44: VegetationClassification.Rnw:444-445
+### code chunk number 51: VegetationClassification.Rnw:486-487
 ###################################################
 as.dist(as.matrix(dchord)[medoids,medoids])
 
 
 ###################################################
-### code chunk number 45: VegetationClassification.Rnw:449-450
+### code chunk number 52: VegetationClassification.Rnw:491-492
 ###################################################
 dist(centroids)
 
 
 ###################################################
-### code chunk number 46: VegetationClassification.Rnw:457-458
+### code chunk number 53: VegetationClassification.Rnw:499-500
 ###################################################
 interclustdist(dchord,groups)
 
 
 ###################################################
-### code chunk number 47: VegetationClassification.Rnw:465-466
+### code chunk number 54: VegetationClassification.Rnw:507-508
 ###################################################
 c = clustconst(wetlandchord, memb = as.memb(groups))
 
 
 ###################################################
-### code chunk number 48: VegetationClassification.Rnw:470-471
+### code chunk number 55: VegetationClassification.Rnw:512-513
 ###################################################
 d=summary(c, mode="all")
 
 
 ###################################################
-### code chunk number 49: VegetationClassification.Rnw:475-476
+### code chunk number 56: VegetationClassification.Rnw:517-518
 ###################################################
 summary(c, mode="cluster", name=names(c)[1])
 

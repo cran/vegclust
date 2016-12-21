@@ -28,7 +28,7 @@ stratifyvegdata<-function(x,sizes1, sizes2 = NULL, treeSel=NULL, spcodes=NULL, p
     colnames(m) = levels(c1)
     c1 = as.numeric(c1)    
     for(i in 1:nrow(treeDataPlot)) {
-      if(verbose) cat(".")
+      if(verbose) cat(paste(i,"\n"))
       isp = which(spcodes==treeDataPlot[i,speciesColumnId])
       if(!cumulative) {
         if(!counts) m[isp,c1[i]] = m[isp,c1[i]]+treeDataPlot[i,abundanceColumnId]
@@ -52,7 +52,7 @@ stratifyvegdata<-function(x,sizes1, sizes2 = NULL, treeSel=NULL, spcodes=NULL, p
     c1 = as.numeric(c1)
     c2 = as.numeric(c2)
     for(i in 1:nrow(treeDataPlot)) {
-      if(verbose) cat(".")      
+      if(verbose) cat(paste(i,"\n"))
       isp = which(spcodes==treeDataPlot[i,speciesColumnId])
       if(!cumulative){
         if(!counts) m[isp,c1[i],c2[i]] = m[isp,c1[i],c2[i]]+treeDataPlot[i,abundanceColumnId]

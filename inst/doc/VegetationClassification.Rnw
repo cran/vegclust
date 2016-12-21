@@ -6,7 +6,7 @@
 %\VignetteIndexEntry{Learning how to use the vegclust package for vegetation classification}
 %\VignettePackage{vegclust}
 
-\title{How to use the \texttt{vegclust} package (ver. 1.6.1)}
+\title{How to use the \texttt{vegclust} package (ver. 1.6.5)}
 \author[1]{Miquel De Cáceres}
 \author[2]{Susan K. Wiser}
 \affil[1]{Centre Tecnològic Forestal de Catalunya, Solsona, Catalonia, Spain}
@@ -308,7 +308,8 @@ dim(wetland.10)
 @
 As initial classification, we simply take the two groups resulting from a K-means analysis (using function \texttt{kmeans} from the \texttt{stats} package) on the first data set:
 <<>>=
-groups = kmeans(wetland.31, 2)$cluster
+km = kmeans(wetland.31, 2)
+groups = km$cluster
 groups
 @
 The idea is to know whether the ten objects of the second data set may be assigned to the vegetation types defined using the first data set. Because our initial classification was not obtained using \texttt{vegclust}, we need to transform the input classification of 31 objects into an object of class `vegclust'. This is done using function \texttt{as.vegclust}:
@@ -324,7 +325,21 @@ In this case, this matches the way we obtained our initial classification. In ge
 wetland.10.km = vegclass(wetland.31.km, wetland.10)
 defuzzify(wetland.10.km)$cluster
 @
-Note that all the objects of the second set were assigned to the nearest cluster. What if we want to determine whether it is more appropriate for any of the objects to define a new vegetation type? In that is case, we may do better by using noise clustering. We can choose, for example, the hard noise clustering (HNC) model:
+The same procedure can be repeated using dissimilarity matrices. First, we call \texttt{as.vegclust} to create a vegclust object:
+<<>>==
+wetland.31.km.d = as.vegclust(dist(wetland.31), groups)
+@
+After that, we need a matrix of distances between the set of observations to be assigned and the original set of 31 observations. This can be obtained from the original distance matrix including all pairs of observations:
+<<>>=
+wetland.d.10.31 = as.data.frame(as.matrix(dchord)[32:41,1:31])
+@
+Once we have these two objects we can use function \texttt{vegclass} to \emph{assign} the second set of observations according to the membership rule of the k-means cluster model:
+<<>>=
+wetland.d.11.km = vegclass(wetland.31.km.d,wetland.d.10.31)
+defuzzify(wetland.d.11.km)$cluster
+@
+
+Note that in both cases all the objects of the second set were assigned to the nearest cluster. What if we want to determine whether it is more appropriate for any of the objects to define a new vegetation type? In that is case, we may do better by using noise clustering. We can choose, for example, the hard noise clustering (HNC) model:
 <<>>=
 wetland.31.nc = as.vegclust(wetland.31, groups, method="HNC", 
                             dnoise = 0.8)
@@ -337,7 +352,7 @@ An additional parameter is needed: the distance to the noise class `dnoise', $\d
 Allowing vegetation classifications to be dynamic entities, in the sense that they may be modified or extended as new surveys are conducted (or in general, when new data becomes available) increases their usability \citep{DeCaceres2010a, Wiser2012}. The aim here is to preserve the two prototypes of the initial classification and let \texttt{vegclust} to define a new vegetation type. 
 
 \subsubsection{Conforming vegetation data sets}
-When new vegetation data becomes available, the set of species in the new data set will not normally be the same as the set of species used in the original classification exercise. In this situation, the practitioner will needs to bring the two sets of samples to the same resemblance space. In our example we divided our initial data set into two subsets of 31 and 10 sites, respectively (i.e. texttt{wetland.31} and \texttt{wetland.10}). Thus, our original data set had a common set of species. However, we will now pretend that texttt{wetland.31} and \texttt{wetland.10} were obtained independently. A useful function to create a common space of species for two sets of vegetation observations is \texttt{conformveg}:
+When new vegetation data becomes available, the set of species in the new data set will not normally be the same as the set of species used in the original classification exercise. In this situation, the practitioner will needs to bring the two sets of samples to the same resemblance space. In our example we divided our initial data set into two subsets of 31 and 10 sites, respectively (i.e. \texttt{wetland.31} and \texttt{wetland.10}). Thus, our original data set had a common set of species. However, we will now pretend that \texttt{wetland.31} and \texttt{wetland.10} were obtained independently. A useful function to create a common space of species for two sets of vegetation observations is \texttt{conformveg}:
 <<>>=
 cf = conformveg(wetland.31, wetland.10)
 wetland.31.cf<- cf$x
@@ -387,6 +402,33 @@ defuzzify(wetland.nc)$cluster
 @
 Note that some of the objects in the first data set may have been reassigned (to a different cluster or to the Noise class). While the centroids of the original classification are preserved, the membership of particular objects may change because the classification now includes new prototypes to which objects may be assigned.  Using the complete data set instead of the new data implies that the used is ready to accept these reassignments. If the new memberships were strikingly different from the original ones, one might decide to start the three group classification from scratch.
 
+\subsubsection{Using \texttt{vegclustdist} with fixed prototypes}
+Extending vegetation classifications can also be done in the distance-based mode. In this case we do not have explicit coordinates for fixed prototypes, but we may have the distances to these centers. To begin our example we use the distances to the two clusters that we obtained at the stage of assigning new observations:
+<<>>=
+fixedDist = wetland.d.11.km$dist2clusters
+@
+With this information, we can now call \texttt{vegclustdist} to define a new cluster while accounting for the previous ones:
+<<>>=
+wetland.km.d = vegclustdist(dist(wetland.10), mobileMemb = 1,
+                            fixedDistToCenters=fixedDist, 
+                            method = "KM",
+                            nstart=10)
+defuzzify(wetland.km.d)$cluster
+@
+
+Analogously to \texttt{vegclust}, we could have chosen to use the set of all vegetation observations. In this case, we need to pool the distances to the centers:
+<<>>=
+fixedDist = rbind(wetland.31.km.d$dist2clusters, wetland.d.11.km$dist2clusters)
+@
+And then we call \texttt{vegclustdist} using the full distance matrix:
+<<>>==
+wetland.km.d = vegclustdist(dchord, mobileMemb = 1,
+                            fixedDistToCenters=fixedDist, 
+                            method = "KM",
+                            nstart=10)
+defuzzify(wetland.km.d)$cluster
+@
+As before, some objects may be reclassified in different clusters when using this option.
 
 
 \section{Cluster characterization}
@@ -440,7 +482,7 @@ clustvar(wetlandchord)
 @
 
 \subsection{Distance between clusters: \texttt{interclustdist}}
-Calculating distance between pairs of cluster prototypes is useful to determine which vegetation types are more similar and which are more distinct.When prototypes of vegetation types are chosen to be cluster medoids, then the resemblance between vegetation types can be defined as the resemblance between the corresponding medoids: 
+Calculating distance between pairs of cluster prototypes is useful to determine which vegetation types are more similar and which are more distinct. When prototypes of vegetation types are chosen to be cluster medoids, then the resemblance between vegetation types can be defined as the resemblance between the corresponding medoids: 
 <<>>=
 as.dist(as.matrix(dchord)[medoids,medoids])
 @

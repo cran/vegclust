@@ -1,9 +1,9 @@
 vegclustdist <-
-function(x,mobileMemb, fixedMemb=NULL, method="NC", m=2,dnoise=NULL, eta = NULL, alpha=0.001, iter.max=100, nstart=1, seeds = NULL, verbose=FALSE) {
+function(x,mobileMemb, fixedDistToCenters=NULL, method="NC", m=2,dnoise=NULL, eta = NULL, alpha=0.001, iter.max=100, nstart=1, seeds = NULL, verbose=FALSE) {
 
 #One run of vegclustdist   
 vegclustonedist <-
-function(d,mobileMemb, fixedMemb=NULL, method="NC", m=2,dnoise=NULL, eta = NULL, alpha=0.001, iter.max=100) {
+function(d,mobileMemb, fixedDistToCenters=NULL, method="NC", m=2,dnoise=NULL, eta = NULL, alpha=0.001, iter.max=100) {
    METHODS <- c("KM", "FCM", "PCM","NC","HNC" ,"KMdd","NCdd", "HNCdd", "FCMdd", "PCMdd")
    method <- match.arg(method, METHODS)
    if(method=="KM"||method=="KMdd") {
@@ -39,13 +39,6 @@ function(d,mobileMemb, fixedMemb=NULL, method="NC", m=2,dnoise=NULL, eta = NULL,
 			stop("The number of rows in mobileMemb must be the same as the number rows and columns of d")
 		}		
 		u = as.matrix(mobileMemb)
-	}
-	else if(is.vector(mobileMemb) && length(mobileMemb)==1 && is.numeric(mobileMemb)) {
-		s = sample(n, mobileMemb)
-		u = matrix(0,n,length(s))
-		for(k in 1:length(s)) {
-			u[s[k],k]=1
-		}
 	} else if(is.vector(mobileMemb) && is.numeric(mobileMemb)) {
 		u = matrix(0,n,length(mobileMemb))
 		for(k in 1:length(mobileMemb)) {
@@ -56,17 +49,20 @@ function(d,mobileMemb, fixedMemb=NULL, method="NC", m=2,dnoise=NULL, eta = NULL,
 		stop("Provide a number, a vector of seeds, or membership matrix for mobile clusters")
 	}	
 	kMov = ncol(u)
-	
 	#Sets the fixed cluster memberships
-	if(!is.null(fixedMemb)) {
-		if(is.data.frame(fixedMemb)) {
+	if(!is.null(fixedDistToCenters)) {
+		if(is.data.frame(fixedDistToCenters)) {
+			fixedMemb = as.matrix(fixedDistToCenters)
+			fixedMemb[] = 0
 			kFix = ncol(fixedMemb)
 			u = cbind(u,fixedMemb)
 		}
-		else if(!is.matrix(fixedMemb)) {
+		else if(!is.matrix(fixedDistToCenters)) {
 			stop("Fixed clusters must be specified as a matrix or a data frame")
 		}	
 		else {
+		  fixedMemb = fixedDistToCenters
+		  fixedMemb[] = 0
 			kFix = ncol(fixedMemb)
 			u = cbind(u,fixedMemb)
 		}
@@ -77,43 +73,32 @@ function(d,mobileMemb, fixedMemb=NULL, method="NC", m=2,dnoise=NULL, eta = NULL,
   med = rep(NA,ncol(u))
    
 	#Check possibilistic parameters
-   if((method=="PCM"||method=="PCMdd") && length(eta)!=(kMov+kFix)) stop("Vector of reference distances (eta) must have a length equal to the number of clusters")
+  if((method=="PCM"||method=="PCMdd") && length(eta)!=(kMov+kFix)) stop("Vector of reference distances (eta) must have a length equal to the number of clusters")
 
    #Add extra (noise) column for NC-related methods
-   if(method=="NC"||method=="NCdd"||method=="HNC"||method=="HNCdd") {
+  if(method=="NC"||method=="NCdd"||method=="HNC"||method=="HNCdd") {
    	u = cbind(u, vector("numeric",length=n))
-  	}
-  	uPrev = matrix(0,nrow=n,ncol=ncol(u))
+  }
+  uPrev = matrix(0,nrow=n,ncol=ncol(u))
 	
-   #Initialize squared distances to fixed centroids
-   if(method=="KM"||method=="PCM"||method=="NC"|| method=="HNC"||method=="FCM") {     
+  #Initialize squared distances to fixed centroids
+  if(method=="KM"||method=="PCM"||method=="NC"|| method=="HNC"||method=="FCM") {     
      sqdist2cent = matrix(0,nrow=n,ncol=(kMov+kFix))
      if(kFix>0) {
-   	  for(k in (kMov+1):(kMov+kFix)) {
-			  vargeom = sum((u[,k]^m) %*% (d^2) %*% (u[,k]^m))/(2*sum(u[,k]^m)^2)
-	  		  for(i in 1:n) {
-	  			  sqdist2cent[i,k] = (sum((u[,k]^m)*(d[i,]^2))/sum(u[,k]^m))-vargeom
-	  			  if(sqdist2cent[i,k]<0) sqdist2cent[i,k]=0
-	  		  }
-   	  }   	
+       sqdist2cent[,(kMov+1):(kMov+kFix)] = as.matrix(fixedDistToCenters)^2
      }
-   } else { #Initialize distances to fixed medoids
+  } else { #Initialize distances to fixed medoids
      dist2med = matrix(0,nrow=n,ncol=(kMov+kFix))
      if(kFix>0) {
-       for(k in (kMov+1):(kMov+kFix)) {
-         #Determine medoid
-         med[k] = which.min((u[,k]^m)%*%d)
-         #Update distances to medoids
-         dist2med[,k] = d[,med[k]] 
-       }
+       dist2med[,(kMov+1):(kMov+kFix)] = as.matrix(fixedDistToCenters)^2
      }
-   }
+  }
 
 	continue = TRUE
 	iter = 1
    #iterates until no change in memberships
    while(continue) {
-     #1. Update squared distances to centers (centroids for Euclidean-based methods and medoids for the others)
+     #1. Update squared distances to mobile centers (centroids for Euclidean-based methods and medoids for the others)
      if(method=="KM"||method=="PCM"||method=="NC"|| method=="HNC"||method=="FCM") {     
    	    vargeom = vector("numeric", kMov)
    	    for(k in 1:(kMov)) {
@@ -255,10 +240,10 @@ function(d,mobileMemb, fixedMemb=NULL, method="NC", m=2,dnoise=NULL, eta = NULL,
 	if(is.null(seeds)) seeds = 1:nrow(as.matrix(x))
    #If mobileCenters is a number and nstart>1 perform different random starts
 	if(is.vector(mobileMemb) && length(mobileMemb)==1 && is.numeric(mobileMemb)) {
-	   bestRun = vegclustonedist(x, mobileMemb=sample(seeds, mobileMemb), fixedMemb, method, m,dnoise, eta, alpha, iter.max)
+	   bestRun = vegclustonedist(x, mobileMemb=sample(seeds, mobileMemb), fixedDistToCenters, method, m,dnoise, eta, alpha, iter.max)
 		if(nstart>1) {
 			for(i in 2:nstart) {
-				run = vegclustonedist(x,mobileMemb=sample(seeds,mobileMemb), fixedMemb, method, m,dnoise,eta, alpha, iter.max)
+				run = vegclustonedist(x,mobileMemb=sample(seeds,mobileMemb), fixedDistToCenters, method, m,dnoise,eta, alpha, iter.max)
 				if(run$functional<bestRun$functional) {
 					bestRun = run
 				}
@@ -266,7 +251,7 @@ function(d,mobileMemb, fixedMemb=NULL, method="NC", m=2,dnoise=NULL, eta = NULL,
 		}		
 		return(bestRun)
 	} else { #Perform a single run
-		return(vegclustonedist(x,mobileMemb, fixedMemb, method, m,dnoise, eta, alpha, iter.max))
+		return(vegclustonedist(x,mobileMemb, fixedDistToCenters, method, m,dnoise, eta, alpha, iter.max))
 	}
 }
 

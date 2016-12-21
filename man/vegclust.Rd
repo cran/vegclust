@@ -12,7 +12,7 @@ Performs hard or fuzzy clustering of vegetation data
 vegclust(x, mobileCenters, fixedCenters = NULL, method="NC", m = 2, dnoise = NULL, 
         eta = NULL, alpha=0.001, iter.max=100, nstart=1, maxminJ = 10, seeds=NULL, 
         verbose=FALSE)
-vegclustdist(x, mobileMemb, fixedMemb = NULL, method="NC", m = 2, dnoise = NULL, 
+vegclustdist(x, mobileMemb, fixedDistToCenters = NULL, method="NC", m = 2, dnoise = NULL, 
             eta = NULL, alpha=0.001, iter.max=100, nstart=1, seeds=NULL, verbose=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -29,8 +29,8 @@ vegclustdist(x, mobileMemb, fixedMemb = NULL, method="NC", m = 2, dnoise = NULL,
   \item{mobileMemb}{
 	A number, a vector of seeds, or starting memberships for mobile clusters.
    }
-  \item{fixedMemb}{
-	A matrix or data frame with starting memberships for fixed (non-mobile) clusters.
+  \item{fixedDistToCenters}{
+	A matrix or data frame with the distances to fixed cluster centers.
   }
   \item{method}{
   A clustering model. Current accepted models are: 
@@ -130,7 +130,7 @@ Miquel De \enc{Cáceres}{Caceres}, Forest Science Center of Catalonia
 data(wetland)
   
 ## This equals the chord transformation 
-## (see also  \code{\link{decostand}} in package vegan)
+## (see also 'decostand' in package vegan)
 wetland.chord = as.data.frame(sweep(as.matrix(wetland), 1, 
                               sqrt(rowSums(as.matrix(wetland)^2)), "/"))
 
