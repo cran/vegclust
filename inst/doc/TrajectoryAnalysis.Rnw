@@ -1,0 +1,114 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{natbib}
+\usepackage{authblk}
+
+%\VignetteIndexEntry{How to classify vegetation stands in terms of structure and composition}
+%\VignettePackage{vegclust}
+
+\title{Examples of trajectory analysis}
+\author[1]{Miquel De Cáceres}
+\affil[1]{Centre Tecnològic Forestal de Catalunya, Solsona, Catalonia, Spain}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+\tableofcontents
+
+<<echo=FALSE>>=
+options(width=67)
+library(vegclust)
+@
+\section{Distances between two segments}
+
+<<echo=TRUE>>=
+sites = c(1,1,2,2)
+@
+
+<<echo=TRUE>>=
+xy1<-rbind(c(0,0),c(0,2.5),
+           c(1,0.5),c(1,3))
+segmentDistances(dist(xy1),sites,distance.type = "Hausdorff")$Dseg
+segmentDistances(dist(xy1),sites,distance.type = "directed-segment")$Dseg
+@
+
+
+<<echo=TRUE>>=
+xy2<-rbind(c(0,0),c(0,2.5),
+           c(0,1),c(1.8,2.5))
+segmentDistances(dist(xy2),sites, distance.type = "Hausdorff")$Dseg
+segmentDistances(dist(xy2),sites, distance.type = "directed-segment")$Dseg
+@
+
+
+<<echo=TRUE>>=
+xy3<-rbind(c(0,0),c(0,2.5),
+           c(-0.5,2),c(2,2))
+segmentDistances(dist(xy3),sites,distance.type = "Hausdorff")$Dseg
+segmentDistances(dist(xy3),sites,distance.type = "directed-segment")$Dseg
+@
+
+<<echo=TRUE>>=
+xy4<-rbind(c(0,0),c(0,2.5),
+           c(0,2.5),c(1.8,1))
+segmentDistances(dist(xy4),sites, distance.type = "Hausdorff")$Dseg
+segmentDistances(dist(xy4),sites, distance.type = "directed-segment")$Dseg
+@
+
+<<echo=TRUE>>=
+xy5<-rbind(c(0,0),c(0,2.5),
+           c(1,3),c(1,0.5))
+segmentDistances(dist(xy5),sites, distance.type = "Hausdorff")$Dseg
+segmentDistances(dist(xy5),sites, distance.type = "directed-segment")$Dseg
+@
+
+<<echo=TRUE>>=
+xy6<-rbind(c(0,2.5),c(0,0),
+           c(1,0.5),c(1,3))
+segmentDistances(dist(xy6),sites, distance.type = "Hausdorff")$Dseg
+segmentDistances(dist(xy6),sites, distance.type = "directed-segment")$Dseg
+@
+
+\section{Distances between two-segment trajectories}
+
+<<echo=TRUE>>=
+sites = c(1,1,1,2,2,2)
+@
+
+<<echo=TRUE>>=
+xy1<-matrix(0, nrow=6, ncol=2)
+xy1[2,2]<-1
+xy1[3,2]<-2
+xy1[4:6,1] <- 0.5
+xy1[4:6,2] <- xy1[1:3,2]
+trajectoryDistances(dist(xy1),sites, distance.type = "Hausdorff")
+trajectoryDistances(dist(xy1),sites, distance.type = "SPD")
+trajectoryDistances(dist(xy1),sites, distance.type = "DSPD")
+@
+
+<<echo=TRUE>>=
+xy2<-xy1
+xy2[6,]<-c(1,1.8)
+trajectoryDistances(dist(xy2),sites, distance.type = "Hausdorff")
+trajectoryDistances(dist(xy2),sites, distance.type = "SPD")
+trajectoryDistances(dist(xy2),sites, distance.type = "DSPD")
+@
+
+<<echo=TRUE>>=
+xy3<-xy2
+xy3[4,]<-c(1,0.2)
+trajectoryDistances(dist(xy3),sites, distance.type = "Hausdorff")
+trajectoryDistances(dist(xy3),sites, distance.type = "SPD")
+trajectoryDistances(dist(xy3),sites, distance.type = "DSPD")
+@
+
+<<echo=TRUE>>=
+xy4<-xy2
+xy4[4,]<-xy2[6,]
+xy4[6,]<-xy2[4,]
+trajectoryDistances(dist(xy4),sites, distance.type = "Hausdorff")
+trajectoryDistances(dist(xy4),sites, distance.type = "SPD")
+trajectoryDistances(dist(xy4),sites, distance.type = "DSPD")
+@
+
+\end{document}
