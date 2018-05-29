@@ -6,10 +6,21 @@
 \alias{segmentDistances}
 \alias{trajectoryDistances}
 \alias{trajectoryLengths}
+\alias{trajectoryAngles}
 \alias{trajectoryPCoA}
+\alias{trajectoryProjection}
+\alias{trajectoryConvergence}
+\alias{trajectoryDirectionality}
+\alias{centerTrajectories}
 \alias{trajectoryDistances}
 \alias{trajectoryLengths}
+\alias{trajectoryAngles}
 \alias{trajectoryPCoA}
+\alias{trajectoryPlot}
+\alias{trajectoryProjection}
+\alias{trajectoryConvergence}
+\alias{trajectoryDirectionality}
+\alias{centerTrajectories}
 \title{Community trajectory analysis}
 \usage{
 segmentDistances(d, sites, surveys = NULL,
@@ -20,8 +31,22 @@ trajectoryDistances(d, sites, surveys = NULL, distance.type = "DSPD",
 
 trajectoryLengths(d, sites, surveys = NULL, verbose = FALSE)
 
+trajectoryAngles(d, sites, surveys = NULL, all = FALSE, verbose = FALSE)
+
 trajectoryPCoA(d, sites, surveys = NULL, selection = NULL,
   traj.colors = NULL, axes = c(1, 2), ...)
+
+trajectoryPlot(x, sites, surveys = NULL, selection = NULL,
+  traj.colors = NULL, axes = c(1, 2), ...)
+
+trajectoryProjection(d, target, trajectory, tol = 1e-06)
+
+trajectoryConvergence(d, sites, surveys = NULL, symmetric = FALSE,
+  verbose = FALSE)
+
+trajectoryDirectionality(d, sites, surveys = NULL, verbose = FALSE)
+
+centerTrajectories(d, sites, surveys = NULL, verbose = FALSE)
 }
 \arguments{
 \item{d}{A symmetric \code{\link{matrix}} or an object of class \code{\link{dist}} containing the distance values between pairs of community states.}
@@ -47,6 +72,8 @@ whereas for \code{trajectoryDistances} the available indices are:
 
 \item{symmetrization}{Function used to obtain a symmetric distance, so that DSPD(T1,T2) = DSPD(T2,T1) (e.g., \code{mean} or \code{min}).}
 
+\item{all}{A flag to indicate that angles are desired for all triangles in the trajectory}
+
 \item{selection}{A numeric or logical vector of the same length as \code{sites}, indicating a subset of site trajectories to be plotted.}
 
 \item{traj.colors}{A vector of colors (one per site). If \code{selection != NULL} the length of the color vector should be equal to the number of sites selected.}
@@ -54,6 +81,16 @@ whereas for \code{trajectoryDistances} the available indices are:
 \item{axes}{The pair of principal coordinates to be plotted.}
 
 \item{...}{Additional parameters for function \code{\link{arrows}}.}
+
+\item{x}{A data.frame or matrix where rows are community states and columns are coordinates in an arbitrary space}
+
+\item{target}{An integer vector of the community states to be projected.}
+
+\item{trajectory}{An integer vector of the trajectory onto which target states are to be projected.}
+
+\item{tol}{Numerical tolerance value to determine that projection of a point lies within the trajectory.}
+
+\item{symmetric}{A logical flag to indicate a symmetric convergence comparison of trajectories.}
 }
 \value{
 Function \code{trajectoryDistances} returns an object of class \code{\link{dist}} containing the distances between trajectories. Function \code{trajectorySegments} returns a list with the following elements:
@@ -64,14 +101,42 @@ Function \code{trajectoryDistances} returns an object of class \code{\link{dist}
   \item{\code{Dinifin}: Distance matrix between initial points of one segment and the final point of the other.}
   \item{\code{Dfinini}: Distance matrix between final points of one segment and the initial point of the other.}
 }
+
 Function \code{trajectoryLengths} returns a data frame with the length of each segment on each trajectory and the total length of all trajectories. Function \code{trajectoryPCoA} returns the result of calling \code{\link{cmdscale}}.
+
+Function \code{trajectoryAngles} returns a data frame with the angle between each pair of segments on each trajectory and the mean and standard deviation of those angles across each trajectory. 
+
+Function \code{trajectoryPCoA} returns the result of calling \code{\link{cmdscale}}.
+
+Function \code{trajectoryProjection} returns a data frame with the following columns:
+\itemize{
+  \item{\code{distanceToTrajectory}: Distances to the trajectory, i.e. rejection (\code{NA} for target points whose projection is outside the trajectory).}
+  \item{\code{segment}: Segment that includes the projected point (\code{NA} for target points whose projection is outside the trajectory).}
+  \item{\code{relativePosition}: Relative position of the projected point within the trajectory, i.e. values from 0 to 1 with 0 representing the start of the trajectory and 1 representing the end (\code{NA} for target points whose projection is outside the trajectory).}
+}
+
+Function \code{trajectoryConvergence} returns a list with two elements:
+\itemize{
+  \item{\code{tau}: A matrix with the statistic (Mann-Kendall's tau) of the convergence/divergence test between trajectories. If \code{symmetric=TRUE} then the matrix is square. Otherwise the statistic of the test of the row trajectory approaching the column trajectory.}
+  \item{\code{p.value}: A matrix with the p-value of the convergence/divergence test between trajectories. If \code{symmetric=TRUE} then the matrix is square. Otherwise the p-value indicates the test of the row trajectory approaching the column trajectory.}
+}
+
+Function \code{trajectoryDirectionality} returns a vector with directionality values (one per trajectory).
+Function \code{centerTrajectory} returns an object of class \code{\link{dist}}.
 }
 \description{
-Given a distance matrix between community states, functions \code{segmentDistances} and \code{trajectoryDistances} calculate the distance between pairs of directed segments and community trajectories, respectively. 
-Function \code{trajectoryLengths} calculates lengths of directed segments and complete trajectories. 
-Function \code{trajectoryPCoA} performs principal coordinates analysis (\code{\link{cmdscale}}) and draws trajectories in the ordination scatterplot.
+Set of functions for trajectory analysis
+\itemize{
+\item{Given a distance matrix between community states, functions \code{segmentDistances} and \code{trajectoryDistances} calculate the distance between pairs of directed segments and community trajectories, respectively.}
+\item{Function \code{trajectoryLengths} calculates lengths of directed segments and complete trajectories.}
+\item{Function \code{trajectoryAngles} calculates the angle between consecutive pairs of directed segments.}
+\item{Function \code{trajectoryPCoA} performs principal coordinates analysis (\code{\link{cmdscale}}) and draws trajectories in the ordination scatterplot.}
+\item{Function \code{trajectoryPlot} Draws trajectories in a scatterplot corresponding to the input coordinates.}
+\item{Function \code{trajectoryProjection} projects a set of target points onto a specified trajectory and returns the distance to the trajectory (i.e. rejection) and the relative position of the projection point within the trajectory.}
+\item{Function \code{trajectoryConvergence} performs the Mann-Kendall trend test on the distances between trajectories (symmetric test) or the distance between points of one trajectory to the other.}
+\item{Function \code{trajectoryDirectionality} returns (for each trajectory) a statistic that measures directionality of the whole trajectory.}
+\item{Function \code{centerTrajectories} shifts all trajectories to the center of the compositional space and returns a modified distance matrix.}
 }
-\details{
 These functions consider community dynamics as trajectories in a chosen space of community resemblance and takes trajectories as objects to be compared. 
 By adapting concepts and procedures used for the analysis of trajectories in space (i.e. movement data) (Besse et al. 2016), the functions allow assessing the resemblance between trajectories. 
 Details of calculations are given in De \enc{Cáceres}{Caceres} et al (submitted)
@@ -94,6 +159,7 @@ Details of calculations are given in De \enc{Cáceres}{Caceres} et al (submitted
   d
   
   trajectoryLengths(d, sites, surveys)
+  trajectoryAngles(d, sites, surveys)
   segmentDistances(d, sites, surveys)$Dseg
   trajectoryDistances(d, sites, surveys, distance.type = "Hausdorff")
   trajectoryDistances(d, sites, surveys, distance.type = "DSPD")

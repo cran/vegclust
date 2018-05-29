@@ -1,0 +1,389 @@
+---
+title: "Community trajectory analysis"
+author: "Miquel De Cáceres"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: TRUE
+vignette: >
+  %\VignetteIndexEntry{Community trajectory analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignettePackage{vegclust}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Introduction
+In this vignette you will learn how to conduct community trajectory analysis (CTA), as implemented in package **vegclust**.
+
+We begin by loading the libraries:
+
+```{r load libraries, echo = T}
+library(vegclust)
+library(RColorBrewer)
+```
+
+
+## 2. Simple example
+
+In this section we describe how to study the trajectories of three sites that have been surveyed four times each. We use a simple example so that geometric calculations can be followed more easily.
+
+### 2.1 Trajectory data
+To specify community dynamics, we need three data items: (a) a set of community states (i.e. coordinates in a space $\Omega$), described using a distance matrix $d$; (b) a vector specifying the site corresponding to each community state; (c) a vector specifying the survey corresponding to each community state. Let's first define the vectors that describe the site and the survey of each community state:
+```{r}
+#Description of sites and surveys
+sites = c(1,1,1,1,2,2,2,2,3,3,3,3)
+surveys=c(1,2,3,4,1,2,3,4,1,2,3,4)
+```
+We then build a matrix with the coordinates corresponding to the community states of the three sites during each survey. We assume that the community space $\Omega$ has 2 dimensions:
+```{r}
+#Raw data table
+xy<-matrix(0, nrow=12, ncol=2)
+xy[2,2]<-1
+xy[3,2]<-2
+xy[4,2]<-3
+xy[5:6,2] <- xy[1:2,2]
+xy[7,2]<-1.5
+xy[8,2]<-2.0
+xy[5:6,1] <- 0.25
+xy[7,1]<-0.5
+xy[8,1]<-1.0
+xy[9:10,1] <- xy[5:6,1]+0.25
+xy[11,1] <- 1.0
+xy[12,1] <-1.5
+xy[9:10,2] <- xy[5:6,2]
+xy[11:12,2]<-c(1.25,1.0)
+cbind(sites,surveys,xy)
+```
+The matrix of Euclidean distances $d$ between community states in $\Omega$ is then:
+```{r} 
+#Distance matrix
+D = dist(xy)
+D
+```
+
+### 2.2 Display trajectories
+
+To begin our analysis of the three trajectories we display them in an ordination space, using function `trajectoryPCoA`. Since $\Omega$ has only two dimensions, the Principal Coordinates Analysis (PCoA) on $d$ displays the complete space:
+
+```{r pcoa, fig = TRUE, fig.height=5, fig.width=5, fig.align = "center"}
+trajectoryPCoA(D, sites, surveys, traj.colors = c("black","red", "blue"), lwd = 2)
+legend("topleft", col=c("black","red", "blue"), 
+       legend=c("Trajectory 1", "Trajectory 2", "Trajectory 3"), bty="n", lty=1, lwd = 2)
+```
+
+While trajectory of site '1' (black arrows) is made of three segments of the same length and direction, trajectory of site '2' (red arrows) has a second and third segments that bend and are shorter than that of the segond segment of site '1'. Trajectory of site '3' includes a stronger change in direction and shorter segments.
+
+### 2.3 Trajectory lengths, angles and directionality
+
+We can obtain the length of trajectory segments using function `trajectoryLengths` and the angles between consecutive segments, using function `trajectoryAngles`:
+
+```{r} 
+trajectoryLengths(D, sites, surveys)
+trajectoryAngles(D, sites, surveys)
+```
+where some segments are shorter and angles are smaller for trajectories of site '2' and '3'. In this case, the same information could be obtained by inspecting the PCoA representation, but in a case of $\Omega$ having many dimensions, the PCoA representation will correspond to a reduced space and hence, angles and lengths will not correspond exactly to those of functions `trajectoryLengths` and `trajectoryAngles`, which take into account the full space.
+
+One way of determining the degree to which trajectories follow directional trends (i.e. more or less straight pathways) involves considering all pairs of triplets in the trajectory. This approach is implemented in function `trajectoryDirectionality`:
+```{r} 
+trajectoryDirectionality(D, sites, surveys)
+```  
+As expected, trajectory of site '2' is less straight than trajectory of site '1' and that of site '3' has the lowest directionality value. Although it would be desirable, the function only computes a descriptive statistic, i.e. it does not perform any statistical test on directionality.
+
+
+### 2.4 Relative positions within trajectories
+Community states occupy a position within their trajectory that depends on their position along the total pathway of the trajectory. By adding the length of segments prior to a given state and dividing the sum by the total length of the trajectory we obtain the relative position of the community state. Function `trajectoryProjection` allows obtaining the relative position of each point of a trajectory. To use it for this purpose one should use as parameters the distance matrix between state and the indices that conform the trajectory. For example for the two example trajectories we would have:
+
+```{r} 
+trajectoryProjection(D, 1:4, 1:4)
+trajectoryProjection(D, 5:8, 5:8)
+```  
+Because the trajectory of site '2' as the second and third segments that are longer than the first, the relative position of state '6' is lower than 1/3 and that of state '7' is lower than 2/3.
+
+Function `trajectoryProjection` can also be used to project arbitrary community states on a given trajectory. For example we can study the projection of third state of the trajectory of site '1' (i.e. state 3) onto the trajectory of site '2' (i.e. states 5 to 8):
+```{r} 
+trajectoryProjection(D, 3, 5:8)
+```  
+
+### 2.5 Trajectory convergence
+
+When trajectories have been sampled the same number of times, function `trajectoryConvergence` allows performing tests of convergence based on the trend analysis of the sequences of distances between points of the two trajectories (i.e. first-first, second-second, ...):
+
+```{r} 
+trajectoryConvergence(D, sites, surveys, symmetric = TRUE)
+```  
+Actually, the function performs the Mann-Whitney trend test. Values of the statistic ('tau') larger than 0 correspond to trajectories that are diverging, whereas values lower than 0 correspond to trajectories that are converging. By setting `symmetric = FALSE` the convergence test becomes asymmetric. In this case the sequence of distances is that of points of one trajectory projected onto the other:
+
+```{r} 
+trajectoryConvergence(D, sites, surveys, symmetric = FALSE)
+```  
+
+
+### 2.6 Distances between segments and trajectories
+
+To start comparing trajectories between sites, one important step is the calculation of distances between directed segments, which can be obtained by calling function `segmentDistances`:
+```{r} 
+Ds = segmentDistances(D, sites, surveys)$Dseg
+Ds
+```  
+Distances between segments are affected by differences in both *position* and *direction*. Hence, among the six segments of this example, the distance is maximum between the last segment of trajectory '1' and the first segment of trajectory '3'.
+```{r, echo=T, fig=TRUE, fig.height=6, fig.width=6, fig.align = "center"}
+xret = cmdscale(Ds)
+par(mar=c(4,4,1,1))
+plot(xret, xlab="axis 1", ylab = "axis 2", asp=1, pch=21,
+     bg=c(rep("black",3), rep("red",3), rep("blue",3)), 
+     xlim=c(-1.5,1), ylim=c(-1,1.5))
+text(xret, labels=rep(paste0("s",1:3),3), pos=1)
+legend("topleft", pt.bg=c("black","red","blue"), pch=21, bty="n", legend=c("Trajectory 1", "Trajectory 2", "Trajectory 3"))
+```
+
+
+Distances between segments are internally calculated when comparing whole trajectories using function `trajectoryDistances`. Here we show the dissimilarity between the two trajectories as assessed using either the *Hausdorff* distance (equal to the maximum distance between directed segments) or the *directed segment path distance* (an average of distances between segments): 
+```{r} 
+trajectoryDistances(D, sites, surveys, distance.type = "Hausdorff")
+trajectoryDistances(D, sites, surveys, distance.type = "DSPD")
+```  
+
+## 3. Structural dynamics in permanent plots
+
+In this example we analyze the dynamics of 8 permanent forest plots located on slopes of a valley in the New Zealand Alps. The study area is mountainous and centered on the Craigieburn Range (Southern Alps), South Island, New Zealand.  Forests plots are almost monospecific, being the mountain beech (*Fuscospora cliffortioides*) the main dominant tree species. Previously forests consisted of largely mature stands, but some of them were affected by different disturbances during the sampling period (1972-2009) which includes 9 surveys. We begin our example by loading the data set, which includes 72 plot observations:
+```{r load avoca, echo=T}
+data("avoca")
+```
+Community data is in form of an object `stratifiedvegdata`. To account for differences in tree diameter, while emphasizing regeneration, the data contains individual counts to represent tree abundance and trees are classified in 19 quadratic diameter bins (in cm): {(2.25, 4], (4, 6.25], (6.25, 9], ... (110.25, 121]}. The data set also includes vectors `avoca_surveys` and `avoca_sites` that indicate the survey and forest plot corresponding to each forest state.
+
+Before starting community trajectory analysis, we have to use function `vegdiststruct`to calculate distances between forest plot states in terms of structure and composition:
+```{r distance, echo=TRUE}
+avoca_D_man = vegdiststruct(avoca_strat, method="manhattan", transform = function(x){log(x+1)})
+```
+Distances in `avoca_D_man` are calculated using the Manhattan metric. 
+
+### 3.1 Display trajectories in PCoA
+
+The distance matrix `avoca_D_man` conforms our definition of $\Omega$. We use `trajectoryPCoA` to display the relations between forest plot states in this space and to draw the trajectory of each plot:
+
+```{r avoca_pcoa, echo=T, fig=TRUE, fig.height=6, fig.width=6, fig.align = "center"}
+trajectoryPCoA(avoca_D_man,  avoca_sites, avoca_surveys,
+               traj.colors = brewer.pal(8,"Accent"), 
+               axes=c(1,2), length=0.1, lwd=2)
+legend("topright", bty="n", legend = 1:8, col = brewer.pal(8,"Accent"), lwd=2)
+
+```
+Note that in this case, the full $\Omega$ include more than two dimensions, and PCoA is representing 43% of total variance (correction for negative eigenvalues is included in the call to `cmdscale` from `trajectoryPCoA`), so one has to be careful when interpreting trajectories visually.
+
+```{r int1, echo=FALSE}
+plotTrajDiamDist<-function(cli = 7) {
+l = colnames(avoca_strat[[1]])
+ncl = 14
+m197072= avoca_strat[avoca_surveys==1][[cli]]["NOTCLI",2:ncl]
+m197072[m197072<1] = NA
+m1974 = avoca_strat[avoca_surveys==2][[cli]]["NOTCLI",2:ncl]
+m1974[m1974<1] = NA
+m1978 = avoca_strat[avoca_surveys==3][[cli]]["NOTCLI",2:ncl]
+m1978[m1978<1] = NA
+m1983 = avoca_strat[avoca_surveys==4][[cli]]["NOTCLI",2:ncl]
+m1983[m1983<1] = NA
+m1987 = avoca_strat[avoca_surveys==5][[cli]]["NOTCLI",2:ncl]
+m1987[m1987<1] = NA
+m1993 = avoca_strat[avoca_surveys==6][[cli]]["NOTCLI",2:ncl]
+m1993[m1993<1] = NA
+m1999 = avoca_strat[avoca_surveys==7][[cli]]["NOTCLI",2:ncl]
+m1999[m1999<1] = NA
+m2004 = avoca_strat[avoca_surveys==8][[cli]]["NOTCLI",2:ncl]
+m2004[m2004<1] = NA
+m2009 = avoca_strat[avoca_surveys==9][[cli]]["NOTCLI",2:ncl]
+m2009[m2009<1] = NA
+
+
+plot(m197072, type="l", ylim=c(1,200), log="y",
+       xlab="", ylab="Number of individuals (log)", main=paste0("Trajectory ",cli), 
+       axes=FALSE, col=gray(0.8), lwd=2)
+axis(2, las=2)
+axis(1, at=1:(ncl-1), labels=l[2:ncl], las=2)
+lines(m1974, col=gray(0.7), lwd=2)
+lines(m1978, col=gray(0.6), lwd=2)
+lines(m1983, col=gray(0.5), lwd=2)
+lines(m1987, col=gray(0.4), lwd=2)
+lines(m1993, col=gray(0.3), lwd=2)
+lines(m1999, col=gray(0.2), lwd=2)
+lines(m2004, col=gray(0.1), lwd=2)
+lines(m2009, col=gray(0), lwd=2)
+legend("topright", bty="n", lwd=2,col=gray(seq(0.8,0, by=-0.1)), legend=c("1970/72","1974","1978","1983", "1987", "1993","1999","2004","2009"))
+}
+```
+
+One can inspect specific trajectories using argument `selection` in function `trajectoryPCoA`. This allows getting a better view of particular trajectories, here that of forest plot '3':
+```{r trajectory_3, fig.height=4, fig.width=8, fig.align = "center"}
+par(mfrow=c(1,2))
+trajectoryPCoA(avoca_D_man,  avoca_sites, avoca_surveys,
+               selection= 3,
+               length=0.1, lwd=2)
+plotTrajDiamDist(3)
+```
+
+In the right hand, we added a representation of the change in the mountain beech tree diameter distribution through time for trajectory of forest plot '3'. The dynamics of this plot include mostly growth, which results in individuals moving from one diameter class to the other. The whole trajectory looks mostly directional. Let's now inspect the trajectory of forest plot '4':
+```{r trajectory_4, echo=T, fig.height=4, fig.width=8, fig.align = "center"}
+par(mfrow=c(1,2))
+trajectoryPCoA(avoca_D_man,  avoca_sites, avoca_surveys,
+               selection= 4,
+               length=0.1, lwd=2)
+plotTrajDiamDist(4)
+```
+
+This second trajectory is less straight and seems to include a turn by the end of the sampling period, corresponding to the recruitment of new saplings.
+
+### 3.2 Trajectory lengths, angles and directionality
+
+While trajectory lengths and angles can be inspected visually in ordination diagrams, it is better to calculate them using the full $\Omega$ space (i.e., from matrix `avoca_D_man`). Using function `trajectoryLengths` we can see that the trajectory of forest plot '4' is lengthier than that of plot '3', mostly because includes a lengthier last segment (i.e. the recruitment of new individuals):
+
+```{r trajectory lengths, echo=T}
+trajectoryLengths(avoca_D_man, avoca_sites, avoca_surveys)
+```
+
+If we calculate the angles between consecutive segments (using function `trajectoryLengths`) we see that indeed the trajectory of '3' is rather directional, but the angles of trajectory of '4' are not that low:
+
+```{r trajectory angles, echo=T}
+trajectoryAngles(avoca_D_man, avoca_sites, avoca_surveys)
+```
+
+By calling function `trajectoryDirectionality` we can confirm that the trajectory for site '4' is less straight than that of site '3':
+
+```{r trajectory directionality, echo=T}
+trajectoryDirectionality(avoca_D_man, avoca_sites, avoca_surveys)
+```
+
+
+### 3.3 Distances between trajectories
+
+We can calculate the resemblance between forest plot trajectories using `trajectoryDistances`:
+```{r avoca DT, echo=FALSE}
+avoca_D_traj_man = trajectoryDistances(avoca_D_man, avoca_sites, distance.type="DSPD", verbose=FALSE)
+print(round(avoca_D_traj_man,3))
+```
+The closest trajectories are those of plots '1' and '2'. They looked rather close in *position* in the PCoA ordination of $\Omega$ with all trajectories, so probably it is position, rather than *shape* which has influenced this low value. The next pair of similar trajectories are those of the '3'-'5' pair. We can use `cmdscale` to produce an ordination of resemblances between trajectories:
+```{r avoca_DT_PCoA, echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"}
+cmd_D2<-cmdscale(avoca_D_traj_man, add=TRUE, eig=TRUE, k=7)
+x<-cmd_D2$points[,1]
+y<-cmd_D2$points[,2]
+plot(x,y, type="p", asp=1, xlab=paste0("PCoA 1 (", round(100*cmd_D2$eig[1]/sum(cmd_D2$eig)),"%)"), 
+     ylab=paste0("PCoA 2 (", round(100*cmd_D2$eig[2]/sum(cmd_D2$eig)),"%)"), col="black",
+     bg= brewer.pal(8,"Accent"), pch=21)
+text(x,y, labels=1:8, pos=2)
+```
+
+## 4. Square root transformation and community trajectories
+
+### 4.1 Introduction
+
+Some dissimilarity coefficients that are popular in community ecology, such as the percentage difference (alias Bray-Curtis), have the drawback of being a non-Euclidean (dissimilarity matrices do not allow a representation in a Cartesian space), or even semi-metric (i.e. triangle inequality is not ensured). In order to use these coefficients in multivariate analyses that require these properties a common transformation is the square root. This document tries to illustrate that applying this transformation has consequences for trajectory analysis.
+
+### 4.2 Simple directional trajectory
+Here we use an example of a single synthetic community to illustrate the effect of square root transformation on a community trajectory. We begin by defining the species data of the trajectory itself. The dataset consists of four rows (i.e. surveys) and four columns (species). The dynamics in this example consist in an constant increase in the number of individuals of the first species and a corresponding decrease of the others, while keeping a total abundance of 100 individuals:  
+
+```{r}
+sites = rep(1,4)
+surveys=1:4
+spdata = rbind(c(35,30,20,15),
+               c(50,25,15,10),
+               c(65,20,10,5),
+               c(80,15,5,0))
+```
+We now use function `vegdist` from package `vegan` to calculate the Bray-Curtis coefficient:
+```{r}
+D = vegan::vegdist(spdata, "bray")
+D
+```
+If we draw the resemblance space corresponding to this dissimilarity matrix we see a straight trajectory:
+```{r, echo=TRUE, fig = TRUE, fig.height=4, fig.width=6, fig.align="center"}
+trajectoryPCoA(D,sites,surveys)
+```
+Here we see that Bray-Curtis dissimilarity responds linearly to the proposed sequence of community dynamics. To confirm this geometry, we can calculate the geometric properties of the trajectory (i.e. length, angle between consecutive segments and overall directionality):
+```{r}
+trajectoryLengths(D,sites,surveys)
+trajectoryAngles(D,sites,surveys)
+trajectoryDirectionality(D,sites,surveys)
+```
+Angles are 180 degrees and overall directionality is maximum (i.e. 1), in accordance with the plot and the data. We now proceed to take the square root of the dissimilarity values, as would be necessary to achieve a metric (and Euclidean) space in a more complex data set:
+
+```{r}
+sqrtD = sqrt(D)
+sqrtD
+
+```
+The transformation increases all dissimilarity values (because the original values are smaller than 1), but the increase is larger for smaller values, so the ratio between large dissimilarities and small dissimilarities decreases. This has an effect on the overall shape of the trajectory, which surprisingly now looks like:
+```{r, echo=TRUE, fig = TRUE, fig.height=4, fig.width=6, fig.align="center"}
+trajectoryPCoA(sqrtD,sites,surveys)
+```
+In addition to the distortion observed, the number of dimensions of the data have increased (i.e the sum of variance explained by the two axes is 88% < 100%), so we cannot be sure that the angles are well represented. If we re-calculate the properties of the trajectory taking into account all dimensions we obtain:
+
+```{r}
+trajectoryLengths(sqrtD,sites,surveys)
+trajectoryAngles(sqrtD,sites,surveys)
+trajectoryDirectionality(sqrtD,sites,surveys)
+```
+The length of segments and the trajectory have increased, but all segments are still the same size, in agreement with the original trajectory. In contrast, the angles are now 90 degrees and the directionality of the trajectory has decreased substantially.
+
+### 4.3 Longer trajectories
+
+Do the results of the previous section hold for a more complex trajectory? Here we use simulated dynamics to build another trajectory with more species (20) and more time steps. We begin by setting the number of time steps (50) and the size of the community (100 individuals):
+```{r}
+Nsteps = 50
+CC = 100
+Nreplace <- CC*0.05
+```
+`Nreplace` is the number of individuals to be replaced each time step (5\%). Now we define the initial community vector and the vector with the probabilities of offspring for each species according to some ecological conditions:
+```{r}
+x <- c(0, 1, 0, 67, 1, 3, 0, 2, 2, 2, 1, 6, 2, 0, 0, 2, 5, 1, 6, 0)
+poffspring <- c(0, 0, 0.002, 0.661 ,0 ,0, 0.037, 0.281, 0, 0, 0, 0.008, 0, 0, 0.005, 0.003, 0, 0, 0, 0)
+```
+We can now simulate the dynamics by sequentially applying stochastic deaths and recruitment:
+```{r}
+m <- matrix(0, nrow=Nsteps+1, ncol=length(x))
+m[1, ] = x
+for(k in 1:Nsteps) {
+  pdeath <-x/sum(x) #Equal probability of dying
+  deaths<-rmultinom(1,Nreplace, pdeath)
+  x <- pmax(x - deaths,0)
+  offspring = rmultinom(1,Nreplace, as.vector(poffspring))
+  x <- x + offspring
+  m[k+1, ]<-x
+}
+```
+Then we decide how frequently (with respect to the simulated step) a sample of the community is taken, here every four steps:
+```{r}
+Sj <- seq(1,51, by=4) #Sample every four steps
+mj <- m[Sj,]
+surveys = 1:length(Sj)
+sites = rep(1,length(Sj))
+```
+Now we are ready to calculate the Bray-Curtis dissimilarity and to plot the resulting trajectory:
+```{r, echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"}
+D <- vegan::vegdist(mj,"bray")
+trajectoryPCoA(D, sites, surveys, selection=1,length=0.1, axes=c(1,2))
+```
+
+The trajectory looks rather directional, although it has some twists derived from stochasticity in death and recruitment. Let's now look at the square root of the Bray-Curtis dissimilarity:
+```{r, echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"}
+sqrtD = sqrt(D)
+trajectoryPCoA(sqrtD, sites, surveys, selection=1,length=0.1, axes=c(1,2))
+```
+
+While they look different, the differences are not so striking as with the simple example. In other words, the overall shape of the trajectory looks similar in the two plots. From this, we might conclude that the square root transformation did not distort the trajectory significantly. However, note that the proportion of variance explained by the two axes has decreased after the transformation, so there might be changes in trajectory shape that are hidden in the dimensions of the data that we do not see. If we calculate geometric properties we are not limited by the ordination plot and we can take into account all dimensions. In contrast with the ordination plot, the angles of the trajectory are strongly affected by the square root transformation:
+
+```{r}
+trajectoryAngles(D,sites,surveys)
+trajectoryAngles(sqrtD,sites,surveys)
+```
+And so does the overall directionality:
+```{r}
+trajectoryDirectionality(D,sites,surveys)
+trajectoryDirectionality(sqrtD,sites,surveys)
+```
+
+### 4.4 Conclusions
+
+In this small study we have shown how the square root transformation distorts the angles and overall directionality of trajectories on the space defined by the percentage difference (alias Bray-Curtis) dissimilarity index. We suspect that this negative effect of square root transformation on angles happens no matter which coefficient is used to derive the initial distance matrix. Therefore, we advocate for avoiding its use when conducting community trajectory analysis (in particular for angles). However, the square root transformation may still be advised for the representation of (especially complex) trajectories in ordination diagrams, because the alternative is to discard the information corresponding to negative eigenvalues of the distance matrix. 
+

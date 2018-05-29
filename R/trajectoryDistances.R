@@ -1,16 +1,26 @@
 #' Community trajectory analysis
 #' 
-#' Given a distance matrix between community states, functions \code{segmentDistances} and \code{trajectoryDistances} calculate the distance between pairs of directed segments and community trajectories, respectively. 
-#' Function \code{trajectoryLengths} calculates lengths of directed segments and complete trajectories. 
-#' Function \code{trajectoryPCoA} performs principal coordinates analysis (\code{\link{cmdscale}}) and draws trajectories in the ordination scatterplot.
-#' 
+#' Set of functions for trajectory analysis
+#' \itemize{
+#' \item{Given a distance matrix between community states, functions \code{segmentDistances} and \code{trajectoryDistances} calculate the distance between pairs of directed segments and community trajectories, respectively.}
+#' \item{Function \code{trajectoryLengths} calculates lengths of directed segments and complete trajectories.}
+#' \item{Function \code{trajectoryAngles} calculates the angle between consecutive pairs of directed segments.}
+#' \item{Function \code{trajectoryPCoA} performs principal coordinates analysis (\code{\link{cmdscale}}) and draws trajectories in the ordination scatterplot.}
+#' \item{Function \code{trajectoryPlot} Draws trajectories in a scatterplot corresponding to the input coordinates.}
+#' \item{Function \code{trajectoryProjection} projects a set of target points onto a specified trajectory and returns the distance to the trajectory (i.e. rejection) and the relative position of the projection point within the trajectory.}
+#' \item{Function \code{trajectoryConvergence} performs the Mann-Kendall trend test on the distances between trajectories (symmetric test) or the distance between points of one trajectory to the other.}
+#' \item{Function \code{trajectoryDirectionality} returns (for each trajectory) a statistic that measures directionality of the whole trajectory.}
+#' \item{Function \code{centerTrajectories} shifts all trajectories to the center of the compositional space and returns a modified distance matrix.}
+#' }
 #' These functions consider community dynamics as trajectories in a chosen space of community resemblance and takes trajectories as objects to be compared. 
 #' By adapting concepts and procedures used for the analysis of trajectories in space (i.e. movement data) (Besse et al. 2016), the functions allow assessing the resemblance between trajectories. 
 #' Details of calculations are given in De \enc{Cáceres}{Caceres} et al (submitted)
 #' 
 #' @encoding UTF-8
 #' @name trajectories
-#' @aliases segmentDistances trajectoryDistances trajectoryLengths trajectoryPCoA
+#' @aliases segmentDistances trajectoryDistances trajectoryLengths trajectoryAngles 
+#'          trajectoryPCoA trajectoryProjection trajectoryConvergence trajectoryDirectionality 
+#'          centerTrajectories
 #' 
 #' @param d A symmetric \code{\link{matrix}} or an object of class \code{\link{dist}} containing the distance values between pairs of community states.
 #' @param sites A vector indicating the site corresponding to each community state.
@@ -39,7 +49,28 @@
 #'   \item{\code{Dinifin}: Distance matrix between initial points of one segment and the final point of the other.}
 #'   \item{\code{Dfinini}: Distance matrix between final points of one segment and the initial point of the other.}
 #' }
+#' 
 #' Function \code{trajectoryLengths} returns a data frame with the length of each segment on each trajectory and the total length of all trajectories. Function \code{trajectoryPCoA} returns the result of calling \code{\link{cmdscale}}.
+#' 
+#' Function \code{trajectoryAngles} returns a data frame with the angle between each pair of segments on each trajectory and the mean and standard deviation of those angles across each trajectory. 
+#' 
+#' Function \code{trajectoryPCoA} returns the result of calling \code{\link{cmdscale}}.
+#' 
+#' Function \code{trajectoryProjection} returns a data frame with the following columns:
+#' \itemize{
+#'   \item{\code{distanceToTrajectory}: Distances to the trajectory, i.e. rejection (\code{NA} for target points whose projection is outside the trajectory).}
+#'   \item{\code{segment}: Segment that includes the projected point (\code{NA} for target points whose projection is outside the trajectory).}
+#'   \item{\code{relativePosition}: Relative position of the projected point within the trajectory, i.e. values from 0 to 1 with 0 representing the start of the trajectory and 1 representing the end (\code{NA} for target points whose projection is outside the trajectory).}
+#' }
+#' 
+#' Function \code{trajectoryConvergence} returns a list with two elements:
+#' \itemize{
+#'   \item{\code{tau}: A matrix with the statistic (Mann-Kendall's tau) of the convergence/divergence test between trajectories. If \code{symmetric=TRUE} then the matrix is square. Otherwise the statistic of the test of the row trajectory approaching the column trajectory.}
+#'   \item{\code{p.value}: A matrix with the p-value of the convergence/divergence test between trajectories. If \code{symmetric=TRUE} then the matrix is square. Otherwise the p-value indicates the test of the row trajectory approaching the column trajectory.}
+#' }
+#' 
+#' Function \code{trajectoryDirectionality} returns a vector with directionality values (one per trajectory).
+#' Function \code{centerTrajectory} returns an object of class \code{\link{dist}}.
 #' 
 #' @author Miquel De \enc{Cáceres}{Caceres}, Forest Sciences Center of Catalonia
 #' 
@@ -68,6 +99,7 @@
 #'   d
 #'   
 #'   trajectoryLengths(d, sites, surveys)
+#'   trajectoryAngles(d, sites, surveys)
 #'   segmentDistances(d, sites, surveys)$Dseg
 #'   trajectoryDistances(d, sites, surveys, distance.type = "Hausdorff")
 #'   trajectoryDistances(d, sites, surveys, distance.type = "DSPD")
@@ -321,9 +353,7 @@ trajectoryLengths<-function(d, sites, surveys=NULL, verbose= FALSE) {
 
   lengths = as.data.frame(matrix(NA, nrow=nsite, ncol=maxnsurveys))
   row.names(lengths)<-siteIDs
-  names(lengths)<-c(paste0("Segment",as.character(1:(maxnsurveys-1))),"Trajectory")
-  speeds = lengths
-  os1 = 1
+  names(lengths)<-c(paste0("S",as.character(1:(maxnsurveys-1))),"Trajectory")
   if(verbose) {
     cat("\nCalculating trajectory lengths...\n")
     tb = txtProgressBar(1, nsite, style=3)
@@ -335,11 +365,70 @@ trajectoryLengths<-function(d, sites, surveys=NULL, verbose= FALSE) {
     if(!is.null(surveys)) ind_surv1 = ind_surv1[order(surveys[sites==siteIDs[i1]])]
     for(s1 in 1:(nsurveysite[i1]-1)) {
       lengths[i1,s1] = dmat[ind_surv1[s1], ind_surv1[s1+1]]
-      os1 = os1+1
     }
     lengths[i1, maxnsurveys] = sum(lengths[i1,], na.rm=T)
   }
   return(lengths)
+}
+
+#' @rdname trajectories
+#' @param all A flag to indicate that angles are desired for all triangles in the trajectory
+trajectoryAngles<-function(d, sites, surveys=NULL, all = FALSE, verbose= FALSE) {
+  if(length(sites)!=nrow(as.matrix(d))) stop("'sites' needs to be of length equal to the number of rows/columns in d")
+  if(!is.null(surveys)) if(length(sites)!=length(surveys)) stop("'sites' and 'surveys' need to be of the same length")
+  
+  siteIDs = unique(sites)
+  nsite = length(siteIDs)
+  nsurveysite<-numeric(nsite)
+  for(i in 1:nsite) {
+    nsurveysite[i] = sum(sites==siteIDs[i])
+  }
+  if(sum(nsurveysite==1)>0) stop("All sites need to be surveyed at least twice")
+  dmat = as.matrix(d)
+  n = nrow(dmat)
+  
+  maxnsurveys = max(nsurveysite)
+  if(!all) angles = matrix(NA, nrow=nsite, ncol=maxnsurveys)
+  else {
+    angles = matrix(NA, nrow=nsite, ncol=choose(maxnsurveys,3)+2)
+  }
+  if(verbose) {
+    cat("\nCalculating trajectory angles...\n")
+    tb = txtProgressBar(1, nsite, style=3)
+  }
+  for(i1 in 1:nsite) {
+    if(verbose) setTxtProgressBar(tb, i1)
+    ind_surv1 = which(sites==siteIDs[i1])
+    #Surveys may not be in order
+    if(!is.null(surveys)) ind_surv1 = ind_surv1[order(surveys[sites==siteIDs[i1]])]
+    if(!all) {
+      for(s1 in 1:(nsurveysite[i1]-2)) {
+        d12 = dmat[ind_surv1[s1], ind_surv1[s1+1]]
+        d23 = dmat[ind_surv1[s1+1], ind_surv1[s1+2]]
+        d13 = dmat[ind_surv1[s1], ind_surv1[s1+2]]
+        angles[i1, s1] = .angleConsecutiveC(d12,d23,d13, TRUE)
+        # cat(paste(i1,s1,":", d12,d23,d13,.angleConsecutiveC(d12,d23,d13, TRUE),"\n"))
+      }
+      angles[i1, maxnsurveys-1] = mean(angles[i1,1:(nsurveysite[i1]-2)], na.rm=T)
+      angles[i1, maxnsurveys] = sd(angles[i1,1:(nsurveysite[i1]-2)], na.rm=T)
+    } else {
+      cs = combn(length(ind_surv1),3)
+      dsub = dmat[ind_surv1, ind_surv1]
+      for(s in 1:ncol(cs)) {
+        d12 = dsub[cs[1,s],cs[2,s]]
+        d23 = dsub[cs[2,s],cs[3,s]]
+        d13 = dsub[cs[1,s],cs[3,s]]
+        angles[i1, s] = .angleConsecutiveC(d12,d23,d13, TRUE)
+      }
+      angles[i1, ncol(angles)-1] = mean(angles[i1,], na.rm=T)
+      angles[i1, ncol(angles)] = sd(angles[i1,], na.rm=T)
+    }
+  }
+  angles = as.data.frame(angles)
+  row.names(angles)<-siteIDs
+  if(!all) names(angles)<-c(paste0("S",as.character(1:(maxnsurveys-2)),"-S",as.character(2:(maxnsurveys-1))),"mean", "sd")
+  else names(angles)<-c(paste0("A",as.character(1:(ncol(angles)-2))),"mean", "sd")
+  return(angles)
 }
 
 #' @rdname trajectories
@@ -354,6 +443,9 @@ trajectoryPCoA<-function(d, sites, surveys = NULL, selection = NULL, traj.colors
   #Apply site selection
   
   if(is.null(selection)) selection = 1:nsite 
+  else {
+    if(is.character(selection)) selection = (siteIDs %in% selection)
+  }
   selIDs = siteIDs[selection]
   
   D2 =as.dist(as.matrix(d)[sites %in% selIDs, sites %in% selIDs])
@@ -367,12 +459,11 @@ trajectoryPCoA<-function(d, sites, surveys = NULL, selection = NULL, traj.colors
   sitesred = sites[sites %in% selIDs]
   if(!is.null(surveys)) surveysred = surveys[sites %in% selIDs]
   else surveysred = NULL
-  
   #Draw arrows
   for(i in 1:length(selIDs)) {
     ind_surv = which(sitesred==selIDs[i])
     #Surveys may not be in order
-    if(!is.null(surveysred)) ind_surv = ind_surv[order(surveysred[sitesred==siteIDs[i]])]
+    if(!is.null(surveysred)) ind_surv = ind_surv[order(surveysred[sitesred==selIDs[i]])]
     for(t in 1:(length(ind_surv)-1)) {
       niini =ind_surv[t]
       nifin =ind_surv[t+1]
@@ -380,6 +471,243 @@ trajectoryPCoA<-function(d, sites, surveys = NULL, selection = NULL, traj.colors
       else arrows(x[niini],y[niini],x[nifin],y[nifin], ...)
     }
   }
-  #Draw legend
+  #Return cmdscale result
   invisible(cmd_D2)
+}
+
+#' @rdname trajectories
+#' @param x A data.frame or matrix where rows are community states and columns are coordinates in an arbitrary space
+trajectoryPlot<-function(x, sites, surveys = NULL, selection = NULL, traj.colors = NULL, axes=c(1,2), ...) {
+  siteIDs = unique(sites)
+  nsite = length(siteIDs)
+  
+  #Apply site selection
+  
+  if(is.null(selection)) selection = 1:nsite 
+  else {
+    if(is.character(selection)) selection = (siteIDs %in% selection)
+  }
+  selIDs = siteIDs[selection]
+  
+  xp =x[sites %in% selIDs, axes[1]]
+  yp<-x[sites %in% selIDs,axes[2]]
+  plot(xp,yp, type="n", asp=1, xlab=paste0("Axis ",axes[1]), 
+       ylab=paste0("Axis ",axes[2]))
+  
+  sitesred = sites[sites %in% selIDs]
+  if(!is.null(surveys)) surveysred = surveys[sites %in% selIDs]
+  else surveysred = NULL
+  #Draw arrows
+  for(i in 1:length(selIDs)) {
+    ind_surv = which(sitesred==selIDs[i])
+    #Surveys may not be in order
+    if(!is.null(surveysred)) ind_surv = ind_surv[order(surveysred[sitesred==selIDs[i]])]
+    for(t in 1:(length(ind_surv)-1)) {
+      niini =ind_surv[t]
+      nifin =ind_surv[t+1]
+      if(!is.null(traj.colors)) arrows(xp[niini],yp[niini],xp[nifin],yp[nifin], col = traj.colors[i], ...)
+      else arrows(xp[niini],yp[niini],xp[nifin],yp[nifin], ...)
+    }
+  }
+}
+
+#' @rdname trajectories
+#' @param target An integer vector of the community states to be projected.
+#' @param trajectory An integer vector of the trajectory onto which target states are to be projected.
+#' @param tol Numerical tolerance value to determine that projection of a point lies within the trajectory.
+trajectoryProjection<-function(d, target, trajectory, tol = 0.000001) {
+  if(length(trajectory)<2) stop("Trajectory needs to include at least two states")
+  dmat = as.matrix(d)
+  npoints = length(target)
+  nsteps = length(trajectory) -1
+  #Distance betwen target points and trajectory points
+  d2ref = dmat[target, trajectory, drop=FALSE]
+  #Distance between trajectory steps
+  dsteps = diag(dmat[trajectory[1:(length(trajectory)-1)], trajectory[2:length(trajectory)]])
+  #Cumulative distance between steps
+  dstepcum = rep(0,nsteps+1)
+  if(nsteps>1) {
+    for(i in 2:nsteps) {
+      dstepcum[i] = dstepcum[i-1]+dsteps[i-1]
+    }
+  }
+  dstepcum[nsteps+1] = sum(dsteps)
+  
+  projH = matrix(NA, nrow=npoints, ncol = nsteps)
+  projA1 = matrix(NA, nrow=npoints, ncol = nsteps)
+  projA2 = matrix(NA, nrow=npoints, ncol = nsteps)
+  whichstep = rep(NA, npoints)
+  dgrad = rep(NA, npoints)
+  posgrad = rep(NA, npoints)
+  
+  for(i in 1:npoints) {
+    for(j in 1:nsteps) {
+      if(!.triangleinequalityC(dsteps[j], d2ref[i, j], d2ref[i, j+1])) warning(paste0(i," to [",j,", ",j+1,"] does not meet triangle inequality\n"))
+      p <-.projectionC(dsteps[j], d2ref[i, j], d2ref[i, j+1])
+      if((!is.na(p[3])) & (p[1]>-tol) & (p[2]>-tol)) {
+        projA1[i,j] = p[1]
+        projA2[i,j] = p[2]
+        projH[i,j] = p[3]
+        if(is.na(dgrad[i])) {
+          dgrad[i] = p[3]
+          whichstep[i] = j
+        } else {
+          if(p[3]<dgrad[i]) {
+            dgrad[i] = p[3]
+            whichstep[i] = j
+          }
+        }
+      }
+    }
+    if(!is.na(whichstep[i])) {
+      dg = dstepcum[whichstep[i]]+projA1[i,whichstep[i]]
+      posgrad[i] = dg/sum(dsteps)
+    }
+  }
+  res = data.frame(distanceToTrajectory=dgrad, segment = whichstep, relativePosition = posgrad)
+  row.names(res)<-row.names(d2ref)
+  return(res)
+}
+
+
+#' @rdname trajectories
+#' @param symmetric A logical flag to indicate a symmetric convergence comparison of trajectories.
+trajectoryConvergence<-function(d, sites, surveys = NULL, symmetric = FALSE, verbose = FALSE){
+  if(length(sites)!=nrow(as.matrix(d))) stop("'sites' needs to be of length equal to the number of rows/columns in d")
+  if(!is.null(surveys)) if(length(sites)!=length(surveys)) stop("'sites' and 'surveys' need to be of the same length")
+  siteIDs = unique(sites)
+  nsite = length(siteIDs)
+  nsurveysite<-numeric(nsite)
+  for(i in 1:nsite) nsurveysite[i] = sum(sites==siteIDs[i])
+  if(sum(nsurveysite<3)>0) stop("All sites need to be surveyed at least three times")
+  n = nrow(as.matrix(d))
+
+  #Init output
+  tau = matrix(NA, nrow=nsite, ncol = nsite)
+  rownames(tau) = siteIDs
+  colnames(tau) = siteIDs
+  p.value = tau
+  dmat = as.matrix(d)
+  if(verbose) {
+    cat("\nCalculating trajectory convergence...\n")
+    tb = txtProgressBar(1, nsite, style=3)
+  }
+  for(i1 in 1:(nsite-1)) {
+    if(verbose) setTxtProgressBar(tb, i1)
+    ind_surv1 = which(sites==siteIDs[i1])
+    #Surveys may not be in order
+    if(!is.null(surveys)) ind_surv1 = ind_surv1[order(surveys[sites==siteIDs[i1]])]
+    for(i2 in (i1+1):nsite) {
+      ind_surv2 = which(sites==siteIDs[i2])
+      #Surveys may not be in order
+      if(!is.null(surveys)) ind_surv2 = ind_surv2[order(surveys[sites==siteIDs[i2]])]
+      if(!symmetric) {
+        trajectory = ind_surv2
+        target = ind_surv1
+        trajProj = trajectoryProjection(d,target, trajectory)
+        dT = trajProj$distanceToTrajectory
+        mk.test = MannKendall(dT)
+        tau[i1,i2] = mk.test$tau
+        p.value[i1,i2] = mk.test$sl
+        trajectory = ind_surv1
+        target = ind_surv2
+        trajProj = trajectoryProjection(d,target, trajectory)
+        dT = trajProj$distanceToTrajectory
+        mk.test = MannKendall(dT)
+        tau[i2,i1] = mk.test$tau
+        p.value[i2,i1] = mk.test$sl
+      } 
+      else {
+        if(length(ind_surv1)==length(ind_surv2)) {
+          dT = numeric(length(ind_surv1))
+          for(j in 1:length(ind_surv1)) dT[j] = dmat[ind_surv1[j], ind_surv2[j]]
+          mk.test = MannKendall(dT)
+          tau[i1,i2] = mk.test$tau
+          p.value[i1,i2] = mk.test$sl
+          tau[i2,i1] = mk.test$tau
+          p.value[i2,i1] = mk.test$sl
+        } else {
+          warning(paste0("sites ",i1, " and ",i2," do not have the same number of surveys."))
+        }
+      }
+    }
+  }
+  return(list(tau = tau, p.value = p.value))
+}
+
+
+#' @rdname trajectories
+trajectoryDirectionality<-function(d, sites, surveys = NULL, verbose = FALSE) {
+  if(length(sites)!=nrow(as.matrix(d))) stop("'sites' needs to be of length equal to the number of rows/columns in d")
+  if(!is.null(surveys)) if(length(sites)!=length(surveys)) stop("'sites' and 'surveys' need to be of the same length")
+  siteIDs = unique(sites)
+  nsite = length(siteIDs)
+  nsurveysite<-numeric(nsite)
+  for(i in 1:nsite) nsurveysite[i] = sum(sites==siteIDs[i])
+  if(sum(nsurveysite<3)>0) stop("All sites need to be surveyed at least three times")
+  
+  dmat = as.matrix(d)
+  #Init output
+  dir = rep(NA, nsite)
+  names(dir) = siteIDs
+  if(verbose) {
+    cat("\nAssessing trajectory directionality...\n")
+    tb = txtProgressBar(1, nsite, style=3)
+  }
+  for(i1 in 1:nsite) {
+    if(verbose) setTxtProgressBar(tb, i1)
+    ind_surv1 = which(sites==siteIDs[i1])
+    #Surveys may not be in order
+    if(!is.null(surveys)) ind_surv1 = ind_surv1[order(surveys[sites==siteIDs[i1]])]
+    dsub = dmat[ind_surv1, ind_surv1]
+    n = length(ind_surv1)
+    den = 0
+    num = 0
+    if(n>2) {
+      for(i in 1:(n-2)) {
+        for(j in (i+1):(n-1)) {
+          for(k in (j+1):n) {
+            da = dsub[i,j]
+            db = dsub[j,k]
+            dab = dsub[i,k]
+            den = den + da + db
+            num = num + dab
+          }
+        }
+      }
+      dir[i1] = num/den
+    }
+  }
+  return(dir)
+}
+
+#' @rdname trajectories
+centerTrajectories<-function(d, sites, surveys = NULL, verbose = FALSE) {
+  if(length(sites)!=nrow(as.matrix(d))) stop("'sites' needs to be of length equal to the number of rows/columns in d")
+  if(!is.null(surveys)) if(length(sites)!=length(surveys)) stop("'sites' and 'surveys' need to be of the same length")
+  siteIDs = unique(sites)
+  nsite = length(siteIDs)
+  nsurveysite<-numeric(nsite)
+  for(i in 1:nsite) nsurveysite[i] = sum(sites==siteIDs[i])
+
+  if(verbose) {
+    cat("\nPrincipal coordinates Analysis...\n")
+    tb = txtProgressBar(1, nsite, style=3)
+  }
+  cmd = cmdscale(d, length(sites)-1, add=TRUE)
+  x = cmd$points
+  rm(cmd)
+  if(verbose) {
+    cat("\nAssessing trajectory directionality...\n")
+    tb = txtProgressBar(1, nsite, style=3)
+  }
+  for(i1 in 1:nsite) {
+    if(verbose) setTxtProgressBar(tb, i1)
+    ind_surv1 = which(sites==siteIDs[i1])
+    #Surveys may not be in order
+    if(!is.null(surveys)) ind_surv1 = ind_surv1[order(surveys[sites==siteIDs[i1]])]
+    #Centers trajectory (only positive eigen values (real dimensions))
+    x[ind_surv1, ] = scale(x[ind_surv1, ], scale=FALSE)
+  }
+  return(dist(x))
 }

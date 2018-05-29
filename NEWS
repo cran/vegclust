@@ -4,6 +4,22 @@
 
 __Version history__
 
+_Version 1.7.4, May 2018
+1. Improvement of parameter checking in function 'stratifyvegdata'
+2. Documentation of avoca data set
+3. New function 'trajectoryPlot'
+
+_Version 1.7.3, April 2018
+1. New function 'trajectoryConvergence'
+2. New function 'trajectoryDirectionality'
+3. New function 'centerTrajectories'
+
+_Version 1.7.2, April 2018
+
+1. New function 'trajectoryAngles'.
+2. New function 'trajectoryProjection'.
+3. New vignette for trajectory analysis.
+
 _Version 1.7.1, September 2017
 
 1. Package encoding. Changed package and author description.
