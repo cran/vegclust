@@ -4,6 +4,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ## ----load libraries, echo = T--------------------------------------------
 library(vegclust)
 library(RColorBrewer)
+library(smacof)
+library(MASS)
 
 ## ------------------------------------------------------------------------
 #Description of sites and surveys
@@ -34,14 +36,26 @@ cbind(sites,surveys,xy)
 D = dist(xy)
 D
 
-## ----pcoa, fig = TRUE, fig.height=5, fig.width=5, fig.align = "center"----
+## ----pcoa, fig = TRUE, fig.height=4, fig.width=4, fig.align = "center"----
+par(mar=c(4,4,1,1))
 trajectoryPCoA(D, sites, surveys, traj.colors = c("black","red", "blue"), lwd = 2)
 legend("topleft", col=c("black","red", "blue"), 
        legend=c("Trajectory 1", "Trajectory 2", "Trajectory 3"), bty="n", lty=1, lwd = 2)
 
+## ----xy, fig = TRUE, fig.height=4, fig.width=4, fig.align = "center"-----
+par(mar=c(4,4,1,1))
+trajectoryPlot(xy, sites, surveys, traj.colors = c("black","red", "blue"), lwd = 2)
+legend("topright", col=c("black","red", "blue"), 
+       legend=c("Trajectory 1", "Trajectory 2", "Trajectory 3"), bty="n", lty=1, lwd = 2)
+
 ## ------------------------------------------------------------------------
 trajectoryLengths(D, sites, surveys)
+
+## ------------------------------------------------------------------------
 trajectoryAngles(D, sites, surveys)
+
+## ------------------------------------------------------------------------
+trajectoryAngles(D, sites, surveys, all=TRUE)
 
 ## ------------------------------------------------------------------------
 trajectoryDirectionality(D, sites, surveys)
@@ -63,8 +77,10 @@ trajectoryConvergence(D, sites, surveys, symmetric = FALSE)
 Ds = segmentDistances(D, sites, surveys)$Dseg
 Ds
 
-## ---- echo=T, fig=TRUE, fig.height=6, fig.width=6, fig.align = "center"----
-xret = cmdscale(Ds)
+## ---- echo=T, fig=TRUE, fig.height=5, fig.width=5, fig.align = "center"----
+mMDS = mds(Ds)
+mMDS
+xret = mMDS$conf
 par(mar=c(4,4,1,1))
 plot(xret, xlab="axis 1", ylab = "axis 2", asp=1, pch=21,
      bg=c(rep("black",3), rep("red",3), rep("blue",3)), 
@@ -76,14 +92,27 @@ legend("topleft", pt.bg=c("black","red","blue"), pch=21, bty="n", legend=c("Traj
 trajectoryDistances(D, sites, surveys, distance.type = "Hausdorff")
 trajectoryDistances(D, sites, surveys, distance.type = "DSPD")
 
+## ------------------------------------------------------------------------
+trajectoryDistances(D, sites, surveys, distance.type = "DSPD", symmetrization = NULL)
+
 ## ----load avoca, echo=T--------------------------------------------------
 data("avoca")
 
 ## ----distance, echo=TRUE-------------------------------------------------
 avoca_D_man = vegdiststruct(avoca_strat, method="manhattan", transform = function(x){log(x+1)})
 
-## ----avoca_pcoa, echo=T, fig=TRUE, fig.height=6, fig.width=6, fig.align = "center"----
+## ----avoca_pcoa, echo=T, fig=TRUE, fig.height=5, fig.width=5, fig.align = "center"----
+par(mar=c(4,4,1,1))
 trajectoryPCoA(avoca_D_man,  avoca_sites, avoca_surveys,
+               traj.colors = brewer.pal(8,"Accent"), 
+               axes=c(1,2), length=0.1, lwd=2)
+legend("topright", bty="n", legend = 1:8, col = brewer.pal(8,"Accent"), lwd=2)
+
+## ----avoca_mmds, echo=T, fig=TRUE, fig.height=5, fig.width=5, fig.align = "center"----
+mMDS = mds(avoca_D_man)
+mMDS
+par(mar=c(4,4,1,1))
+trajectoryPlot(mMDS$conf,  avoca_sites, avoca_surveys,
                traj.colors = brewer.pal(8,"Accent"), 
                axes=c(1,2), length=0.1, lwd=2)
 legend("topright", bty="n", legend = 1:8, col = brewer.pal(8,"Accent"), lwd=2)
@@ -147,23 +176,33 @@ plotTrajDiamDist(4)
 trajectoryLengths(avoca_D_man, avoca_sites, avoca_surveys)
 
 ## ----trajectory angles, echo=T-------------------------------------------
-trajectoryAngles(avoca_D_man, avoca_sites, avoca_surveys)
+avoca_ang <- trajectoryAngles(avoca_D_man, avoca_sites, avoca_surveys)
+avoca_ang
 
 ## ----trajectory directionality, echo=T-----------------------------------
-trajectoryDirectionality(avoca_D_man, avoca_sites, avoca_surveys)
+avoca_dir <- trajectoryDirectionality(avoca_D_man, avoca_sites, avoca_surveys)
+avoca_dir
+
+## ---- echo=TRUE, fig = TRUE, fig.height=5, fig.width=5, fig.align="center"----
+avoca_rho = trajectoryAngles(avoca_D_man, avoca_sites, avoca_surveys, all=TRUE)$rho
+par(mar=c(4,4,1,1))
+plot(avoca_rho, avoca_dir, xlab = "rho(T)", ylab = "dir(T)", type="n")
+text(avoca_rho, avoca_dir, as.character(1:8))
 
 ## ----avoca DT, echo=FALSE------------------------------------------------
 avoca_D_traj_man = trajectoryDistances(avoca_D_man, avoca_sites, distance.type="DSPD", verbose=FALSE)
 print(round(avoca_D_traj_man,3))
 
-## ----avoca_DT_PCoA, echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"----
-cmd_D2<-cmdscale(avoca_D_traj_man, add=TRUE, eig=TRUE, k=7)
-x<-cmd_D2$points[,1]
-y<-cmd_D2$points[,2]
-plot(x,y, type="p", asp=1, xlab=paste0("PCoA 1 (", round(100*cmd_D2$eig[1]/sum(cmd_D2$eig)),"%)"), 
-     ylab=paste0("PCoA 2 (", round(100*cmd_D2$eig[2]/sum(cmd_D2$eig)),"%)"), col="black",
+## ----avoca_DT_PCoA, echo=TRUE, fig = TRUE, fig.height=5, fig.width=5, fig.align="center"----
+mMDS<-mds(avoca_D_traj_man)
+mMDS
+x<-mMDS$conf[,1]
+y<-mMDS$conf[,2]
+par(mar=c(4,4,1,1))
+plot(x,y, type="p", asp=1, xlab=paste0("Axis 1"), 
+     ylab=paste0("Axis 2"), col="black",
      bg= brewer.pal(8,"Accent"), pch=21)
-text(x,y, labels=1:8, pos=2)
+text(x,y, labels=1:8, pos=1)
 
 ## ------------------------------------------------------------------------
 sites = rep(1,4)
@@ -175,6 +214,7 @@ spdata = rbind(c(35,30,20,15),
 
 ## ------------------------------------------------------------------------
 D = vegan::vegdist(spdata, "bray")
+is.metric(D)
 D
 
 ## ---- echo=TRUE, fig = TRUE, fig.height=4, fig.width=6, fig.align="center"----
@@ -196,11 +236,12 @@ trajectoryPCoA(sqrtD,sites,surveys)
 ## ------------------------------------------------------------------------
 trajectoryLengths(sqrtD,sites,surveys)
 trajectoryAngles(sqrtD,sites,surveys)
+trajectoryAngles(sqrtD,sites,surveys, all=TRUE)
 trajectoryDirectionality(sqrtD,sites,surveys)
 
 ## ------------------------------------------------------------------------
 Nsteps = 50
-CC = 100
+CC = 50
 Nreplace <- CC*0.05
 
 ## ------------------------------------------------------------------------
@@ -220,24 +261,48 @@ for(k in 1:Nsteps) {
 }
 
 ## ------------------------------------------------------------------------
-Sj <- seq(1,51, by=4) #Sample every four steps
+Sj <- seq(1,Nsteps+1, by=4) #Sample every four steps
 mj <- m[Sj,]
 surveys = 1:length(Sj)
 sites = rep(1,length(Sj))
 
-## ---- echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"----
+## ------------------------------------------------------------------------
 D <- vegan::vegdist(mj,"bray")
-trajectoryPCoA(D, sites, surveys, selection=1,length=0.1, axes=c(1,2))
+
+## ------------------------------------------------------------------------
+is.metric(D, tol=0.0000001)
+
+## ---- echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"----
+pcoa<-trajectoryPCoA(D, sites, surveys, selection=1,length=0.1, axes=c(1,2))
+pcoaD = dist(pcoa$points)
 
 ## ---- echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"----
 sqrtD = sqrt(D)
-trajectoryPCoA(sqrtD, sites, surveys, selection=1,length=0.1, axes=c(1,2))
+pcoaSqrt = trajectoryPCoA(sqrtD, sites, surveys, selection=1,length=0.1, axes=c(1,2))
+
+## ---- echo=TRUE, fig = TRUE, fig.height=5, fig.width=6, fig.align="center"----
+res <- mds(D, ndim = length(Sj)-1, type = "interval")
+mmdsD <- dist(res$conf)
+trajectoryPlot(res$conf, sites, surveys, selection=1,length=0.1, axes=c(1,2))
 
 ## ------------------------------------------------------------------------
-trajectoryAngles(D,sites,surveys)
-trajectoryAngles(sqrtD,sites,surveys)
+stress0(D,pcoaSqrt$points, type="interval")
+stress0(D,pcoa$points, type="interval")
+stress0(D,res$conf, type="interval")
+
+## ------------------------------------------------------------------------
+anglesD = trajectoryAngles(D,sites,surveys)
+anglesSqrtD = trajectoryAngles(sqrtD,sites,surveys)
+anglesPcoaD = trajectoryAngles(pcoaD,sites,surveys)
+anglesmmdsD = trajectoryAngles(mmdsD,sites,surveys)
+
+df<-as.data.frame(rbind(anglesD, anglesSqrtD, anglesPcoaD, anglesmmdsD))
+row.names(df)<-c("local", "global.sqrt", "global.pcoa", "global.mmds")
+round(df,2)
 
 ## ------------------------------------------------------------------------
 trajectoryDirectionality(D,sites,surveys)
 trajectoryDirectionality(sqrtD,sites,surveys)
+trajectoryDirectionality(pcoaD,sites,surveys)
+trajectoryDirectionality(mmdsD,sites,surveys)
 
