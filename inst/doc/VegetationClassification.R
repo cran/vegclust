@@ -1,5 +1,4 @@
 ### R code from vignette source 'VegetationClassification.Rnw'
-### Encoding: ISO8859-1
 
 ###################################################
 ### code chunk number 1: VegetationClassification.Rnw:21-22
