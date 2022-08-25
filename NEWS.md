@@ -2,8 +2,15 @@
  NEWS for R Package "vegclust"
 -------------------------------
 
+# Version 2.0.2
+- Bug corrected in medoid-based methods which allowed chosing the same object as medoid for different clusters. Issue was reported by Alexander Bauer (Department of Statistics LMU Munich).
+- Exclude duplicate objects that are in the same exact position as potential seeds
+
+# Version 2.0.1
+- Translation of vignettes to Rmarkdown
+
 # Version 2.0.0
-- IMPORTANT: Functions for Community Trajectory Analysis were moved to package 'ecotraj', available at GitHub (https://github.com/emf-creaf/ecotraj) and soon also in CRAN.
+- IMPORTANT: Functions for Community Trajectory Analysis were moved to package 'ecotraj', available at GitHub (https://github.com/emf-creaf/ecotraj/) and soon also in CRAN.
 
 # Version 1.8.0
 - Update of function 'trajectoryAngles2D' by Anthony Sturbois

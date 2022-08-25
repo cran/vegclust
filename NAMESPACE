@@ -1,11 +1,9 @@
-import(vegan,sp)
+import(vegan)
 importFrom("grDevices", "colorRampPalette", "rainbow")
 importFrom("graphics", "abline", "axis", "legend", "lines", "matlines",
              "persp", "arrows", "text")
 importFrom("vegan", "decostand")
-importFrom("MASS", "ginv")
-importFrom("stats", "as.dist", "cutree", "dist", "quantile", "model.matrix", "var", "cmdscale", "sd")
-importFrom("utils", "setTxtProgressBar", "txtProgressBar", "combn")
+importFrom("stats", "as.dist", "cutree", "dist", "quantile", "model.matrix", "var", "cmdscale")
 
 # Export all names
 exportPattern(".")
