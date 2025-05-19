@@ -13,7 +13,7 @@
 <meta name="author" content="Miquel De Cáceres, CREAF, Barcelona, Spain" />
 <meta name="author" content="Susan Wiser, Landcare Research, Lincoln, New Zealand" />
 
-<meta name="date" content="2022-08-24" />
+<meta name="date" content="2025-05-19" />
 
 <title>How to use the vegclust package</title>
 
@@ -32,27 +32,27 @@ document.addEventListener('DOMContentLoaded', function(e) {
 </script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 <style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -63,58 +63,57 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
-  { counter-reset: source-line 0; }
+{ counter-reset: source-line 0; }
 pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
+{ position: relative; left: -4em; counter-increment: source-line; }
 pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-  {   }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
 <script>
 // apply pandoc div.sourceCode style to pre.sourceCode instead
@@ -148,25 +147,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <style type="text/css">
-/* for pandoc --citeproc since 2.11 */
+
 div.csl-bib-body { }
 div.csl-entry {
-  clear: both;
+clear: both;
+margin-bottom: 0em;
 }
 .hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+margin-left:2em;
+text-indent:-2em;
 }
 div.csl-left-margin {
-  min-width:2em;
-  float:left;
+min-width:2em;
+float:left;
 }
 div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
+margin-left:2em;
+padding-left:1em;
 }
 div.csl-indent {
-  margin-left: 2em;
+margin-left: 2em;
 }
 </style>
 
@@ -366,7 +366,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h4 class="author">Miquel De Cáceres, CREAF, Barcelona, Spain</h4>
 <h4 class="author">Susan Wiser, Landcare Research, Lincoln, New
 Zealand</h4>
-<h4 class="date">2022-08-24</h4>
+<h4 class="date">2025-05-19</h4>
 
 
 <div id="TOC">
@@ -428,11 +428,10 @@ group vegetation observations, and we show how to conduct it with the
 help of the R package <code>vegclust</code>. Before starting our
 examples we need to load the <code>vegclust</code> package and package
 <code>vegan</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegclust)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: permute</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: lattice</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; This is vegan 2.6-2</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(vegclust)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; S&#39;està carregant el paquet requerit: permute</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; S&#39;està carregant el paquet requerit: lattice</span></span></code></pre></div>
 </div>
 <div id="example-vegetation-data" class="section level3">
 <h3>Example vegetation data</h3>
@@ -441,20 +440,20 @@ use a small wetland vegetation data set, consisting of 41 sites and 33
 species and published by <span class="citation">Bowman and Wilson
 (1986)</span>. The data is included with the <code>vegclust</code>
 package:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(wetland)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(wetland)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 41 33</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">data</span>(wetland)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">dim</span>(wetland)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] 41 33</span></span></code></pre></div>
 <p>For a number of reasons that we will not detail here, the Euclidean
 distance is not an appropriate index to measure the resemblance in
 species composition between vegetation plot records. Therefore, we
 transform our community data using the chord transformation <span class="citation">(Legendre and Gallagher 2001)</span>, which divides
 each value by the norm of the row vector of the corresponding site:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>wetlandchord <span class="ot">=</span> <span class="fu">decostand</span>(wetland,<span class="st">&quot;normalize&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>wetlandchord <span class="ot">=</span> <span class="fu">decostand</span>(wetland,<span class="st">&quot;normalize&quot;</span>)</span></code></pre></div>
 <p>Function <code>decostand()</code> is provided within the
 <code>vegan</code> package. The Euclidean distance on the transformed
 data is equal to the chord distance <span class="citation">(Orlóci
 1967)</span> with respect to the raw community data:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dchord <span class="ot">=</span> <span class="fu">dist</span>(wetlandchord)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>dchord <span class="ot">=</span> <span class="fu">dist</span>(wetlandchord)</span></code></pre></div>
 <p>In some of our examples we will use the R objects
 <code>wetlandchord</code> or <code>dchord</code> indistinctively,
 because package <code>vegclust</code> allows vegetation to be classified
@@ -817,66 +816,66 @@ dissimilarity matrix.</p>
 <h4>The K-means model</h4>
 <p>The following piece of code produces a classification of our example
 data set into three groups using the K-means clustering model:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wetland.km <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method=</span><span class="st">&quot;KM&quot;</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>wetland.km <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                      <span class="at">method=</span><span class="st">&quot;KM&quot;</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span></code></pre></div>
 <p>The result is an object of class <code>vegclust</code>, in fact a
 list with several components (method, parameters, prototypes, objective
 function, etc.):</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wetland.km)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;mode&quot;          &quot;method&quot;        &quot;m&quot;             &quot;dnoise&quot;       </span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;eta&quot;           &quot;memb&quot;          &quot;mobileCenters&quot; &quot;fixedCenters&quot; </span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;dist2clusters&quot; &quot;withinss&quot;      &quot;size&quot;          &quot;functional&quot;   </span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] &quot;iter&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">names</span>(wetland.km)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;mode&quot;          &quot;method&quot;        &quot;m&quot;             &quot;dnoise&quot;       </span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;eta&quot;           &quot;memb&quot;          &quot;mobileCenters&quot; &quot;fixedCenters&quot; </span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;dist2clusters&quot; &quot;withinss&quot;      &quot;size&quot;          &quot;functional&quot;   </span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; [13] &quot;iter&quot;</span></span></code></pre></div>
 <p>One of the most important components is the membership matrix <span class="math inline">\(\mathbf{U}\)</span>, which we show transposed
 here:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(wetland.km<span class="sc">$</span>memb)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5 8 13 4 17 3 9 21 16 14 2 15 1 7 10 40 23 25 22 20 6 18 12 39 19 11 30 34</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 1 1  1 1  1 1 1  1  1  1 1  1 1 1  1  0  0  0  0  0 0  0  0  0  0  0  0  0</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  1  1  1  1  1 1  1  1  1  1  1  0  0</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  0  0  0  0  0 0  0  0  0  0  0  1  1</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    28 31 26 29 33 24 36 37 41 27 32 35 38</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  0  0  0  0  0  0  0  0  0  0  0  1  1</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0  0  1  1  1  0  0  0  0  0  0  0  0</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  1  1  0  0  0  1  1  1  1  1  1  0  0</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">t</span>(wetland.km<span class="sc">$</span>memb)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt;    5 8 13 4 17 3 9 21 16 14 2 15 1 7 10 40 23 25 22 20 6 18 12 39 19 11 30 34</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; M1 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  1  1  1  1  1 1  1  1  1  1  1  0  0</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; M2 1 1  1 1  1 1 1  1  1  1 1  1 1 1  1  0  0  0  0  0 0  0  0  0  0  0  0  0</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; M3 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  0  0  0  0  0 0  0  0  0  0  0  1  1</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt;    28 31 26 29 33 24 36 37 41 27 32 35 38</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; M1  0  0  1  1  1  0  0  0  0  0  0  0  0</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; M2  0  0  0  0  0  0  0  0  0  0  0  1  1</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; M3  1  1  0  0  0  1  1  1  1  1  1  0  0</span></span></code></pre></div>
 <p>Another important component is the matrix containing the coordinates
 of cluster centroids (i.e. vectors <span class="math inline">\(\mathbf{c}_i\)</span> for each cluster):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(wetland.km<span class="sc">$</span>mobileCenters, <span class="at">dig=</span><span class="dv">3</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Abefic Merhed Alyvag Pancam Abemos Melcor Ludoct Eupvac Echpas Passcr Poa2</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  0.000  0.000  0.000  0.027  0.000  0.062  0.000  0.039  0.048  0.000 0.00</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0.000  0.000  0.047  0.076  0.016  0.153  0.000  0.050  0.066  0.000 0.01</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  0.018  0.068  0.000  0.356  0.015  0.275  0.019  0.205  0.102  0.026 0.00</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Carhal Dendio Casobt Aesind Cyprot Ipocop Cynarc Walind Sessp. Phynod Echell</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  0.037  0.016  0.016  0.000  0.000  0.000  0.000  0.068  0.144  0.000  0.049</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0.069  0.000  0.000  0.075  0.081  0.013  0.013  0.064  0.104  0.715  0.119</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  0.000  0.000  0.000  0.019  0.176  0.040  0.432  0.078  0.157  0.064  0.112</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Helind Ipoaqu Orysp. Elesp. Psespi Ludads Polatt  Poa1 Helcri Physp. Goopur</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  0.125  0.055  0.649  0.154  0.192  0.204  0.097 0.000  0.000  0.012  0.012</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0.172  0.048  0.172  0.138  0.027  0.000  0.000 0.013  0.013  0.000  0.000</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  0.019  0.037  0.040  0.000  0.000  0.000  0.000 0.000  0.000  0.000  0.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">round</span>(wetland.km<span class="sc">$</span>mobileCenters, <span class="at">dig=</span><span class="dv">3</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt;    Abefic Merhed Alyvag Pancam Abemos Melcor Ludoct Eupvac Echpas Passcr Poa2</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; M1  0.000  0.000  0.047  0.076  0.016  0.153  0.000  0.050  0.066  0.000 0.01</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; M2  0.000  0.000  0.000  0.027  0.000  0.062  0.000  0.039  0.048  0.000 0.00</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; M3  0.018  0.068  0.000  0.356  0.015  0.275  0.019  0.205  0.102  0.026 0.00</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt;    Carhal Dendio Casobt Aesind Cyprot Ipocop Cynarc Walind Sessp. Phynod Echell</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; M1  0.069  0.000  0.000  0.075  0.081  0.013  0.013  0.064  0.104  0.715  0.119</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; M2  0.037  0.016  0.016  0.000  0.000  0.000  0.000  0.068  0.144  0.000  0.049</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; M3  0.000  0.000  0.000  0.019  0.176  0.040  0.432  0.078  0.157  0.064  0.112</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt;    Helind Ipoaqu Orysp. Elesp. Psespi Ludads Polatt  Poa1 Helcri Physp. Goopur</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; M1  0.172  0.048  0.172  0.138  0.027  0.000  0.000 0.013  0.013  0.000  0.000</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; M2  0.125  0.055  0.649  0.154  0.192  0.204  0.097 0.000  0.000  0.012  0.012</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt; M3  0.019  0.037  0.040  0.000  0.000  0.000  0.000 0.000  0.000  0.000  0.000</span></span></code></pre></div>
 <p>The same classification exercise can be conducted from the matrix of
 chord distances between objects if we use function
 <code>vegclustdist()</code> instead of <code>vegclust</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>wetland.kmdist <span class="ot">=</span> <span class="fu">vegclustdist</span>(<span class="at">x =</span> dchord, <span class="at">mobileMemb=</span><span class="dv">3</span>, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">method=</span><span class="st">&quot;KM&quot;</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(wetland.kmdist)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;mode&quot;          &quot;method&quot;        &quot;m&quot;             &quot;dnoise&quot;       </span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;eta&quot;           &quot;memb&quot;          &quot;mobileCenters&quot; &quot;fixedCenters&quot; </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;dist2clusters&quot; &quot;withinss&quot;      &quot;size&quot;          &quot;functional&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>wetland.kmdist <span class="ot">=</span> <span class="fu">vegclustdist</span>(<span class="at">x =</span> dchord, <span class="at">mobileMemb=</span><span class="dv">3</span>, </span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>                              <span class="at">method=</span><span class="st">&quot;KM&quot;</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">names</span>(wetland.kmdist)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;mode&quot;          &quot;method&quot;        &quot;m&quot;             &quot;dnoise&quot;       </span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;eta&quot;           &quot;memb&quot;          &quot;mobileCenters&quot; &quot;fixedCenters&quot; </span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;dist2clusters&quot; &quot;withinss&quot;      &quot;size&quot;          &quot;functional&quot;</span></span></code></pre></div>
 <p>Note the different way to specify the number of clusters. In the case
 of <code>vegclustdist()</code> we do not obtain cluster centroids,
 because they cannot be calculated explicitly:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>wetland.kmdist<span class="sc">$</span>mobileCenters</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>wetland.kmdist<span class="sc">$</span>mobileCenters</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>But we do obtain cluster memberships:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(wetland.kmdist<span class="sc">$</span>memb)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5 8 13 4 17 3 9 21 16 14 2 15 1 7 10 40 23 25 22 20 6 18 12 39 19 11 30 34</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  0  0  0  0  0 0  0  0  0  0  0  1  1</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  1  1  1  1  1 1  1  1  1  1  1  0  0</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 1 1  1 1  1 1 1  1  1  1 1  1 1 1  1  0  0  0  0  0 0  0  0  0  0  0  0  0</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    28 31 26 29 33 24 36 37 41 27 32 35 38</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  1  1  0  0  0  1  1  1  1  1  1  0  0</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0  0  1  1  1  0  0  0  0  0  0  0  0</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  0  0  0  0  0  0  0  0  0  0  0  1  1</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">t</span>(wetland.kmdist<span class="sc">$</span>memb)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt;    5 8 13 4 17 3 9 21 16 14 2 15 1 7 10 40 23 25 22 20 6 18 12 39 19 11 30 34</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt; M1 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  1  1  1  1  1 1  1  1  1  1  1  0  0</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt; M2 1 1  1 1  1 1 1  1  1  1 1  1 1 1  1  0  0  0  0  0 0  0  0  0  0  0  0  0</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt; M3 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  0  0  0  0  0 0  0  0  0  0  0  1  1</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt;    28 31 26 29 33 24 36 37 41 27 32 35 38</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; M1  0  0  1  1  1  0  0  0  0  0  0  0  0</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="co">#&gt; M2  0  0  0  0  0  0  0  0  0  0  0  1  1</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="co">#&gt; M3  1  1  0  0  0  1  1  1  1  1  1  0  0</span></span></code></pre></div>
 <p>Because we used the same resemblance space (although in different
 form) in our examples, both <code>vegclust</code> and
 <code>vegclustdist()</code> should give the same result provided the
@@ -885,10 +884,10 @@ function. Although both R functions return objects of class
 <code>vegclust</code>, we can identify whether calculations were done
 from dissimilarities or from rectangular matrices by inspecting the
 ‘mode’ element of the list:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>wetland.km<span class="sc">$</span>mode</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;raw&quot;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>wetland.kmdist<span class="sc">$</span>mode</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dist&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>wetland.km<span class="sc">$</span>mode</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;raw&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>wetland.kmdist<span class="sc">$</span>mode</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">#&gt; [1] &quot;dist&quot;</span></span></code></pre></div>
 <p>In the following subsections we run <code>vegclust</code> using other
 clustering models, but the same examples could be made using
 <code>vegclustdist()</code>.</p>
@@ -897,19 +896,19 @@ clustering models, but the same examples could be made using
 <h4>The Fuzzy C-means model</h4>
 <p>Let us inspect the distance of each object to each cluster
 centroid:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.km<span class="sc">$</span>dist2clusters), <span class="at">dig=</span><span class="dv">2</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       5    8   13    4   17    3    9   21   16   14    2   15    1    7   10</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.54 0.68 0.44 0.45 0.64 0.76 0.95 0.50 0.64 0.46 0.38 0.57 0.47 0.72 0.87</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 1.05 1.10 1.09 1.14 1.11 1.22 1.23 1.09 1.09 1.10 1.12 1.19 1.12 1.15 1.19</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 1.12 1.12 1.14 1.17 1.07 1.22 1.22 1.20 1.17 1.16 1.17 1.21 1.21 1.18 1.23</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      40   23   25   22   20    6   18   12   39   19   11   30   34   28   31</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 1.11 0.92 0.86 0.73 1.11 1.15 1.19 1.16 1.12 0.97 1.13 1.20 1.22 1.19 1.20</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.40 0.60 0.51 0.67 0.56 0.47 0.45 0.40 0.52 0.44 0.64 1.16 1.20 1.15 1.19</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 1.09 1.07 1.12 1.03 1.15 1.06 1.12 1.12 1.06 1.07 1.07 0.86 0.66 0.77 0.69</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      26   29   33   24   36   37   41   27   32   35   38</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 1.22 1.17 1.22 1.20 1.18 1.17 0.99 1.22 1.17 0.80 0.68</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.81 0.78 0.49 1.04 0.90 1.15 1.14 1.19 1.13 1.03 1.10</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 1.00 0.92 1.00 0.55 0.62 0.55 0.56 0.78 0.73 0.95 0.99</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.km<span class="sc">$</span>dist2clusters), <span class="at">dig=</span><span class="dv">2</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt;       5    8   13    4   17    3    9   21   16   14    2   15    1    7   10</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="co">#&gt; M1 1.05 1.10 1.09 1.14 1.11 1.22 1.23 1.09 1.09 1.10 1.12 1.19 1.12 1.15 1.19</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; M2 0.54 0.68 0.44 0.45 0.64 0.76 0.95 0.50 0.64 0.46 0.38 0.57 0.47 0.72 0.87</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co">#&gt; M3 1.12 1.12 1.14 1.17 1.07 1.22 1.22 1.20 1.17 1.16 1.17 1.21 1.21 1.18 1.23</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="co">#&gt;      40   23   25   22   20    6   18   12   39   19   11   30   34   28   31</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; M1 0.40 0.60 0.51 0.67 0.56 0.47 0.45 0.40 0.52 0.44 0.64 1.16 1.20 1.15 1.19</span></span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt; M2 1.11 0.92 0.86 0.73 1.11 1.15 1.19 1.16 1.12 0.97 1.13 1.20 1.22 1.19 1.20</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; M3 1.09 1.07 1.12 1.03 1.15 1.06 1.12 1.12 1.06 1.07 1.07 0.86 0.66 0.77 0.69</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt;      26   29   33   24   36   37   41   27   32   35   38</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; M1 0.81 0.78 0.49 1.04 0.90 1.15 1.14 1.19 1.13 1.03 1.10</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; M2 1.22 1.17 1.22 1.20 1.18 1.17 0.99 1.22 1.17 0.80 0.68</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; M3 1.00 0.92 1.00 0.55 0.62 0.55 0.56 0.78 0.73 0.95 0.99</span></span></code></pre></div>
 <p>For many objects the distance to the cluster where they have been
 assigned is much smaller than the distance to other clusters. However,
 for some objects (such as ‘22’, ‘29’ or ‘35’) the distance to the
@@ -918,21 +917,21 @@ closest one. Are those latter objects well assigned? Should these
 objects have intermediate degrees of membership instead of picking one
 cluster arbitrarily? The Fuzzy C-means cluster model allows fuzzy
 memberships to be obtained as an alternative to crisp memberships:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>wetland.fcm <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method=</span><span class="st">&quot;FCM&quot;</span>, <span class="at">m=</span><span class="fl">1.2</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.fcm<span class="sc">$</span>memb), <span class="at">dig=</span><span class="dv">3</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        5     8 13 4    17     3     9 21    16 14 2    15 1     7    10 40</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.001 0.007  0 0 0.004 0.009 0.070  0 0.004  0 0 0.001 0 0.011 0.044  1</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.001 0.007  0 0 0.007 0.011 0.086  0 0.003  0 0 0.001 0 0.009 0.036  0</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.998 0.985  1 1 0.990 0.981 0.844  1 0.993  1 1 0.999 1 0.981 0.920  0</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       23    25    22    20 6 18 12    39 19    11    30    34    28    31    26</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.980 0.992 0.581 0.998 1  1  1 0.999  1 0.992 0.040 0.002 0.016 0.003 0.841</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.004 0.001 0.014 0.001 0  0  0 0.001  0 0.005 0.928 0.996 0.971 0.993 0.141</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.016 0.007 0.405 0.001 0  0  0 0.000  0 0.003 0.031 0.002 0.013 0.003 0.017</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       29    33    24    36    37    41    27    32    35    38</span></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.742 0.999 0.002 0.020 0.001 0.001 0.015 0.011 0.057 0.006</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.241 0.001 0.998 0.978 0.999 0.995 0.973 0.980 0.160 0.024</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.017 0.000 0.000 0.001 0.001 0.004 0.012 0.008 0.783 0.970</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>wetland.fcm <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>                       <span class="at">method=</span><span class="st">&quot;FCM&quot;</span>, <span class="at">m=</span><span class="fl">1.2</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.fcm<span class="sc">$</span>memb), <span class="at">dig=</span><span class="dv">3</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co">#&gt;        5     8 13 4    17     3     9 21    16 14 2    15 1     7    10 40</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="co">#&gt; M1 0.998 0.985  1 1 0.990 0.981 0.844  1 0.993  1 1 0.999 1 0.981 0.920  0</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="co">#&gt; M2 0.001 0.007  0 0 0.004 0.009 0.070  0 0.004  0 0 0.001 0 0.011 0.044  1</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co">#&gt; M3 0.001 0.007  0 0 0.007 0.011 0.086  0 0.003  0 0 0.001 0 0.009 0.036  0</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="co">#&gt;       23    25    22    20 6 18 12    39 19    11    30    34    28    31    26</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="co">#&gt; M1 0.016 0.007 0.405 0.001 0  0  0 0.000  0 0.003 0.031 0.002 0.013 0.003 0.017</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="co">#&gt; M2 0.980 0.992 0.581 0.998 1  1  1 0.999  1 0.992 0.040 0.002 0.016 0.003 0.841</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="co">#&gt; M3 0.004 0.001 0.014 0.001 0  0  0 0.001  0 0.005 0.928 0.996 0.971 0.993 0.141</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="co">#&gt;       29    33    24    36    37    41    27    32    35    38</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="co">#&gt; M1 0.017 0.000 0.000 0.001 0.001 0.004 0.012 0.008 0.783 0.970</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="co">#&gt; M2 0.742 0.999 0.002 0.020 0.001 0.001 0.015 0.011 0.057 0.006</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="co">#&gt; M3 0.241 0.001 0.998 0.978 0.999 0.995 0.973 0.980 0.160 0.024</span></span></code></pre></div>
 <p>A comparison of these memberships with the distance to the clusters
 shown before will reveal that intermediate objects obtain fuzzier
 membership values than other objects.</p>
@@ -940,63 +939,63 @@ membership values than other objects.</p>
 classification, vegetation scientists are normally interested in crisp
 assignments. The function <code>defuzzify()</code> allows fuzzy
 membership matrix to be converted into a crisp one:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.fcm)<span class="sc">$</span>cluster</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>groups</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M1&quot; </span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M1&quot; &quot;M1&quot; </span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M3&quot; &quot;M3&quot;</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(groups)</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 M2 M3 </span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 10 17</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.fcm)<span class="sc">$</span>cluster</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>groups</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M2&quot; </span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M2&quot; &quot;M2&quot; </span></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M1&quot; &quot;M1&quot;</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a><span class="fu">table</span>(groups)</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="co">#&gt; M1 M2 M3 </span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a><span class="co">#&gt; 17 14 10</span></span></code></pre></div>
 <p>Another way of defuzzifying the membership matrix is by setting a
 threshold of minimum fuzzy membership:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.fcm, <span class="at">method =</span> <span class="st">&quot;cut&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)<span class="sc">$</span>cluster</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>groups</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M1&quot; </span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M1&quot;   NA &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M1&quot;   NA </span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;   NA &quot;M3&quot;</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(groups, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   M1   M2   M3 &lt;NA&gt; </span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   12   10   16    3</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.fcm, <span class="at">method =</span> <span class="st">&quot;cut&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)<span class="sc">$</span>cluster</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>groups</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M2&quot; </span></span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M2&quot;   NA &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M2&quot;   NA </span></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot;   NA &quot;M1&quot;</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a><span class="fu">table</span>(groups, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a><span class="co">#&gt;   M1   M2   M3 &lt;NA&gt; </span></span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a><span class="co">#&gt;   16   12   10    3</span></span></code></pre></div>
 <p>With this second defuzzification approach intermediate objects remain
 unclassified (indicated as missing values). It is important to recognise
 that FCM fuzzy membership values depend on the fuzziness exponent <span class="math inline">\(m\)</span>. In fact, if we run FCM with a very
 large <span class="math inline">\(m\)</span> value we will obtain
 uninformative results:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wetland.fcm2 <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method=</span><span class="st">&quot;FCM&quot;</span>, <span class="at">m=</span><span class="dv">10</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.fcm2<span class="sc">$</span>memb), <span class="at">dig=</span><span class="dv">3</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        5     8    13     4    17     3     9    21    16    14     2    15</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.334 0.334 0.334 0.334 0.334 0.334 0.333 0.334 0.334 0.334 0.334 0.334</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        1     7    10    40    23    25    22    20     6    18    12    39</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.333 0.333 0.333 0.334 0.334 0.334 0.333 0.334 0.334 0.334 0.334 0.334</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.334 0.334 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       19    11    30    34    28    31    26    29    33    24    36    37</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.334 0.334 0.333 0.333 0.333 0.333 0.334 0.334 0.334 0.333 0.334 0.333</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       41    27    32    35    38</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.333 0.333 0.333 0.333 0.333</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.334 0.333 0.333 0.334 0.334</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.333 0.333 0.333 0.333 0.333</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>wetland.fcm2 <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>                       <span class="at">method=</span><span class="st">&quot;FCM&quot;</span>, <span class="at">m=</span><span class="dv">10</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.fcm2<span class="sc">$</span>memb), <span class="at">dig=</span><span class="dv">3</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt;        5     8    13     4    17     3     9    21    16    14     2    15</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; M1 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; M2 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; M3 0.334 0.333 0.334 0.334 0.333 0.333 0.333 0.334 0.333 0.334 0.334 0.334</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt;        1     7    10    40    23    25    22    20     6    18    12    39</span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; M1 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt; M2 0.333 0.333 0.333 0.333 0.334 0.334 0.334 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; M3 0.334 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt;       19    11    30    34    28    31    26    29    33    24    36    37</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="co">#&gt; M1 0.333 0.333 0.334 0.334 0.334 0.334 0.333 0.334 0.333 0.334 0.334 0.334</span></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="co">#&gt; M2 0.334 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co">#&gt; M3 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a><span class="co">#&gt;       41    27    32    35    38</span></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co">#&gt; M1 0.334 0.334 0.334 0.333 0.333</span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a><span class="co">#&gt; M2 0.333 0.333 0.333 0.333 0.333</span></span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a><span class="co">#&gt; M3 0.333 0.333 0.333 0.333 0.333</span></span></code></pre></div>
 <p>These uninformative results become obvious after defuzzification of
 the membership matrix:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>groups2 <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.fcm2, <span class="at">method =</span> <span class="st">&quot;cut&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)<span class="sc">$</span>cluster</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(groups2, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; groups2</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &lt;NA&gt; </span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   41</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>groups2 <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.fcm2, <span class="at">method =</span> <span class="st">&quot;cut&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>)<span class="sc">$</span>cluster</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">table</span>(groups2, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co">#&gt; groups2</span></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="co">#&gt; &lt;NA&gt; </span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a><span class="co">#&gt;   41</span></span></code></pre></div>
 </div>
 <div id="the-noise-clustering-model" class="section level4">
 <h4>The Noise clustering model</h4>
@@ -1009,55 +1008,55 @@ plant communities would more appropriately be classified as ‘outliers’
 and should not influence the cluster prototypes. In the noise clustering
 (NC) model we allow outlier objects to be excluded from the
 classification:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>wetland.nc <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method=</span><span class="st">&quot;NC&quot;</span>, <span class="at">m=</span><span class="fl">1.2</span>, <span class="at">dnoise=</span><span class="fl">0.8</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.nc<span class="sc">$</span>memb), <span class="at">dig=</span><span class="dv">2</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       5    8 13 4   17    3    9 21   16   14 2   15 1    7   10 40   23   25</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.00 0.00  0 0 0.00 0.01 0.01  0 0.00 0.00 0 0.00 0 0.01 0.01  1 0.93 0.98</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.99 0.85  1 1 0.93 0.41 0.08  1 0.86 0.99 1 0.93 1 0.49 0.12  0 0.01 0.01</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.00 0.00  0 0 0.00 0.01 0.01  0 0.00 0.00 0 0.00 0 0.01 0.01  0 0.00 0.00</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; N  0.01 0.14  0 0 0.07 0.58 0.90  0 0.13 0.01 0 0.07 0 0.49 0.86  0 0.06 0.01</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      22   20 6 18 12   39 19   11   30   34   28   31   26   29   33 24 36 37</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.39 0.98 1  1  1 0.99  1 0.93 0.01 0.00 0.02 0.00 0.28 0.34 0.99  0  0  0</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.50 0.00 0  0  0 0.00  0 0.00 0.01 0.00 0.01 0.00 0.01 0.01 0.00  0  0  0</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.00 0.00 0  0  0 0.00  0 0.00 0.07 0.98 0.08 0.98 0.03 0.08 0.00  1  1  1</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; N  0.11 0.02 0  0  0 0.01  0 0.06 0.90 0.02 0.89 0.02 0.68 0.58 0.01  0  0  0</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      41   27   32   35   38</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 0.00 0.01 0.02 0.03 0.00</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.01 0.01 0.01 0.48 0.90</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.93 0.05 0.11 0.02 0.00</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; N  0.06 0.92 0.85 0.47 0.09</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>wetland.nc <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>                       <span class="at">method=</span><span class="st">&quot;NC&quot;</span>, <span class="at">m=</span><span class="fl">1.2</span>, <span class="at">dnoise=</span><span class="fl">0.8</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">t</span>(wetland.nc<span class="sc">$</span>memb), <span class="at">dig=</span><span class="dv">2</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="co">#&gt;       5    8 13 4   17    3    9 21   16   14 2   15 1    7   10 40   23   25</span></span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="co">#&gt; M1 0.00 0.00  0 0 0.00 0.01 0.01  0 0.00 0.00 0 0.00 0 0.01 0.01  0 0.00 0.00</span></span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; M2 0.99 0.85  1 1 0.93 0.41 0.08  1 0.86 0.99 1 0.93 1 0.49 0.12  0 0.01 0.01</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt; M3 0.00 0.00  0 0 0.00 0.01 0.01  0 0.00 0.00 0 0.00 0 0.01 0.01  1 0.93 0.98</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt; N  0.01 0.14  0 0 0.07 0.58 0.90  0 0.13 0.01 0 0.07 0 0.49 0.86  0 0.06 0.01</span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt;      22   20 6 18 12   39 19   11   30   34   28   31   26   29   33 24 36 37</span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt; M1 0.00 0.00 0  0  0 0.00  0 0.00 0.07 0.98 0.08 0.98 0.03 0.08 0.00  1  1  1</span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt; M2 0.50 0.00 0  0  0 0.00  0 0.00 0.01 0.00 0.01 0.00 0.01 0.01 0.00  0  0  0</span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt; M3 0.39 0.98 1  1  1 0.99  1 0.93 0.01 0.00 0.02 0.00 0.28 0.34 0.99  0  0  0</span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt; N  0.11 0.02 0  0  0 0.01  0 0.06 0.90 0.02 0.89 0.02 0.68 0.58 0.01  0  0  0</span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt;      41   27   32   35   38</span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt; M1 0.93 0.05 0.11 0.02 0.00</span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt; M2 0.01 0.01 0.01 0.48 0.90</span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt; M3 0.00 0.01 0.02 0.03 0.00</span></span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co">#&gt; N  0.06 0.92 0.85 0.47 0.09</span></span></code></pre></div>
 <p>As with FCM, some objects have intermediate memberships. In addition,
 there are some objects with high membership to the Noise class, which
 indicates that they are distant from all ‘true’ cluster centers. These
 objects can be considered ‘outliers’ and remain unclassified:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.nc)<span class="sc">$</span>cluster</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>groups</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;  &quot;N&quot;  &quot;N&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;  &quot;N&quot;  &quot;N&quot; &quot;M1&quot; </span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M1&quot; &quot;M2&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot; &quot;M3&quot;  &quot;N&quot; &quot;M3&quot;  &quot;N&quot;  &quot;N&quot; </span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot;  &quot;N&quot;  &quot;N&quot; &quot;M2&quot; &quot;M2&quot;</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(groups)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 M2 M3  N </span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 14  6 10</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.nc)<span class="sc">$</span>cluster</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>groups</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;  &quot;N&quot;  &quot;N&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;  &quot;N&quot;  &quot;N&quot; &quot;M3&quot; </span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="co">#&gt; &quot;M3&quot; &quot;M3&quot; &quot;M2&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot;  &quot;N&quot; &quot;M1&quot;  &quot;N&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot; </span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="co">#&gt; &quot;M3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot; &quot;M2&quot; &quot;M2&quot;</span></span>
+<span id="cb20-9"><a href="#cb20-9" tabindex="-1"></a><span class="fu">table</span>(groups)</span>
+<span id="cb20-10"><a href="#cb20-10" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
+<span id="cb20-11"><a href="#cb20-11" tabindex="-1"></a><span class="co">#&gt; M1 M2 M3  N </span></span>
+<span id="cb20-12"><a href="#cb20-12" tabindex="-1"></a><span class="co">#&gt;  6 14 11 10</span></span></code></pre></div>
 <p>Note that we can defuzzify the membership matrix using a threshold,
 as before, and identify both intermediates (‘NA’) and outliers (members
 of the noise class: `N’):</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.nc, <span class="at">method=</span><span class="st">&quot;cut&quot;</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)<span class="sc">$</span>cluster</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>groups</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;   NA  &quot;N&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;   NA  &quot;N&quot; &quot;M1&quot; </span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M1&quot;   NA &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot; &quot;M3&quot;  &quot;N&quot; &quot;M3&quot;   NA   NA </span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;M1&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot;  &quot;N&quot;  &quot;N&quot;   NA &quot;M2&quot;</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(groups, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   M1   M2   M3    N &lt;NA&gt; </span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   11   12    6    6    6</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">defuzzify</span>(wetland.nc, <span class="at">method=</span><span class="st">&quot;cut&quot;</span>, <span class="at">alpha=</span><span class="fl">0.8</span>)<span class="sc">$</span>cluster</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>groups</span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a><span class="co">#&gt; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;   NA  &quot;N&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot; &quot;M2&quot;   NA  &quot;N&quot; &quot;M3&quot; </span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a><span class="co">#&gt; &quot;M3&quot; &quot;M3&quot;   NA &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot; &quot;M3&quot;  &quot;N&quot; &quot;M1&quot;  &quot;N&quot; &quot;M1&quot;   NA   NA </span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a><span class="co">#&gt; &quot;M3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot;   NA &quot;M2&quot;</span></span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a><span class="fu">table</span>(groups, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a><span class="co">#&gt; groups</span></span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a><span class="co">#&gt;   M1   M2   M3    N &lt;NA&gt; </span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a><span class="co">#&gt;    6   12   11    6    6</span></span></code></pre></div>
 <p>In vegetation classification, distinguishing between an intermediate
 or an outlier will not always be clearcut. Nevertheless, the distinction
 may be useful in practice because outlier objects may relate to
@@ -1073,18 +1072,18 @@ collecting more data <span class="citation">(Wiser and De Cáceres
 influence the cluster centers. As a result, the cluster centers are more
 separated from each other than in the previous models. Compare the
 following distance matrices between cluster centroids:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(wetland.km<span class="sc">$</span>mobileCenters)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           M1        M2</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.9248370          </span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.9567205 0.8997438</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(wetland.fcm<span class="sc">$</span>mobileCenters)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           M1        M2</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.8852470          </span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0.9280591 0.9387319</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(wetland.nc<span class="sc">$</span>mobileCenters)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           M1        M2</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0.9735403          </span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 1.0102668 1.0666511</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">dist</span>(wetland.km<span class="sc">$</span>mobileCenters)</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#&gt;           M1        M2</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="co">#&gt; M2 0.9248370          </span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co">#&gt; M3 0.8997438 0.9567205</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="fu">dist</span>(wetland.fcm<span class="sc">$</span>mobileCenters)</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="co">#&gt;           M1        M2</span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="co">#&gt; M2 0.9280659          </span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="co">#&gt; M3 0.9387214 0.8852437</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="fu">dist</span>(wetland.nc<span class="sc">$</span>mobileCenters)</span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="co">#&gt;           M1        M2</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="co">#&gt; M2 1.0666958          </span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="co">#&gt; M3 1.0102708 0.9735266</span></span></code></pre></div>
 <p>However, this particular advantage can also be obtained (in partitive
 methods) if medoids are used as prototypes instead of centroids (see
 below).</p>
@@ -1094,40 +1093,40 @@ below).</p>
 <p>All the examples that we have shown so far could be repeated using
 medoids as cluster prototypes instead of centroids. For example, with
 the K-medoids (the K-means analogue) would be:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>wetland.kmdd <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method=</span><span class="st">&quot;KMdd&quot;</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t</span>(wetland.kmdd<span class="sc">$</span>memb)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5 8 13 4 17 3 9 21 16 14 2 15 1 7 10 40 23 25 22 20 6 18 12 39 19 11 30 34</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1 1 1  1 1  1 1 1  1  1  1 1  1 1 1  1  0  0  0  1  0 0  0  0  0  0  0  0  0</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  1  1  1  0  1 1  1  1  1  1  1  0  0</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  0  0  0  0  0 0  0  0  0  0  0  1  1</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    28 31 26 29 33 24 36 37 41 27 32 35 38</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  0  0  0  0  0  0  0  0  0  0  0  1  1</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0  0  1  1  1  0  0  0  0  0  0  0  0</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  1  1  0  0  0  1  1  1  1  1  1  0  0</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>wetland.kmdd <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="at">x =</span> wetlandchord, <span class="at">mobileCenters=</span><span class="dv">3</span>, </span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>                      <span class="at">method=</span><span class="st">&quot;KMdd&quot;</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="fu">t</span>(wetland.kmdd<span class="sc">$</span>memb)</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">#&gt;    5 8 13 4 17 3 9 21 16 14 2 15 1 7 10 40 23 25 22 20 6 18 12 39 19 11 30 34</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">#&gt; M1 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  0  0  0  0  0 0  0  0  0  0  0  1  1</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="co">#&gt; M2 1 1  1 1  1 1 1  1  1  1 1  1 1 1  1  0  0  0  1  0 0  0  0  0  0  0  0  0</span></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">#&gt; M3 0 0  0 0  0 0 0  0  0  0 0  0 0 0  0  1  1  1  0  1 1  1  1  1  1  1  0  0</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">#&gt;    28 31 26 29 33 24 36 37 41 27 32 35 38</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">#&gt; M1  1  1  0  0  0  1  1  1  1  1  1  0  0</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a><span class="co">#&gt; M2  0  0  0  0  0  0  0  0  0  0  0  1  1</span></span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a><span class="co">#&gt; M3  0  0  1  1  1  0  0  0  0  0  0  0  0</span></span></code></pre></div>
 <p>When ran using a site-by-species matrix as input,
 <code>vegclust()</code> returns the coordinates of medoids as the
 cluster centers:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(wetland.kmdd<span class="sc">$</span>mobileCenters, <span class="at">dig=</span><span class="dv">3</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Abefic Merhed Alyvag Pancam Abemos Melcor Ludoct Eupvac Echpas Passcr Poa2</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1      0      0      0  0.000      0  0.183      0  0.000      0  0.000    0</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2      0      0      0  0.000      0  0.177      0  0.000      0  0.000    0</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3      0      0      0  0.258      0  0.258      0  0.258      0  0.258    0</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Carhal Dendio Casobt Aesind Cyprot Ipocop Cynarc Walind Sessp. Phynod Echell</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  0.000      0      0      0      0      0  0.000      0  0.000  0.000  0.000</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0.177      0      0      0      0      0  0.000      0  0.000  0.884  0.177</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  0.000      0      0      0      0      0  0.775      0  0.258  0.258  0.000</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Helind Ipoaqu Orysp. Elesp. Psespi Ludads Polatt Poa1 Helcri Physp. Goopur</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M1  0.000  0.000  0.913  0.183  0.183  0.183  0.183    0      0      0      0</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M2  0.177  0.177  0.000  0.177  0.177  0.000  0.000    0      0      0      0</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; M3  0.000  0.000  0.000  0.000  0.000  0.000  0.000    0      0      0      0</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">round</span>(wetland.kmdd<span class="sc">$</span>mobileCenters, <span class="at">dig=</span><span class="dv">3</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#&gt;    Abefic Merhed Alyvag Pancam Abemos Melcor Ludoct Eupvac Echpas Passcr Poa2</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="co">#&gt; M1      0      0      0  0.258      0  0.258      0  0.258      0  0.258    0</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="co">#&gt; M2      0      0      0  0.000      0  0.183      0  0.000      0  0.000    0</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="co">#&gt; M3      0      0      0  0.000      0  0.177      0  0.000      0  0.000    0</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="co">#&gt;    Carhal Dendio Casobt Aesind Cyprot Ipocop Cynarc Walind Sessp. Phynod Echell</span></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a><span class="co">#&gt; M1  0.000      0      0      0      0      0  0.775      0  0.258  0.258  0.000</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a><span class="co">#&gt; M2  0.000      0      0      0      0      0  0.000      0  0.000  0.000  0.000</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a><span class="co">#&gt; M3  0.177      0      0      0      0      0  0.000      0  0.000  0.884  0.177</span></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a><span class="co">#&gt;    Helind Ipoaqu Orysp. Elesp. Psespi Ludads Polatt Poa1 Helcri Physp. Goopur</span></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a><span class="co">#&gt; M1  0.000  0.000  0.000  0.000  0.000  0.000  0.000    0      0      0      0</span></span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a><span class="co">#&gt; M2  0.000  0.000  0.913  0.183  0.183  0.183  0.183    0      0      0      0</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co">#&gt; M3  0.177  0.177  0.000  0.177  0.177  0.000  0.000    0      0      0      0</span></span></code></pre></div>
 <p>However, when using site-by-site dissimilarity matrices as input for
 <code>vegclustdist()</code>, the indices of objects are returned
 instead:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>wetland.kmdd <span class="ot">=</span> <span class="fu">vegclustdist</span>(<span class="at">x =</span> dchord, <span class="at">mobileMemb=</span><span class="dv">3</span>, </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method=</span><span class="st">&quot;KMdd&quot;</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>wetland.kmdd<span class="sc">$</span>mobileCenters</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 11 23 34</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>wetland.kmdd <span class="ot">=</span> <span class="fu">vegclustdist</span>(<span class="at">x =</span> dchord, <span class="at">mobileMemb=</span><span class="dv">3</span>, </span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>                      <span class="at">method=</span><span class="st">&quot;KMdd&quot;</span>, <span class="at">nstart=</span><span class="dv">20</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>wetland.kmdd<span class="sc">$</span>mobileCenters</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a><span class="co">#&gt; [1] 23 11 34</span></span></code></pre></div>
 </div>
 </div>
 <div id="supervised-classification-as.vegclust-and-vegclass" class="section level3">
@@ -1140,36 +1139,36 @@ created <em>a priori</em>. In order to simulate this two-step process,
 we split our example data set into two matrices, one with the 31 objects
 whose group classification will be known <em>a priori</em> and the other
 with the 10 objects whose classification is to be studied:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>wetland<span class="fl">.31</span> <span class="ot">=</span> wetlandchord[<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>,]</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>wetland<span class="fl">.31</span> <span class="ot">=</span> wetland<span class="fl">.31</span>[,<span class="fu">colSums</span>(wetland<span class="fl">.31</span>)<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(wetland<span class="fl">.31</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 31 27</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>wetland<span class="fl">.10</span> <span class="ot">=</span> wetlandchord[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>),]</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>wetland<span class="fl">.10</span> <span class="ot">=</span> wetland<span class="fl">.10</span>[,<span class="fu">colSums</span>(wetland<span class="fl">.10</span>)<span class="sc">&gt;</span><span class="dv">0</span>] </span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(wetland<span class="fl">.10</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10 22</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>wetland<span class="fl">.31</span> <span class="ot">=</span> wetlandchord[<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>,]</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>wetland<span class="fl">.31</span> <span class="ot">=</span> wetland<span class="fl">.31</span>[,<span class="fu">colSums</span>(wetland<span class="fl">.31</span>)<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="fu">dim</span>(wetland<span class="fl">.31</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="co">#&gt; [1] 31 27</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>wetland<span class="fl">.10</span> <span class="ot">=</span> wetlandchord[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>),]</span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>wetland<span class="fl">.10</span> <span class="ot">=</span> wetland<span class="fl">.10</span>[,<span class="fu">colSums</span>(wetland<span class="fl">.10</span>)<span class="sc">&gt;</span><span class="dv">0</span>] </span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a><span class="fu">dim</span>(wetland<span class="fl">.10</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a><span class="co">#&gt; [1] 10 22</span></span></code></pre></div>
 <p>As initial classification, we simply take the two groups resulting
 from a K-means analysis (using function <code>kmeans()</code> from the
 <code>stats</code> package) on the first data set:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>km <span class="ot">=</span> <span class="fu">kmeans</span>(wetland<span class="fl">.31</span>, <span class="dv">2</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">=</span> km<span class="sc">$</span>cluster</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>groups</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5  8 13  4 17  3  9 21 16 14  2 15  1  7 10 40 23 25 22 20  6 18 12 39 19 11 </span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  2 </span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 30 34 28 31 26 </span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1  1  1  1  2</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>km <span class="ot">=</span> <span class="fu">kmeans</span>(wetland<span class="fl">.31</span>, <span class="dv">2</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>groups <span class="ot">=</span> km<span class="sc">$</span>cluster</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>groups</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a><span class="co">#&gt;  5  8 13  4 17  3  9 21 16 14  2 15  1  7 10 40 23 25 22 20  6 18 12 39 19 11 </span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a><span class="co">#&gt;  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  1  1  1  1  1  1  1  1  1  1  1 </span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="co">#&gt; 30 34 28 31 26 </span></span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a><span class="co">#&gt;  1  1  1  1  1</span></span></code></pre></div>
 <p>The idea is to know whether the ten objects of the second data set
 may be assigned to the vegetation types defined using the first data
 set. Because our initial classification was not obtained using function
 <code>vegclust()</code>, we need to transform the input classification
 of 31 objects into an object of class <code>vegclust</code>. This is
 done using function <code>as.vegclust()</code>:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">31.</span>km <span class="ot">=</span> <span class="fu">as.vegclust</span>(wetland<span class="fl">.31</span>, groups)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>wetland.<span class="fl">31.</span>km <span class="ot">=</span> <span class="fu">as.vegclust</span>(wetland<span class="fl">.31</span>, groups)</span></code></pre></div>
 <p>Note that we did not specify the clustering model for our
 <code>vegclust</code> object. By default, the clustering method is
 K-means (KM):</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">31.</span>km<span class="sc">$</span>method</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;KM&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>wetland.<span class="fl">31.</span>km<span class="sc">$</span>method</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;KM&quot;</span></span></code></pre></div>
 <p>In this case, this matches the way we obtained our initial
 classification. In general, however, we may have a classification
 obtained following an informal (or unknown) procedure, and we will
@@ -1178,38 +1177,38 @@ assignments. Once we have our object <code>vegclust</code> we can use
 function <code>vegclass()</code> to <em>assign</em> the second set of
 observations according to the membership rule of the k-means cluster
 model:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">10.</span>km <span class="ot">=</span> <span class="fu">vegclass</span>(wetland.<span class="fl">31.</span>km, wetland<span class="fl">.10</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.<span class="fl">10.</span>km)<span class="sc">$</span>cluster</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  29  33  24  36  37  41  27  32  35  38 </span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;2&quot; &quot;2&quot; &quot;1&quot; &quot;2&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>wetland.<span class="fl">10.</span>km <span class="ot">=</span> <span class="fu">vegclass</span>(wetland.<span class="fl">31.</span>km, wetland<span class="fl">.10</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.<span class="fl">10.</span>km)<span class="sc">$</span>cluster</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="co">#&gt;  29  33  24  36  37  41  27  32  35  38 </span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="co">#&gt; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;2&quot; &quot;2&quot;</span></span></code></pre></div>
 <p>The same procedure can be repeated using dissimilarity matrices.
 First, we call <code>as.vegclust()</code> to create a vegclust
 object:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">31.</span>km.d <span class="ot">=</span> <span class="fu">as.vegclust</span>(<span class="fu">dist</span>(wetland<span class="fl">.31</span>), groups)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>wetland.<span class="fl">31.</span>km.d <span class="ot">=</span> <span class="fu">as.vegclust</span>(<span class="fu">dist</span>(wetland<span class="fl">.31</span>), groups)</span></code></pre></div>
 <p>After that, we need a matrix of distances between the set of
 observations to be assigned and the original set of 31 observations.
 This can be obtained from the original distance matrix including all
 pairs of observations:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>wetland.d.<span class="fl">10.31</span> <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">as.matrix</span>(dchord)[<span class="dv">32</span><span class="sc">:</span><span class="dv">41</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>wetland.d.<span class="fl">10.31</span> <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">as.matrix</span>(dchord)[<span class="dv">32</span><span class="sc">:</span><span class="dv">41</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">31</span>])</span></code></pre></div>
 <p>Once we have these two objects we can use function
 <code>vegclass()</code> to <em>assign</em> the second set of
 observations according to the membership rule of the k-means cluster
 model:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>wetland.d.<span class="fl">11.</span>km <span class="ot">=</span> <span class="fu">vegclass</span>(wetland.<span class="fl">31.</span>km.d,wetland.d.<span class="fl">10.31</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.d.<span class="fl">11.</span>km)<span class="sc">$</span>cluster</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  29  33  24  36  37  41  27  32  35  38 </span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;2&quot; &quot;2&quot; &quot;1&quot; &quot;2&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>wetland.d.<span class="fl">11.</span>km <span class="ot">=</span> <span class="fu">vegclass</span>(wetland.<span class="fl">31.</span>km.d,wetland.d.<span class="fl">10.31</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.d.<span class="fl">11.</span>km)<span class="sc">$</span>cluster</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a><span class="co">#&gt;  29  33  24  36  37  41  27  32  35  38 </span></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a><span class="co">#&gt; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;1&quot; &quot;2&quot; &quot;2&quot;</span></span></code></pre></div>
 <p>Note that in both cases all the objects of the second set were
 assigned to the nearest cluster. What if we want to determine whether it
 is more appropriate for any of the objects to define a new vegetation
 type? In that is case, we may do better by using noise clustering. We
 can choose, for example, the hard noise clustering (HNC) model:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">31.</span>nc <span class="ot">=</span> <span class="fu">as.vegclust</span>(wetland<span class="fl">.31</span>, groups, <span class="at">method=</span><span class="st">&quot;HNC&quot;</span>, </span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">dnoise =</span> <span class="fl">0.8</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">10.</span>nc <span class="ot">=</span> <span class="fu">vegclass</span>(wetland.<span class="fl">31.</span>nc, wetland<span class="fl">.10</span>)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.<span class="fl">10.</span>nc)<span class="sc">$</span>cluster</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  29  33  24  36  37  41  27  32  35  38 </span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;N&quot; &quot;2&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;1&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>wetland.<span class="fl">31.</span>nc <span class="ot">=</span> <span class="fu">as.vegclust</span>(wetland<span class="fl">.31</span>, groups, <span class="at">method=</span><span class="st">&quot;HNC&quot;</span>, </span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>                            <span class="at">dnoise =</span> <span class="fl">0.8</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>wetland.<span class="fl">10.</span>nc <span class="ot">=</span> <span class="fu">vegclass</span>(wetland.<span class="fl">31.</span>nc, wetland<span class="fl">.10</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.<span class="fl">10.</span>nc)<span class="sc">$</span>cluster</span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a><span class="co">#&gt;  29  33  24  36  37  41  27  32  35  38 </span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a><span class="co">#&gt; &quot;1&quot; &quot;1&quot; &quot;N&quot; &quot;1&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;N&quot; &quot;2&quot;</span></span></code></pre></div>
 <p>An additional parameter is needed: the distance to the noise class
 ‘dnoise’, <span class="math inline">\(\delta\)</span>. This can be set
 either conventionally (depending on the level of abstraction of
@@ -1242,13 +1241,13 @@ pretend that <code>wetland.31</code> and <code>wetland.10</code> were
 obtained independently. A useful function to create a common space of
 species for two sets of vegetation observations is
 <code>conformveg()</code>:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cf <span class="ot">=</span> <span class="fu">conformveg</span>(wetland<span class="fl">.31</span>, wetland<span class="fl">.10</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">31.</span>cf<span class="ot">&lt;-</span> cf<span class="sc">$</span>x</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>wetland.<span class="fl">10.</span>cf<span class="ot">&lt;-</span> cf<span class="sc">$</span>y</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(wetland.<span class="fl">31.</span>cf)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 31 33</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(wetland.<span class="fl">10.</span>cf)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 10 33</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>cf <span class="ot">=</span> <span class="fu">conformveg</span>(wetland<span class="fl">.31</span>, wetland<span class="fl">.10</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>wetland.<span class="fl">31.</span>cf<span class="ot">&lt;-</span> cf<span class="sc">$</span>x</span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a>wetland.<span class="fl">10.</span>cf<span class="ot">&lt;-</span> cf<span class="sc">$</span>y</span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="fu">dim</span>(wetland.<span class="fl">31.</span>cf)</span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="co">#&gt; [1] 31 33</span></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="fu">dim</span>(wetland.<span class="fl">10.</span>cf)</span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co">#&gt; [1] 10 33</span></span></code></pre></div>
 <p>The only difference between these new objects and the preceeding ones
 is that they include extra columns with zeros, so that the set of
 columns (i.e. species) match between the two data sets.</p>
@@ -1259,7 +1258,7 @@ columns (i.e. species) match between the two data sets.</p>
 is to re-calculate the centroids of the initial classification in the
 resemblance space of all species. Thus, we need to call
 <code>clustcentroid()</code> using the conformed data set as input:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fixed <span class="ot">=</span> <span class="fu">clustcentroid</span>(wetland.<span class="fl">31.</span>cf, groups)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>fixed <span class="ot">=</span> <span class="fu">clustcentroid</span>(wetland.<span class="fl">31.</span>cf, groups)</span></code></pre></div>
 <p>Again, these centroids are exactly like the original ones except that
 they are expressed in a matrix that includes extra zeros for the new
 species.</p>
@@ -1268,25 +1267,25 @@ species.</p>
 <h4>Calling <code>vegclust</code> with fixed prototypes</h4>
 <p>At this point we are ready to call function <code>vegclust()</code>
 with the new data set (again, its conformed version):</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>wetland.nc <span class="ot">=</span> <span class="fu">vegclust</span>(wetland.<span class="fl">10.</span>cf, <span class="at">mobileCenters=</span><span class="dv">1</span>, </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixedCenters =</span> fixed, </span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> wetland.<span class="fl">31.</span>nc<span class="sc">$</span>method,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dnoise=</span>wetland.<span class="fl">31.</span>nc<span class="sc">$</span>dnoise, <span class="at">nstart=</span><span class="dv">10</span>)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.nc)<span class="sc">$</span>cluster</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   29   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  &quot;N&quot; &quot;F3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot;  &quot;N&quot; &quot;F2&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>wetland.nc <span class="ot">=</span> <span class="fu">vegclust</span>(wetland.<span class="fl">10.</span>cf, <span class="at">mobileCenters=</span><span class="dv">1</span>, </span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>                      <span class="at">fixedCenters =</span> fixed, </span>
+<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>                      <span class="at">method =</span> wetland.<span class="fl">31.</span>nc<span class="sc">$</span>method,</span>
+<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>                      <span class="at">dnoise=</span>wetland.<span class="fl">31.</span>nc<span class="sc">$</span>dnoise, <span class="at">nstart=</span><span class="dv">10</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.nc)<span class="sc">$</span>cluster</span>
+<span id="cb37-6"><a href="#cb37-6" tabindex="-1"></a><span class="co">#&gt;   29   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb37-7"><a href="#cb37-7" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;F2&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot;  &quot;N&quot; &quot;F3&quot;</span></span></code></pre></div>
 <p>Here, the function <code>vegclust()</code> has renamed the original
 clusters as ‘F2’ and ‘F3’ (indicating that they are now fixed), while
 the new cluster is named ‘M1’.</p>
 <p>Instead of relying on the Noise clustering model, we could have
 chosen to use the K-means model to extend the classification:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>wetland.km <span class="ot">=</span> <span class="fu">vegclust</span>(wetland.<span class="fl">10.</span>cf, <span class="at">mobileCenters=</span><span class="dv">1</span>, </span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixedCenters =</span> fixed, </span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&quot;KM&quot;</span>,</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">nstart=</span><span class="dv">10</span>)</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.km)<span class="sc">$</span>cluster</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   29   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;F3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F2&quot; &quot;F2&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>wetland.km <span class="ot">=</span> <span class="fu">vegclust</span>(wetland.<span class="fl">10.</span>cf, <span class="at">mobileCenters=</span><span class="dv">1</span>, </span>
+<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a>                      <span class="at">fixedCenters =</span> fixed, </span>
+<span id="cb38-3"><a href="#cb38-3" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">&quot;KM&quot;</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" tabindex="-1"></a>                      <span class="at">nstart=</span><span class="dv">10</span>)</span>
+<span id="cb38-5"><a href="#cb38-5" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.km)<span class="sc">$</span>cluster</span>
+<span id="cb38-6"><a href="#cb38-6" tabindex="-1"></a><span class="co">#&gt;   29   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb38-7"><a href="#cb38-7" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;F2&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F3&quot; &quot;F3&quot;</span></span></code></pre></div>
 <p>This avoids having objects in the Noise class. However, note that the
 noise clustering model allows objects in the Noise to be classified
 later on when new data becomes available, instead of forcing them to
@@ -1297,17 +1296,17 @@ belong to one cluster or the other (i.e. the partition restriction).</p>
 <p>Instead of calling <code>vegclust()</code> with the new data set
 only, we could have chosen to use the set of all vegetation
 observations:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>wetland.nc <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="fu">rbind</span>(wetland.<span class="fl">31.</span>cf,wetland.<span class="fl">10.</span>cf), <span class="at">mobileCenters=</span><span class="dv">1</span>, </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fixedCenters =</span> fixed, </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> wetland.<span class="fl">31.</span>nc<span class="sc">$</span>method,</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dnoise=</span>wetland.<span class="fl">31.</span>nc<span class="sc">$</span>dnoise, <span class="at">nstart=</span><span class="dv">10</span>)</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.nc)<span class="sc">$</span>cluster</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot;  &quot;N&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot;  &quot;N&quot; &quot;F3&quot; </span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot;  &quot;N&quot; &quot;M1&quot;  &quot;N&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot; </span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot;  &quot;N&quot; &quot;F2&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>wetland.nc <span class="ot">=</span> <span class="fu">vegclust</span>(<span class="fu">rbind</span>(wetland.<span class="fl">31.</span>cf,wetland.<span class="fl">10.</span>cf), <span class="at">mobileCenters=</span><span class="dv">1</span>, </span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>                      <span class="at">fixedCenters =</span> fixed, </span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>                      <span class="at">method =</span> wetland.<span class="fl">31.</span>nc<span class="sc">$</span>method,</span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>                      <span class="at">dnoise=</span>wetland.<span class="fl">31.</span>nc<span class="sc">$</span>dnoise, <span class="at">nstart=</span><span class="dv">10</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.nc)<span class="sc">$</span>cluster</span>
+<span id="cb39-6"><a href="#cb39-6" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
+<span id="cb39-7"><a href="#cb39-7" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot;  &quot;N&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot;  &quot;N&quot; &quot;F2&quot; </span></span>
+<span id="cb39-8"><a href="#cb39-8" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
+<span id="cb39-9"><a href="#cb39-9" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot;  &quot;N&quot; &quot;M1&quot;  &quot;N&quot; &quot;M1&quot; &quot;F2&quot; &quot;F2&quot; </span></span>
+<span id="cb39-10"><a href="#cb39-10" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb39-11"><a href="#cb39-11" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot;  &quot;N&quot;  &quot;N&quot;  &quot;N&quot; &quot;F3&quot;</span></span></code></pre></div>
 <p>Note that some of the objects in the first data set may have been
 reassigned (to a different cluster or to the Noise class). While the
 centroids of the original classification are preserved, the membership
@@ -1325,33 +1324,33 @@ distance-based mode. In this case we do not have explicit coordinates
 for fixed prototypes, but we may have the distances to these centers. To
 begin our example we use the distances to the two clusters that we
 obtained at the stage of assigning new observations:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fixedDist <span class="ot">=</span> wetland.d.<span class="fl">11.</span>km<span class="sc">$</span>dist2clusters</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>fixedDist <span class="ot">=</span> wetland.d.<span class="fl">11.</span>km<span class="sc">$</span>dist2clusters</span></code></pre></div>
 <p>With this information, we can now call <code>vegclustdist()</code> to
 define a new cluster while accounting for the previous ones:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>wetland.km.d <span class="ot">=</span> <span class="fu">vegclustdist</span>(<span class="fu">dist</span>(wetland<span class="fl">.10</span>), <span class="at">mobileMemb =</span> <span class="dv">1</span>,</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fixedDistToCenters=</span>fixedDist, </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">method =</span> <span class="st">&quot;KM&quot;</span>,</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">nstart=</span><span class="dv">10</span>)</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.km.d)<span class="sc">$</span>cluster</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   29   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;F3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F2&quot; &quot;F2&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>wetland.km.d <span class="ot">=</span> <span class="fu">vegclustdist</span>(<span class="fu">dist</span>(wetland<span class="fl">.10</span>), <span class="at">mobileMemb =</span> <span class="dv">1</span>,</span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>                            <span class="at">fixedDistToCenters=</span>fixedDist, </span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>                            <span class="at">method =</span> <span class="st">&quot;KM&quot;</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>                            <span class="at">nstart=</span><span class="dv">10</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.km.d)<span class="sc">$</span>cluster</span>
+<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="co">#&gt;   29   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;F2&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F3&quot; &quot;F3&quot;</span></span></code></pre></div>
 <p>Analogously to <code>vegclust</code>, we could have chosen to use the
 set of all vegetation observations. In this case, we need to pool the
 distances to the centers:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fixedDist <span class="ot">=</span> <span class="fu">rbind</span>(wetland.<span class="fl">31.</span>km.d<span class="sc">$</span>dist2clusters, wetland.d.<span class="fl">11.</span>km<span class="sc">$</span>dist2clusters)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>fixedDist <span class="ot">=</span> <span class="fu">rbind</span>(wetland.<span class="fl">31.</span>km.d<span class="sc">$</span>dist2clusters, wetland.d.<span class="fl">11.</span>km<span class="sc">$</span>dist2clusters)</span></code></pre></div>
 <p>And then we call <code>vegclustdist()</code> using the full distance
 matrix:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>wetland.km.d <span class="ot">=</span> <span class="fu">vegclustdist</span>(dchord, <span class="at">mobileMemb =</span> <span class="dv">1</span>,</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fixedDistToCenters=</span>fixedDist, </span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">method =</span> <span class="st">&quot;KM&quot;</span>,</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">nstart=</span><span class="dv">10</span>)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.km.d)<span class="sc">$</span>cluster</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F3&quot; </span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F3&quot; &quot;F3&quot; </span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F2&quot; &quot;F2&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>wetland.km.d <span class="ot">=</span> <span class="fu">vegclustdist</span>(dchord, <span class="at">mobileMemb =</span> <span class="dv">1</span>,</span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a>                            <span class="at">fixedDistToCenters=</span>fixedDist, </span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a>                            <span class="at">method =</span> <span class="st">&quot;KM&quot;</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a>                            <span class="at">nstart=</span><span class="dv">10</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a><span class="fu">defuzzify</span>(wetland.km.d)<span class="sc">$</span>cluster</span>
+<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a><span class="co">#&gt;    5    8   13    4   17    3    9   21   16   14    2   15    1    7   10   40 </span></span>
+<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a><span class="co">#&gt; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F3&quot; &quot;F2&quot; </span></span>
+<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a><span class="co">#&gt;   23   25   22   20    6   18   12   39   19   11   30   34   28   31   26   29 </span></span>
+<span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;F2&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F2&quot; &quot;F2&quot; </span></span>
+<span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a><span class="co">#&gt;   33   24   36   37   41   27   32   35   38 </span></span>
+<span id="cb43-11"><a href="#cb43-11" tabindex="-1"></a><span class="co">#&gt; &quot;F2&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;M1&quot; &quot;F3&quot; &quot;F3&quot;</span></span></code></pre></div>
 <p>As before, some objects may be reclassified in different clusters
 when using this option.</p>
 </div>
@@ -1363,7 +1362,7 @@ when using this option.</p>
 cluster properties to be extracted from an input classification. In all
 examples we will use this <em>a priori</em> classification of our data
 set:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">17</span>), <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">14</span>), <span class="fu">rep</span>(<span class="dv">3</span>,<span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>groups <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">17</span>), <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">14</span>), <span class="fu">rep</span>(<span class="dv">3</span>,<span class="dv">10</span>))</span></code></pre></div>
 <div id="cluster-prototypes-clustcentroid-and-clustmedoid" class="section level3">
 <h3>Cluster prototypes: <code>clustcentroid()</code> and
 <code>clustmedoid()</code></h3>
@@ -1373,29 +1372,29 @@ classification structure, which can be specified using either a cluster
 vector or a membership matrix.</p>
 <p>For example, with <code>clustcentroid()</code> we can calculate the
 coordinates of the centroids of the initial groups using:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>centroids <span class="ot">=</span> <span class="fu">clustcentroid</span>(wetlandchord, groups)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(centroids, <span class="at">dig=</span><span class="dv">3</span>)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Abefic Merhed Alyvag Pancam Abemos Melcor Ludoct Eupvac Echpas Passcr Poa2</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.000  0.000  0.009  0.009  0.000  0.054  0.000  0.020  0.031  0.000 0.00</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.013  0.015  0.036  0.088  0.000  0.178  0.000  0.090  0.116  0.000 0.01</span></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.000  0.047  0.000  0.371  0.036  0.253  0.019  0.182  0.061  0.026 0.00</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Carhal Dendio Casobt Aesind Cyprot Ipocop Cynarc Walind Sessp. Phynod Echell</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.064  0.000  0.016  0.009  0.000  0.000  0.000  0.068  0.144  0.090  0.022</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.036  0.000  0.000  0.064  0.179  0.028  0.106  0.055  0.117  0.506  0.119</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.000  0.027  0.000  0.019  0.039  0.018  0.301  0.090  0.138  0.204  0.158</span></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Helind Ipoaqu Orysp. Elesp. Psespi Ludads Polatt  Poa1 Helcri Physp. Goopur</span></span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  0.112  0.055  0.609  0.164  0.192  0.204  0.097 0.000  0.000   0.00   0.00</span></span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  0.138  0.048  0.126  0.125  0.027  0.000  0.000 0.013  0.013   0.00   0.00</span></span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  0.090  0.037  0.172  0.000  0.000  0.000  0.000 0.000  0.000   0.02   0.02</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>centroids <span class="ot">=</span> <span class="fu">clustcentroid</span>(wetlandchord, groups)</span>
+<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a><span class="fu">round</span>(centroids, <span class="at">dig=</span><span class="dv">3</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" tabindex="-1"></a><span class="co">#&gt;   Abefic Merhed Alyvag Pancam Abemos Melcor Ludoct Eupvac Echpas Passcr Poa2</span></span>
+<span id="cb45-4"><a href="#cb45-4" tabindex="-1"></a><span class="co">#&gt; 1  0.000  0.000  0.009  0.009  0.000  0.054  0.000  0.020  0.031  0.000 0.00</span></span>
+<span id="cb45-5"><a href="#cb45-5" tabindex="-1"></a><span class="co">#&gt; 2  0.013  0.015  0.036  0.088  0.000  0.178  0.000  0.090  0.116  0.000 0.01</span></span>
+<span id="cb45-6"><a href="#cb45-6" tabindex="-1"></a><span class="co">#&gt; 3  0.000  0.047  0.000  0.371  0.036  0.253  0.019  0.182  0.061  0.026 0.00</span></span>
+<span id="cb45-7"><a href="#cb45-7" tabindex="-1"></a><span class="co">#&gt;   Carhal Dendio Casobt Aesind Cyprot Ipocop Cynarc Walind Sessp. Phynod Echell</span></span>
+<span id="cb45-8"><a href="#cb45-8" tabindex="-1"></a><span class="co">#&gt; 1  0.064  0.000  0.016  0.009  0.000  0.000  0.000  0.068  0.144  0.090  0.022</span></span>
+<span id="cb45-9"><a href="#cb45-9" tabindex="-1"></a><span class="co">#&gt; 2  0.036  0.000  0.000  0.064  0.179  0.028  0.106  0.055  0.117  0.506  0.119</span></span>
+<span id="cb45-10"><a href="#cb45-10" tabindex="-1"></a><span class="co">#&gt; 3  0.000  0.027  0.000  0.019  0.039  0.018  0.301  0.090  0.138  0.204  0.158</span></span>
+<span id="cb45-11"><a href="#cb45-11" tabindex="-1"></a><span class="co">#&gt;   Helind Ipoaqu Orysp. Elesp. Psespi Ludads Polatt  Poa1 Helcri Physp. Goopur</span></span>
+<span id="cb45-12"><a href="#cb45-12" tabindex="-1"></a><span class="co">#&gt; 1  0.112  0.055  0.609  0.164  0.192  0.204  0.097 0.000  0.000   0.00   0.00</span></span>
+<span id="cb45-13"><a href="#cb45-13" tabindex="-1"></a><span class="co">#&gt; 2  0.138  0.048  0.126  0.125  0.027  0.000  0.000 0.013  0.013   0.00   0.00</span></span>
+<span id="cb45-14"><a href="#cb45-14" tabindex="-1"></a><span class="co">#&gt; 3  0.090  0.037  0.172  0.000  0.000  0.000  0.000 0.000  0.000   0.02   0.02</span></span></code></pre></div>
 <p>As medoids are prototypes that are chosen among the objects to be
 classified, function <code>clustmedoid()</code> does not return
 coordinates but the indices of objects. The following code uses the
 medoid hard cluster equation to determine the medoids of each
 cluster:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>medoids <span class="ot">=</span> <span class="fu">clustmedoid</span>(wetlandchord, groups)</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>medoids</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 12 41 </span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 23 37</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>medoids <span class="ot">=</span> <span class="fu">clustmedoid</span>(wetlandchord, groups)</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>medoids</span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a><span class="co">#&gt;  2 12 41 </span></span>
+<span id="cb46-4"><a href="#cb46-4" tabindex="-1"></a><span class="co">#&gt; 11 23 37</span></span></code></pre></div>
 <p>The value returned by function <code>medoid()</code> is a vector of
 indices with the corresponding object names (which are numbers in this
 particular case). If the classification structure is a fuzzy membership
@@ -1417,9 +1416,9 @@ Var(i) = \sum_{j=1}^{n_k}{e_{ij}^2}/n_i
 sample estimate. Thus, the variances calculated in
 <code>clustvar()</code> are population variances. For example, the
 variances of the three groups in our examples are:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clustvar</span>(wetlandchord, groups)</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         1         2         3 </span></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.4554668 0.5466579 0.5293836</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="fu">clustvar</span>(wetlandchord, groups)</span>
+<span id="cb47-2"><a href="#cb47-2" tabindex="-1"></a><span class="co">#&gt;         1         2         3 </span></span>
+<span id="cb47-3"><a href="#cb47-3" tabindex="-1"></a><span class="co">#&gt; 0.4554668 0.5466579 0.5293836</span></span></code></pre></div>
 <p>The reason why population values are produced, instead of sample
 estimates, is because it allows the variance to be calculated using
 fuzzy membership values: <span class="math display">\[\begin{equation}
@@ -1433,14 +1432,14 @@ Var(i) = \frac{1}{n_i^2} \sum_{k=1}^{n_i}\sum_{l=1}^{n_i}{d_{kl}^2}
 estimate. Because in our example the community data had been transformed
 using the chord transformation, the same variance values can be obtained
 using a distance matrix with chord distances:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clustvar</span>(dchord, groups)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         1         2         3 </span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0.4554668 0.5466579 0.5293836</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">clustvar</span>(dchord, groups)</span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="co">#&gt;         1         2         3 </span></span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a><span class="co">#&gt; 0.4554668 0.5466579 0.5293836</span></span></code></pre></div>
 <p>Finally, if no classification structure is provided function
 <code>clustvar()</code> will return the overall variance (beta
 diversity) of the data table:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clustvar</span>(wetlandchord)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.6751038</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a><span class="fu">clustvar</span>(wetlandchord)</span>
+<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a><span class="co">#&gt; [1] 0.6751038</span></span></code></pre></div>
 </div>
 <div id="distance-between-clusters-interclustdist" class="section level3">
 <h3>Distance between clusters: <code>interclustdist()</code></h3>
@@ -1449,19 +1448,19 @@ determine which vegetation types are more similar and which are more
 distinct. When prototypes of vegetation types are chosen to be cluster
 medoids, then the resemblance between vegetation types can be defined as
 the resemblance between the corresponding medoids:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(dchord)[medoids,medoids])</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           2       12</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 1.344006         </span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 41 1.093926 1.363297</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="fu">as.dist</span>(<span class="fu">as.matrix</span>(dchord)[medoids,medoids])</span>
+<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="co">#&gt;           2       12</span></span>
+<span id="cb50-3"><a href="#cb50-3" tabindex="-1"></a><span class="co">#&gt; 12 1.344006         </span></span>
+<span id="cb50-4"><a href="#cb50-4" tabindex="-1"></a><span class="co">#&gt; 41 1.093926 1.363297</span></span></code></pre></div>
 <p>In contrast, if prototypes of vegetation types are chosen to be
 cluster centroids, the distance between two vegetation types should be
 defined as the distance between the cluster centroids. Following our
 example, we can simply use function <code>dist()</code> on the matrix of
 centroid coordinates:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(centroids)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           1         2</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.7624211          </span></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.8004329 0.5298008</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="fu">dist</span>(centroids)</span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a><span class="co">#&gt;           1         2</span></span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a><span class="co">#&gt; 2 0.7624211          </span></span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a><span class="co">#&gt; 3 0.8004329 0.5298008</span></span></code></pre></div>
 <p>Alternatively, the function <code>interclustdist()</code> allows the
 distance between pairs of centroids to be calculated without the
 coordinates of centroids being supplied. Instead, the matrix of
@@ -1472,10 +1471,10 @@ d^2(i,j)=\frac{\sum_{k=1}^{n}\sum_{l=1}^{n}{u_{ik}^mu_{jl}^m{d_{kl}}^2}}{\sum_{k
 - Var(i) - Var(j)
 \end{equation}\]</span> Using the former equation in our example would
 result in:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interclustdist</span>(dchord,groups)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           1         2</span></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 0.7624211          </span></span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 0.8004329 0.5298008</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="fu">interclustdist</span>(dchord,groups)</span>
+<span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a><span class="co">#&gt;           1         2</span></span>
+<span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a><span class="co">#&gt; 2 0.7624211          </span></span>
+<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a><span class="co">#&gt; 3 0.8004329 0.5298008</span></span></code></pre></div>
 <p>which returns the same values as before.</p>
 </div>
 <div id="constancy-classes-clustconst" class="section level3">
@@ -1486,38 +1485,38 @@ the type. This frequency is often called <em>constancy</em> and the
 table that contains the constancy of all species in all vegetation types
 is called <em>constancy table</em>. The function
 <code>clustconst()</code> allows this table to be calculated:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">clustconst</span>(wetlandchord, <span class="at">memb =</span> <span class="fu">as.memb</span>(groups))</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">clustconst</span>(wetlandchord, <span class="at">memb =</span> <span class="fu">as.memb</span>(groups))</span></code></pre></div>
 <p>The R object returned by <code>clustconst()</code> can be examined in
 several ways. First, it is useful to print the constancy table ordering
 species from high to low constancy for each cluster:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>d<span class="ot">=</span><span class="fu">summary</span>(c, <span class="at">mode=</span><span class="st">&quot;all&quot;</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ------------ 3 -------------</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            3     2     1</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Pancam 1.000 0.357 0.059</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Melcor 1.000 0.786 0.294</span></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Eupvac 0.800 0.357 0.118</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sessp. 0.600 0.500 0.412</span></span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Echell 0.600 0.357 0.118</span></span>
-<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ------------ 2 -------------</span></span>
-<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            3     2     1</span></span>
-<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Phynod 0.400 0.714 0.118</span></span>
-<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Helind 0.300 0.643 0.471</span></span>
-<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Elesp. 0.000 0.571 0.529</span></span>
-<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ------------ 1 -------------</span></span>
-<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;            3     2     1</span></span>
-<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Orysp. 0.300 0.286 1.000</span></span>
-<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Ludads 0.000 0.000 0.824</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a>d<span class="ot">=</span><span class="fu">summary</span>(c, <span class="at">mode=</span><span class="st">&quot;all&quot;</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" tabindex="-1"></a><span class="co">#&gt; ------------ 3 -------------</span></span>
+<span id="cb54-3"><a href="#cb54-3" tabindex="-1"></a><span class="co">#&gt;            3     2     1</span></span>
+<span id="cb54-4"><a href="#cb54-4" tabindex="-1"></a><span class="co">#&gt; Pancam 1.000 0.357 0.059</span></span>
+<span id="cb54-5"><a href="#cb54-5" tabindex="-1"></a><span class="co">#&gt; Melcor 1.000 0.786 0.294</span></span>
+<span id="cb54-6"><a href="#cb54-6" tabindex="-1"></a><span class="co">#&gt; Eupvac 0.800 0.357 0.118</span></span>
+<span id="cb54-7"><a href="#cb54-7" tabindex="-1"></a><span class="co">#&gt; Sessp. 0.600 0.500 0.412</span></span>
+<span id="cb54-8"><a href="#cb54-8" tabindex="-1"></a><span class="co">#&gt; Echell 0.600 0.357 0.118</span></span>
+<span id="cb54-9"><a href="#cb54-9" tabindex="-1"></a><span class="co">#&gt; ------------ 2 -------------</span></span>
+<span id="cb54-10"><a href="#cb54-10" tabindex="-1"></a><span class="co">#&gt;            3     2     1</span></span>
+<span id="cb54-11"><a href="#cb54-11" tabindex="-1"></a><span class="co">#&gt; Phynod 0.400 0.714 0.118</span></span>
+<span id="cb54-12"><a href="#cb54-12" tabindex="-1"></a><span class="co">#&gt; Helind 0.300 0.643 0.471</span></span>
+<span id="cb54-13"><a href="#cb54-13" tabindex="-1"></a><span class="co">#&gt; Elesp. 0.000 0.571 0.529</span></span>
+<span id="cb54-14"><a href="#cb54-14" tabindex="-1"></a><span class="co">#&gt; ------------ 1 -------------</span></span>
+<span id="cb54-15"><a href="#cb54-15" tabindex="-1"></a><span class="co">#&gt;            3     2     1</span></span>
+<span id="cb54-16"><a href="#cb54-16" tabindex="-1"></a><span class="co">#&gt; Orysp. 0.300 0.286 1.000</span></span>
+<span id="cb54-17"><a href="#cb54-17" tabindex="-1"></a><span class="co">#&gt; Ludads 0.000 0.000 0.824</span></span></code></pre></div>
 <p>Alternatively, we can examine the constancy vector of each vegetation
 type:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(c, <span class="at">mode=</span><span class="st">&quot;cluster&quot;</span>, <span class="at">name=</span><span class="fu">names</span>(c)[<span class="dv">1</span>])</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Orysp. 1.000 </span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Ludads 0.824 </span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Elesp. 0.529</span></span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">summary</span>(c, <span class="at">mode=</span><span class="st">&quot;cluster&quot;</span>, <span class="at">name=</span><span class="fu">names</span>(c)[<span class="dv">1</span>])</span>
+<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a><span class="co">#&gt; Orysp. 1.000 </span></span>
+<span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a><span class="co">#&gt; Ludads 0.824 </span></span>
+<span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a><span class="co">#&gt; Elesp. 0.529</span></span></code></pre></div>
 </div>
 </div>
 <div id="bibliography" class="section level2 unnumbered">
 <h2 class="unnumbered">Bibliography</h2>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-Bezdek1981" class="csl-entry">
 Bezdek, James C. 1981. <em><span class="nocase">Pattern recognition with
 fuzzy objective functions</span></em>. New York: Plenum Press.
@@ -1530,7 +1529,7 @@ the Royal Society of Queensland</em> 97: 69–77.
 <div id="ref-Dale1995" class="csl-entry">
 Dale, MB. 1995. <span>“<span class="nocase">Evaluating classification
 strategies</span>.”</span> <em>Journal of Vegetation Science</em> 6 (3):
-437–40. <a href="https://onlinelibrary.wiley.com/doi/10.2307/3236243/abstract">https://onlinelibrary.wiley.com/doi/10.2307/3236243/abstract</a>.
+437–40.
 </div>
 <div id="ref-Dave1991" class="csl-entry">
 Dave, R N. 1991. <span>“<span class="nocase">Characterization and
@@ -1566,7 +1565,7 @@ algorithms</span>.”</span> <em>Pattern Recognition Letters</em> 17 (6):
 <div id="ref-Krishnapuram1999" class="csl-entry">
 Krishnapuram, Raghu, Anupam Joshi, and Liyu Yi. 1999. <span>“<span class="nocase">A Fuzzy relative of the k-medoids algorithm with
 application to web document and snippet clustering</span>.”</span> In
-<em>IEEE International Fuzzy Systems</em>, 1281–86. <a href="https://ieeexplore.ieee.org/xpls/abs\_all.jsp?arnumber=790086">https://ieeexplore.ieee.org/xpls/abs\_all.jsp?arnumber=790086</a>.
+<em>IEEE International Fuzzy Systems</em>, 1281–86.
 </div>
 <div id="ref-Krishnapuram1993" class="csl-entry">
 Krishnapuram, R., and J. M. Keller. 1993. <span>“<span class="nocase">A

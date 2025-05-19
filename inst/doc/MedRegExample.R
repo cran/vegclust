@@ -28,7 +28,7 @@ length(medreg.CAP)
 ## -----------------------------------------------------------------------------
 medreg.CAP[[1]]
 
-## ---- fig=TRUE, echo = TRUE, fig.width=5, fig.height=5------------------------
+## ----fig=TRUE, echo = TRUE, fig.width=5, fig.height=5-------------------------
 plot(medreg.CAP, plots="1", sizes=strataUp, xlab="Height (cm)", 
      ylab="Cumulative percent cover")
 legend("topright", col=1:5, lty=1, 
@@ -61,7 +61,7 @@ tree.S<-stratifyvegdata(m, sizes1=heights, sizes2=diams,
 ## -----------------------------------------------------------------------------
 tree.CAS <- CAS(tree.S)
 
-## ---- fig=TRUE, echo = TRUE, fig.width=5, fig.height=9------------------------
+## ----fig=TRUE, echo = TRUE, fig.width=5, fig.height=9-------------------------
 par(mfrow=c(2,1), mar=c(4,5,2,1))
 plot(tree.CAS, species=1, sizes1=heights[-1], xlab="height (m)", 
      ylab="diameter (cm)", sizes2=diams[-1], zlab="Basal area (m2)",
@@ -79,7 +79,7 @@ tree.S2<-stratifyvegdata(m, sizes1=heights, plotColumn = "plot",
                          abundanceColumn = "ba")
 print(CAP(tree.S2))
 
-## ---- fig=TRUE, echo = TRUE, fig.width=4, fig.height=5------------------------
+## ----fig=TRUE, echo = TRUE, fig.width=4, fig.height=5-------------------------
 par(mfrow=c(2,1), mar=c(4,5,2,1))
 plot(CASmargin(tree.CAS,margin=1), plots=1, sizes=heights[-1], 
      xlab="height (m)", ylab="Basal area (m2)", ylim = c(0,7))
@@ -97,7 +97,7 @@ as.matrix(medreg.D)[1,2]
 medreg.Dsqrt = vegdiststruct(medreg.CAP, method="bray", 
                          classWeights=strataWidths, transform="sqrt")
 
-## ---- fig=TRUE, echo = TRUE, fig.width=4, fig.height=7------------------------
+## ----fig=TRUE, echo = TRUE, fig.width=4, fig.height=7-------------------------
 par(mfrow=c(2,1), mar=c(4,5,2,1))
 X<-cmdscale(medreg.D, k=2)
 plot(X, xlab="MDS 1", ylab="MDS 2", asp=1,
@@ -122,7 +122,7 @@ print(medoids)
 cluster<-defuzzify(vc)$cluster
 table(cluster)
 
-## ---- echo = TRUE, fig.width=4, fig.height=4----------------------------------
+## ----echo = TRUE, fig.width=4, fig.height=4-----------------------------------
 clNum = as.numeric(as.factor(cluster))
 plot(Xsqrt, xlab="MDS 1", ylab="MDS 2", 
      pch=clNum, col=clNum)
@@ -136,7 +136,7 @@ n = names(CAPm)
 ## -----------------------------------------------------------------------------
 round(CAPm[[n[4]]], dig=1)
 
-## ---- fig=TRUE, echo = FALSE, fig.width=6, fig.height=8-----------------------
+## ----fig=TRUE, echo = FALSE, fig.width=6, fig.height=8------------------------
 par(mfrow=c(3,2), mar=c(4,4,3,0))
 plot(CAPm, plots=n[1], sizes = strataWidths, 
      ylab="Percent cover", main="M1")
